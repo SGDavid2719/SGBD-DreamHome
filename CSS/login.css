@@ -7,7 +7,7 @@ hr.headerSplitter {
   opacity: 1;
 }
 
-.demo-container {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
