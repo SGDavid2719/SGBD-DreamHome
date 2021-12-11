@@ -22,25 +22,33 @@
     </header>
     <section>
         <div class="container">
-            <form action="login_action.php" method="post">
-                <div class="mt-2 mb-2">
-                    <label for="eaddress">Email Address:</label><br>
-                    <input type="text" id="eaddress" name="eaddress" value=""><br>
+            <div class="form-container">
+                <div class="text-center mb-5">
+                    <img id="iconImg"src="IMG/dream-home.png" alt="DreamHome icon">
                 </div>
-                <div class="mt-2 mb-2">
-                    <div>
-                        <label for="password" >Password:</label><br>
-                        <input type="password" id="password" name="password" value="">
+                <div class="mb-3 text-center">
+                    <label for="eaddress">Login</label><br>
+                    <hr class="mb-5"/>
+                </div>
+                <form action="login_action.php" method="post">
+                    <div class="mb-2">
+                        <label for="eaddress">Email Address:</label><br>
+                        <input type="text" id="eaddress" name="eaddress" value=""><br>
                     </div>
-                    <div class="mt-2">
-                        <input type="checkbox" onclick="myFunction()"> Show Password
+                    <div class="mt-2 mb-2">
+                        <div>
+                            <label for="password" >Password:</label><br>
+                            <input type="password" id="password" name="password" value="">
+                        </div>
+                        <div class="mt-2">
+                            <input type="checkbox" onclick="myFunction()"> Show Password
+                        </div>
                     </div>
-                    
-                </div>
-                <div class="d-flex flex-row-reverse">
-                    <input id="submitbutton" class="btn btn-primary mt-2" type="submit" value="Submit">
-                </div>
-            </form>
+                    <div class="d-flex flex-row-reverse">
+                        <input id="submitbutton" class="btn btn-primary mt-2" type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
     <footer>

@@ -26,10 +26,13 @@
     if($rows) {
         Redirect('index.php', false);
     } else {
-        echo '<script language="javascript">';
-        echo 'alert("Wrong Password")';
-        echo '</script>';
-        include("login.php");
+        ?>
+        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+            <strong>Your email address or password are incorrect!</strong> Try it again.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <?php
+        include_once('login.php');
     }
     mysqli_free_result($result);
     mysqli_close($connection);
