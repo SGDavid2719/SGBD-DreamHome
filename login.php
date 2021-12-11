@@ -19,7 +19,7 @@
     </header>
     <section>
         <div class="container">
-            <form>
+            <form action="login_action.php" method="post">
                 <div class="mt-2 mb-2">
                     <label for="eaddress">Email Address:</label><br>
                     <input type="text" id="eaddress" name="eaddress" value=""><br>
