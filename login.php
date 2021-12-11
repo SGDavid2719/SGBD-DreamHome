@@ -24,7 +24,7 @@
         <div class="container">
             <div class="form-container">
                 <div class="text-center mb-5">
-                    <img id="iconImg"src="IMG/dream-home.png" alt="DreamHome icon">
+                    <img id="iconImg" src="IMG/dream-home.png" alt="DreamHome Logo">
                 </div>
                 <div class="mb-3 text-center">
                     <label for="eaddress">Login</label><br>
