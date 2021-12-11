@@ -7,8 +7,6 @@
 
     $user_address=$_POST['eaddress'];
     $user_password=$_POST['password'];
-    //start_session();
-    $_SESSION['eaddress']=$user_address;
 
     $servername = "localhost";
     $username = "root";
@@ -28,12 +26,10 @@
     if($rows) {
         Redirect('index.php', false);
     } else {
-        ?>
-        <?php
-            include("login.php");
-        ?>
-        <h1 class="bad">ERROR</H1>
-        <?php
+        echo '<script language="javascript">';
+        echo 'alert("Wrong Password")';
+        echo '</script>';
+        include("login.php");
     }
     mysqli_free_result($result);
     mysqli_close($connection);
