@@ -20,11 +20,17 @@
     <section>
         <div class="container">
             <form>
-                <label for="fname">Email Address:</label><br>
-                <input type="text" id="fname" name="fname" value=""><br>
-                <label for="lname">Password:</label><br>
-                <input type="text" id="lname" name="lname" value="">
-                <input type="submit" value="Submit">
+                <div class="mt-2 mb-2">
+                    <label for="eaddress">Email Address:</label><br>
+                    <input type="text" id="eaddress" name="eaddress" value=""><br>
+                </div>
+                <div class="mt-2 mb-2">
+                    <label for="password">Password:</label><br>
+                    <input type="text" id="password" name="password" value="">
+                </div>
+                <div class="d-flex flex-row-reverse">
+                    <input id="submitbutton" class="btn btn-primary mt-2" type="submit" value="Submit">
+                </div>
             </form>
         </div>
     </section>

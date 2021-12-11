@@ -14,8 +14,12 @@ hr.headerSplitter {
   min-height: 80vh;
 }
 
-.dx-overlay-content {
-  background-color: #337ab7;
+label {
+  font-size: large;
+}
+
+.eaddress {
+  width: 100%;
 }
 
 .footer {
