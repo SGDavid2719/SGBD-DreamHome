@@ -106,7 +106,7 @@ a {
 
 .container {
   display: flex;
-  min-height: 80vh;
+  min-height: 85vh;
 }
 
 .footer {

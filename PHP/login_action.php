@@ -2,7 +2,7 @@
 
     session_start();
 
-    include_once('PHP/utilities.php');
+    include_once('utilities.php');
 
     if(isset($_POST['login']))
     {
@@ -29,7 +29,7 @@
         if($rows) {
             $name=$data['name'];
             $_SESSION['name']=$name;
-            Redirect('index.php', false);
+            Redirect('../VIEWS/index.php', false);
         } else {
             ?>
             <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
@@ -37,7 +37,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php
-            include_once('login.php');
+            include_once('../VIEWS/login.php');
         }
         mysqli_free_result($result);
         mysqli_close($connection);
