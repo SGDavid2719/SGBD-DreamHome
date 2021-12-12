@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if(empty($_SESSION['name'])):
+        header('Location:login.php');
+    endif;
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +29,7 @@
             <div class="m-2 navigation-elements">
                 <nav id="navigation-main" class="navigation-main">
                     <!-- Brand -->
-                    <img src="IMG/dream-home.png" alt="DreamHome Logo" class="iconImg invert">
+                    <a href="index.php"><img src="IMG/dream-home.png" alt="DreamHome Logo" class="iconImg invert"></a>
                     <!-- Left Nav -->
                     <ul class="navigation-menu mt-2">
                         <li>
@@ -31,13 +39,21 @@
                             <a href="#">More</a>
                         </li>
                     </ul>
-                </nav>
+                    <ul class="navigation-menu-user mt-2">
+                        <li>
+                            <a href="logout_action.php">                                
+                                <i class="far fa-user"></i>
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>                
             </div>
         </div>
     </header>
     <section>
         <div class="container">
-            
+            <h1>Welcome <?=$_SESSION['name']?></h1>
         </div>
     </section>
     <footer>

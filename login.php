@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <div class="d-flex flex-row-reverse">
-                        <input id="submitbutton" class="btn btn-primary mt-2" type="submit" value="Submit">
+                        <input id="submitbutton" class="btn btn-primary mt-2" type="submit" name="login" value="Submit" >
                     </div>
                 </form>
             </div>
