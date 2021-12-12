@@ -51,10 +51,8 @@
             </div>
         </div>
     </section>
-    <footer>
-        <div class="footer">
-            &copy; 2021 David Santomé & Raixa Madueño
-        </div>
-    </footer>
+    <?php
+        include_once('ELEMENTS/footer.php');
+    ?>
 </body>
 </html>
