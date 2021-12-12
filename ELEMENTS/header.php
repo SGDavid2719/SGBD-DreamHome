@@ -13,12 +13,27 @@
                             <a href="#">Branch</a>
                         </li>
                         <li>
-                            <a href="#">More</a>
+                            <a href="#">Staff</a>
+                        </li>
+                        <li>
+                            <a href="#">Property for rent</a>
+                        </li>
+                        <li>
+                            <a href="#">Owner</a>
+                        </li>
+                        <li>
+                            <a href="#">Client</a>
+                        </li>
+                        <li>
+                            <a href="#">Property viewing</a>
+                        </li>
+                        <li>
+                            <a href="#">Newspaper</a>
                         </li>
                     </ul>
                     <ul class="navigation-menu-user mt-2">
                         <li>
-                            <a href="logout_action.php">                                
+                            <a href="logout_action.php">   
                                 <i class="far fa-user"></i>
                                 Logout
                             </a>
