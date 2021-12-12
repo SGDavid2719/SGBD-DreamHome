@@ -10,26 +10,26 @@
     ?>
     <section>
         <header>
-            <div class="m-5 p-2">
+            <div class="row m-5 p-2 headerRow">
                 <h1>Branch number X</h1>
+                <h3>Manager number x</h3>
             </div>
         </header>
         <div class="container mt-5">
-            <div class="col-md-6">
-                <article>
-                    <div>
-                        <h1>Manager number <?=$_SESSION['name']?></h1>
-                        <h1>City</h1>
-                        <h1>Street</h1>
-                        <h1>Postcode</h1>
-                    </div>
-                </article>
-            </div>
-            <div class="col-md-6">
-                <aside>
-                    <img src="../IMG/dream-home.png" alt="DreamHome Logo" class="">
-                </aside>
-            </div>            
+            <div class="row containerRow">
+                <div class="col-md-4 m-1 infoField">
+                    <h5>Street<h5><br>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, adipisci.</p>
+                </div>
+                <div class="col-md-4 m-1 infoField">
+                    <h5>City<h5><br>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, adipisci.</p>
+                </div>
+                <div class="col-md-4 m-1 infoField">
+                    <h5>Postcode<h5><br>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. At, adipisci.</p>
+                </div>
+            </div>         
         </div>
     </section>
     <?php
