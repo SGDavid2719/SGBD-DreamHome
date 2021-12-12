@@ -10,15 +10,30 @@
                     <!-- Left Nav -->
                     <ul class="navigation-menu mt-2">
                         <li>
-                            <a href="#">Branch</a>
+                            <a href="VIEWS/branch.php">Branch</a>
                         </li>
                         <li>
-                            <a href="#">More</a>
+                            <a href="VIEWS/staff.php">Staff</a>
+                        </li>
+                        <li>
+                            <a href="VIEWS/property_for_rent.php">Property for rent</a>
+                        </li>
+                        <li>
+                            <a href="VIEWS/owner.php">Owner</a>
+                        </li>
+                        <li>
+                            <a href="VIEWS/client.php">Client</a>
+                        </li>
+                        <li>
+                            <a href="VIEWS/property_viewing.php">Property viewing</a>
+                        </li>
+                        <li>
+                            <a href="VIEWS/newspaper.php">Newspaper</a>
                         </li>
                     </ul>
                     <ul class="navigation-menu-user mt-2">
                         <li>
-                            <a href="logout_action.php">                                
+                            <a href="logout_action.php">   
                                 <i class="far fa-user"></i>
                                 Logout
                             </a>
