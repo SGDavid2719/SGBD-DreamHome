@@ -1,0 +1,8 @@
+.container,
+.rowHeader {
+  justify-content: center;
+}
+
+#profileIMG {
+  width: 100px;
+}

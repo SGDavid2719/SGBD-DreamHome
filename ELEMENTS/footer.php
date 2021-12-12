@@ -4,4 +4,4 @@
     </div>
 </footer>
 <!-- JAVASCRIPT -->
-<script src="JS/index.js"></script>
+<script src="../JS/index.js"></script>

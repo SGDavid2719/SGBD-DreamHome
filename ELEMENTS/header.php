@@ -6,34 +6,34 @@
             <div class="m-2 navigation-elements">
                 <nav id="navigation-main" class="navigation-main">
                     <!-- Brand -->
-                    <a href="index.php"><img src="IMG/dream-home.png" alt="DreamHome Logo" class="iconImg invert"></a>
+                    <a href="index.php"><img src="../IMG/dream-home.png" alt="DreamHome Logo" class="iconImg invert"></a>
                     <!-- Left Nav -->
                     <ul class="navigation-menu mt-2">
                         <li>
-                            <a href="VIEWS/branch.php">Branch</a>
+                            <a href="branch.php">Branch</a>
                         </li>
                         <li>
-                            <a href="VIEWS/staff.php">Staff</a>
+                            <a href="staff.php">Staff</a>
                         </li>
                         <li>
-                            <a href="VIEWS/property_for_rent.php">Property for rent</a>
+                            <a href="property_for_rent.php">Property for rent</a>
                         </li>
                         <li>
-                            <a href="VIEWS/owner.php">Owner</a>
+                            <a href="owner.php">Owner</a>
                         </li>
                         <li>
-                            <a href="VIEWS/client.php">Client</a>
+                            <a href="client.php">Client</a>
                         </li>
                         <li>
-                            <a href="VIEWS/property_viewing.php">Property viewing</a>
+                            <a href="property_viewing.php">Property viewing</a>
                         </li>
                         <li>
-                            <a href="VIEWS/newspaper.php">Newspaper</a>
+                            <a href="newspaper.php">Newspaper</a>
                         </li>
                     </ul>
                     <ul class="navigation-menu-user mt-2">
                         <li>
-                            <a href="logout_action.php">   
+                            <a href="../PHP/logout_action.php">   
                                 <i class="far fa-user"></i>
                                 Logout
                             </a>
