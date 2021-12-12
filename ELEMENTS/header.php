@@ -10,25 +10,25 @@
                     <!-- Left Nav -->
                     <ul class="navigation-menu mt-2">
                         <li>
-                            <a href="#">Branch</a>
+                            <a href="VIEWS/branch.php">Branch</a>
                         </li>
                         <li>
-                            <a href="#">Staff</a>
+                            <a href="VIEWS/staff.php">Staff</a>
                         </li>
                         <li>
-                            <a href="#">Property for rent</a>
+                            <a href="VIEWS/property_for_rent.php">Property for rent</a>
                         </li>
                         <li>
-                            <a href="#">Owner</a>
+                            <a href="VIEWS/owner.php">Owner</a>
                         </li>
                         <li>
-                            <a href="#">Client</a>
+                            <a href="VIEWS/client.php">Client</a>
                         </li>
                         <li>
-                            <a href="#">Property viewing</a>
+                            <a href="VIEWS/property_viewing.php">Property viewing</a>
                         </li>
                         <li>
-                            <a href="#">Newspaper</a>
+                            <a href="VIEWS/newspaper.php">Newspaper</a>
                         </li>
                     </ul>
                     <ul class="navigation-menu-user mt-2">
