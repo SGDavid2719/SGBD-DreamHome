@@ -30,7 +30,7 @@
                     <label for="eaddress">Login</label><br>
                     <hr class="mb-5"/>
                 </div>
-                <form action="../PHP/login_action.php" method="post">
+                <form action="../login_action.php" method="post">
                     <div class="mb-2">
                         <label for="eaddress">Email Address:</label><br>
                         <input type="text" id="eaddress" name="eaddress" value=""><br>
@@ -51,8 +51,10 @@
             </div>
         </div>
     </section>
-    <?php
-        include_once('../ELEMENTS/footer.php');
-    ?>
+    <footer>
+        <div class="footer">
+            &copy; 2021 David Santomé & Raixa Madueño
+        </div>
+    </footer>
 </body>
 </html>

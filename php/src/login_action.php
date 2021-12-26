@@ -1,6 +1,13 @@
 <?php
 
-    session_start();
+    // Manager      :   susan.b@dreamhome.com   |   DH-sb!2021
+    // Supervisor   :   david.f@dreamhome.com   |   DH-df!2021
+    // Assistant    :   ann.b@dreamhome.com     |   DH-ab!2021
+    // Client       :   astewart@hotmail.com    |   123
+
+    if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
     include_once('utilities.php');
 
@@ -9,27 +16,32 @@
         $user_address=$_POST['eaddress'];
         $user_password=$_POST['password'];
     
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "credentials";
+        // Connection arguments
+        $host        = "host = postgresdb";
+        $port        = "port = 5432";
+        $dbname      = "dbname = POSTGRES_DB";
+        $credentials = "user = POSTGRES_USER password=POSTGRES_PASSWORD";
+
         // Create connection
-        $connection = mysqli_connect($servername, $username, $password, $dbname);
+        $connection = pg_connect( "$host $port $dbname $credentials");
         // Check connection
-        if ($connection->connect_error) {
+        if(!$connection) {
             die("Connection failed: " . $connection->connect_error);
         }
+
+        $lTable = str_contains($user_address, '@dreamhome.com') ? 'staff' : 'client';
     
-        $query="SELECT*FROM Users where userAddress='$user_address' and pass='$user_password'";
-        $result=mysqli_query($connection, $query);
+        $query="SELECT*FROM $lTable where email='$user_address' and password='$user_password'";
+        $result = pg_query($connection, $query);
     
-        $data=mysqli_fetch_array($result);
-        $rows=mysqli_num_rows($result);
+        $data = pg_fetch_row($result);
+        $rows = pg_num_rows($result);
     
         if($rows) {
-            $name=$data['name'];
-            $_SESSION['name']=$name;
-            Redirect('../VIEWS/index.php', false);
+            $_SESSION['fname'] = $data[1];
+            $_SESSION['lname'] = $data[2];
+            $_SESSION['role'] = ($lTable == 'staff') ? $data[3] : 'Client';
+            Redirect('VIEWS/index.php', false);
         } else {
             ?>
             <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
@@ -37,9 +49,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php
-            include_once('../VIEWS/login.php');
+            include_once('VIEWS/login.php');
         }
-        mysqli_free_result($result);
-        mysqli_close($connection);
+        pg_free_result($result);
+        pg_close($connection);
     }
 ?>
