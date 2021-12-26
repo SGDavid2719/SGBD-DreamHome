@@ -5,7 +5,7 @@
         exit();
     }
 
-    function GetData($pTable)
+    function GetData($pTable, $pCriteria)
     {
         // Connection arguments
         $host        = "host = postgresdb";

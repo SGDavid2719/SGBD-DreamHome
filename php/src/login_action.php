@@ -23,16 +23,27 @@
         if(!$connection) {
             die("Connection failed: " . $connection->connect_error);
         }
+
+        if (str_contains($user_address, '@dreamhome.com')) {
+            $lTable = 'staff';
+        } else {
+            $lTable = 'client';
+        }
     
-        $query="SELECT*FROM credentials where email='$user_address' and password='$user_password'";
+        $query="SELECT*FROM $lTable where email='$user_address' and password='$user_password'";
         $result = pg_query($connection, $query);
     
         $data = pg_fetch_row($result);
         $rows = pg_num_rows($result);
     
         if($rows) {
-            $username=$data[1];
-            $_SESSION['username']=$username;
+            $_SESSION['fname'] = $data[1];
+            $_SESSION['lname'] = $data[2];
+            if($lTable == 'staff') {
+                $_SESSION['role'] = $data[3];
+            } else {
+                $_SESSION['role'] = 'client';
+            }
             Redirect('VIEWS/index.php', false);
         } else {
             ?>

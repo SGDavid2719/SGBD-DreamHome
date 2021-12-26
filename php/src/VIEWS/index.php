@@ -7,6 +7,8 @@
 <body>
     <?php
         include_once('../ELEMENTS/header.php');
+        include_once('../utilities.php');
+        //GetData();
     ?>
     <section>
         <div class="container mt-5">
@@ -16,7 +18,7 @@
                     
                 </div>  
                 <div class="row mt-2">
-                    <h1>Welcome, <?=$_SESSION['username']?></h1>
+                    <h1>Welcome, <?=$_SESSION['fname']?> <?=$_SESSION['lname']?></h1>
                 </div>                
             </header>
         </div>
