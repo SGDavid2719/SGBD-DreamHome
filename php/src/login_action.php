@@ -19,8 +19,8 @@
         // Connection arguments
         $host        = "host = postgresdb";
         $port        = "port = 5432";
-        $dbname      = "dbname = POSTGRES_DB";
-        $credentials = "user = POSTGRES_USER password=POSTGRES_PASSWORD";
+        $dbname      = "dbname = DREAMHOME_DB";
+        $credentials = "user=DREAMHOME_USER password=DREAMHOME_PASSWORD";
 
         // Create connection
         $connection = pg_connect( "$host $port $dbname $credentials");
