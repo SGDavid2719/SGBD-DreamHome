@@ -1,5 +1,10 @@
 <?php
 
+    // Manager      :   susan.b@dreamhome.com   |   DH-sb!2021
+    // Supervisor   :   david.f@dreamhome.com   |   DH-df!2021
+    // Assistant    :   ann.b@dreamhome.com     |   DH-ab!2021
+    // Client       :   astewart@hotmail.com    |   123
+
     if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
         session_start();
     }
@@ -24,11 +29,7 @@
             die("Connection failed: " . $connection->connect_error);
         }
 
-        if (str_contains($user_address, '@dreamhome.com')) {
-            $lTable = 'staff';
-        } else {
-            $lTable = 'client';
-        }
+        $lTable = str_contains($user_address, '@dreamhome.com') ? 'staff' : 'client';
     
         $query="SELECT*FROM $lTable where email='$user_address' and password='$user_password'";
         $result = pg_query($connection, $query);
@@ -39,11 +40,7 @@
         if($rows) {
             $_SESSION['fname'] = $data[1];
             $_SESSION['lname'] = $data[2];
-            if($lTable == 'staff') {
-                $_SESSION['role'] = $data[3];
-            } else {
-                $_SESSION['role'] = 'client';
-            }
+            $_SESSION['role'] = ($lTable == 'staff') ? $data[3] : 'Client';
             Redirect('VIEWS/index.php', false);
         } else {
             ?>

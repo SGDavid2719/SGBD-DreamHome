@@ -20,7 +20,7 @@
             die("Connection failed: " . $connection->connect_error);
         }
 
-        $query="SELECT*FROM $pTable";
+        $query="SELECT*FROM $pTable" . $pCriteria;
         $result = pg_query($connection, $query);
     
         $data = pg_fetch_row($result);
