@@ -33,7 +33,7 @@
                     </ul>
                     <ul class="navigation-menu-user mt-2">
                         <li>
-                            <a href="../PHP/logout_action.php">   
+                            <a href="../logout_action.php">   
                                 <i class="far fa-user"></i>
                                 Logout
                             </a>

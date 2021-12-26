@@ -9,27 +9,29 @@
         $user_address=$_POST['eaddress'];
         $user_password=$_POST['password'];
     
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "credentials";
+        // Connection arguments
+        $host        = "host = postgresdb";
+        $port        = "port = 5432";
+        $dbname      = "dbname = POSTGRES_DB";
+        $credentials = "user = POSTGRES_USER password=POSTGRES_PASSWORD";
+
         // Create connection
-        $connection = mysqli_connect($servername, $username, $password, $dbname);
+        $connection = pg_connect( "$host $port $dbname $credentials");
         // Check connection
-        if ($connection->connect_error) {
+        if(!$connection) {
             die("Connection failed: " . $connection->connect_error);
         }
     
-        $query="SELECT*FROM Users where userAddress='$user_address' and pass='$user_password'";
-        $result=mysqli_query($connection, $query);
+        $query="SELECT*FROM credentials where email='$user_address' and password='$user_password'";
+        $result = pg_query($connection, $query);
     
-        $data=mysqli_fetch_array($result);
-        $rows=mysqli_num_rows($result);
+        $data = pg_fetch_row($result);
+        $rows = pg_num_rows($result);
     
         if($rows) {
-            $name=$data['name'];
-            $_SESSION['name']=$name;
-            Redirect('../VIEWS/index.php', false);
+            $username=$data[1];
+            $_SESSION['username']=$username;
+            Redirect('VIEWS/index.php', false);
         } else {
             ?>
             <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
@@ -37,9 +39,9 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php
-            include_once('../VIEWS/login.php');
+            include_once('VIEWS/login.php');
         }
-        mysqli_free_result($result);
-        mysqli_close($connection);
+        pg_free_result($result);
+        pg_close($connection);
     }
 ?>

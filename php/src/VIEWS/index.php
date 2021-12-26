@@ -16,7 +16,7 @@
                     
                 </div>  
                 <div class="row mt-2">
-                    <h1>Welcome, <?=$_SESSION['name']?></h1>
+                    <h1>Welcome, <?=$_SESSION['username']?></h1>
                 </div>                
             </header>
         </div>
