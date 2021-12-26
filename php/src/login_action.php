@@ -3,7 +3,7 @@
     // Manager      :   susan.b@dreamhome.com   |   DH-sb!2021
     // Supervisor   :   david.f@dreamhome.com   |   DH-df!2021
     // Assistant    :   ann.b@dreamhome.com     |   DH-ab!2021
-    // Client       :   astewart@hotmail.com    |   123
+    // Client       :   astewart@hotmail.com    |   456
 
     if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
         session_start();
@@ -34,14 +34,15 @@
         $query="SELECT*FROM $lTable where email='$user_address' and password='$user_password'";
         $result = pg_query($connection, $query);
     
-        $data = pg_fetch_row($result);
+        $data = pg_fetch_array($result);
         $rows = pg_num_rows($result);
     
         if($rows) {
-            $_SESSION['fname'] = $data[1];
-            $_SESSION['lname'] = $data[2];
-            $_SESSION['role'] = ($lTable == 'staff') ? $data[3] : 'Client';
-            Redirect('VIEWS/index.php', false);
+            $_SESSION['fname'] = $data['fname'];
+            $_SESSION['lname'] = $data['lname'];
+            $_SESSION['role'] = ($lTable == 'staff') ? $data['position'] : 'Client';
+            $_SESSION['email'] = $data['email'];
+            Redirect('VIEWS/INDEX/index.php', false);
         } else {
             ?>
             <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">

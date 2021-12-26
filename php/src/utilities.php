@@ -23,7 +23,7 @@
         $query="SELECT*FROM $pTable" . $pCriteria;
         $result = pg_query($connection, $query);
     
-        $data = pg_fetch_row($result);
+        $data = pg_fetch_array($result);
         $rows = pg_num_rows($result);
     
         if($rows) {
