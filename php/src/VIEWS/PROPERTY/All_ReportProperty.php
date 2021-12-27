@@ -2,8 +2,7 @@
     include_once('../../ELEMENTS/head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/CLIENT/AllQueryClient.css" />
-<script src="../../JS/Utilities.js"></script>
+<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
 </head>
 <body>
     <?php
@@ -25,8 +24,8 @@
                             <td><?php echo implode('</td><td>', $lRow); ?></td>
                             <td>
                                 <form action="../../utilities.php" method="post">
-                                    <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?php echo $lRow['propertyno'] ?>><br>
-                                    <input type="submit" value="More info" class="btn btn-secondary" name="queryPropertyForm">
+                                    <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?php echo $lRow['propertyno'] ?>>
+                                    <input type="submit" value="More info" class="btn btn-primary" name="queryPropertyForm">
                                 </form>
                             </td>
                         </tr>

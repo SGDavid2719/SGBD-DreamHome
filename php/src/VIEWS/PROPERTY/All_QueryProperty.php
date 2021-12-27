@@ -2,7 +2,7 @@
     include_once('../../ELEMENTS/head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/CLIENT/AllQueryClient.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
 </head>
 <body>
     <?php

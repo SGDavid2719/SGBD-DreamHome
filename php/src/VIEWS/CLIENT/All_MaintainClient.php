@@ -63,9 +63,18 @@
                     </div>
                 </div>
                 <div class="row mt-4">
-                    <div class="col-11"></div>
+                    <div class="col-10"></div>
                     <div class="col-1 d-flex justify-content-end">
-                        <input type="submit" value="Submit" class="btn btn-secondary" name="submitClientForm">
+                        <button id='ReturnBtn' type="button" class="btn btn-danger">Cancel</button>
+                        <script>
+                            var lBtn = document.getElementById('ReturnBtn');
+                            lBtn.addEventListener('click', function() {
+                                document.location.href = 'All_QueryClient.php';
+                            });
+                        </script>
+                    </div>
+                    <div class="col-1 d-flex justify-content-end">
+                        <input type="submit" value="Submit" class="btn btn-primary" name="submitClientForm">
                     </div>
                 </div>
             </form>

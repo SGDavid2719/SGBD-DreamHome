@@ -21,11 +21,11 @@
                 </div>
                 <div class="col-3"></div>
                 <div class="col-1 d-flex justify-content-end">
-                    <a href="All_MaintainClient.php" class="btn btn-secondary button">Edit</a>
+                    <a href="All_MaintainClient.php" class="btn btn-primary button">Edit</a>
                 </div>
             </div>
         </header>
-        <div class="container mt-5">
+        <div class="container">
             <div class="row containerRow m-1">
                 <div class="col infoField">
                     <h3>Telephone number:</h3>
