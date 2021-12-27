@@ -1,7 +1,7 @@
 <?php
     $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
 
-    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/allQueryClient.php" : "client.php";
+    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_QueryClient.php" : "client.php";
 ?>
 
 <header>

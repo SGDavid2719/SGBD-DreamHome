@@ -1,37 +1,73 @@
 <?php
+
+    if(session_id() == '' || !isset($_SESSION) || session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
     function Redirect($url, $permanent = false)
     {
         header('Location: ' . $url, true, $permanent ? 301 : 302);
         exit();
     }
 
-    function GetData($pTable, $pCriteria)
-    {
+    function ConnectToDatabase() {
         // Connection arguments
-        $host        = "host = postgresdb";
-        $port        = "port = 5432";
-        $dbname      = "dbname = DREAMHOME_DB";
-        $credentials = "user=DREAMHOME_USER password=DREAMHOME_PASSWORD";
+        $lHost        = "host = postgresdb";
+        $lPort        = "port = 5432";
+        $lDBName      = "dbname = DREAMHOME_DB";
+        $lCredentials = "user=DREAMHOME_USER password=DREAMHOME_PASSWORD";
 
         // Create connection
-        $connection = pg_connect( "$host $port $dbname $credentials");
+        $lConnection = pg_connect( "$lHost $lPort $lDBName $lCredentials");
         // Check connection
-        if(!$connection) {
-            die("Connection failed: " . $connection->connect_error);
+        if(!$lConnection) {
+            die("Connection failed: " . $lConnection->connect_error);
         }
 
-        $query="SELECT*FROM $pTable" . $pCriteria;
-        $result = pg_query($connection, $query);
+        return $lConnection;
+    }
+
+    function GetData($pTable, $pCriteria)
+    {
+        $lConnection = ConnectToDatabase();
+
+        $lQuery="SELECT*FROM $pTable" . $pCriteria;
+        $lResult = pg_query($lConnection, $lQuery);
     
-        $data = pg_fetch_array($result);
-        $rows = pg_num_rows($result);
+        $lData = pg_fetch_array($lResult);
+        $lRows = pg_num_rows($lResult);
     
-        if($rows) {
-            return $data;
+        if($lRows) {
+            return $lData;
         } else {
             // Error
         }
-        pg_free_result($result);
-        pg_close($connection);
+        pg_free_result($lResult);
+        pg_close($lConnection);
     }
+
+    function EditClientData() 
+    {
+        unset($_POST['submitClientForm']);
+        
+        $lConnection = ConnectToDatabase();
+
+        // Client identifier
+        $clientID = $_SESSION['clientno'];
+        // New Data
+        $lNewData = array('telno' => $_POST['telno'], 'preftype' => $_POST['preftype'], 'maxrent' => $_POST['maxrent'], 'email' => $_POST['email'], 'password' => $_POST['password']);
+        // Condition
+        $lCondition = array('clientno' => $_SESSION['clientno']);
+        // Update
+        $lResult = pg_update($lConnection, 'client', $_POST, $lCondition);
+        if ($lResult) {
+            unset($_SESSION['clientno']);
+            Redirect('VIEWS/CLIENT/All_QueryClient.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }        
+    }
+
+    if(isset($_POST['submitClientForm'])) EditClientData();
+    
 ?>
