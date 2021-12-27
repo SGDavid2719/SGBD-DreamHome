@@ -22,7 +22,7 @@
                         <a href="staff.php">Staff</a>
                     </li>
                     <li id="propertyForRentLink">
-                        <a href="property_for_rent.php">Property for rent</a>
+                        <a href="../PROPERTY/All_ReportProperty.php">Property for rent</a>
                     </li>
                     <li id="ownerLink">
                         <a href="owner.php">Owner</a>

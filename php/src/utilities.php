@@ -34,11 +34,36 @@
         $lQuery="SELECT*FROM $pTable" . $pCriteria;
         $lResult = pg_query($lConnection, $lQuery);
     
-        $lData = pg_fetch_array($lResult);
+        $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
         $lRows = pg_num_rows($lResult);
     
         if($lRows) {
             return $lData;
+        } else {
+            // Error
+        }
+        pg_free_result($lResult);
+        pg_close($lConnection);
+    }
+
+    function GetAllData($pTable)
+    {
+        $lConnection = ConnectToDatabase();
+
+        $lQuery="SELECT*FROM $pTable";
+        $lResult = pg_query($lConnection, $lQuery);
+    
+        $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
+        $lRows = pg_num_rows($lResult);
+        $lDataArray = array();
+    
+        if($lRows) {
+            while($lData != null) {
+                // Success
+                array_push($lDataArray, $lData);
+                $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
+            }
+            return $lDataArray;
         } else {
             // Error
         }
