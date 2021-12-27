@@ -3,25 +3,32 @@
 ?>
 <!-- STYLES -->
 <link rel="stylesheet" type="text/css" href="../../CSS/CLIENT/AllQueryClient.css" />
+<script src="../../JS/Utilities.js"></script>
 </head>
 <body>
     <?php
         include_once('../../ELEMENTS/header.php');
         include_once('../../utilities.php');
-        $lDataArray = GetAllData('propertyforrent');
+        $lDataArray = GetAllData('propertyno, street, city, postcode, type, rooms, rent', 'propertyforrent');
     ?>
     <section>
         <div class="container mt-5">
-            <table>
-                <thead>
+            <table class="table table-striped">
+                <thead class="thead-dark">
                     <tr>
-                        <th><?php echo implode('</th><th>', array_keys(current($lDataArray))); ?></th>
+                        <th scope="col"><?php echo implode('</th><th scope="col">', array_keys(current($lDataArray))); ?></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($lDataArray as $row): array_map('htmlentities', $row); ?>
+                    <?php foreach ($lDataArray as $lRow): array_map('htmlentities', $lRow); ?>
                         <tr>
-                            <td><?php echo implode('</td><td>', $row); ?></td>
+                            <td><?php echo implode('</td><td>', $lRow); ?></td>
+                            <td>
+                                <form action="../../utilities.php" method="post">
+                                    <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?php echo $lRow['propertyno'] ?>><br>
+                                    <input type="submit" value="More info" class="btn btn-secondary" name="queryPropertyForm">
+                                </form>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

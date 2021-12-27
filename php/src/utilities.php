@@ -46,11 +46,11 @@
         pg_close($lConnection);
     }
 
-    function GetAllData($pTable)
+    function GetAllData($pColumns, $pTable)
     {
         $lConnection = ConnectToDatabase();
 
-        $lQuery="SELECT*FROM $pTable";
+        $lQuery="SELECT " . $pColumns . " FROM $pTable";
         $lResult = pg_query($lConnection, $lQuery);
     
         $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
@@ -94,5 +94,9 @@
     }
 
     if(isset($_POST['submitClientForm'])) EditClientData();
+    if(isset($_POST['queryPropertyForm'])) {
+        $_SESSION['propertyno'] = $_POST['propertyno'];
+        Redirect('VIEWS/PROPERTY/All_QueryProperty.php', false);
+    }
     
 ?>
