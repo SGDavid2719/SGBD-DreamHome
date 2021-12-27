@@ -2,7 +2,7 @@
     include_once('../../ELEMENTS/head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/CLIENT/AllQueryClient.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/CLIENT/Query.css" />
 </head>
 <body>
     <?php
@@ -14,18 +14,18 @@
         $lData = GetData($lTable, $lCriteria);
     ?>
     <section>
-        <header>
-            <div class="row m-5 p-2 headerRow">
-                <div class="col-8">
-                    <h1>Client name: <?php echo $lData['fname'] . " " . $lData['lname'] ?></h1>
-                </div>
-                <div class="col-3"></div>
-                <div class="col-1 d-flex justify-content-end">
-                    <a href="All_MaintainClient.php" class="btn btn-primary button">Edit</a>
-                </div>
-            </div>
-        </header>
         <div class="container">
+            <header>
+                <div class="row m-5 p-2 headerRow">
+                    <div class="col-8">
+                        <h1>Client name: <?php echo $lData['fname'] . " " . $lData['lname'] ?></h1>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-1 d-flex justify-content-end">
+                        <a href="All_MaintainClient.php" class="btn btn-primary button">Edit</a>
+                    </div>
+                </div>
+            </header>
             <div class="row containerRow m-1">
                 <div class="col infoField">
                     <h3>Telephone number:</h3>

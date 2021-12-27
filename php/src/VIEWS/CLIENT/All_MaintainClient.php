@@ -2,7 +2,7 @@
     include_once('../../ELEMENTS/head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/branch.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/CLIENT/Query.css" />
 </head>
 <body>
 <?php
