@@ -42,7 +42,7 @@
             $_SESSION['lname'] = $data['lname'];
             $_SESSION['role'] = ($lTable == 'staff') ? $data['position'] : 'Client';
             $_SESSION['email'] = $data['email'];
-            Redirect('VIEWS/INDEX/index.php', false);
+            Redirect('VIEWS/INDEX/Index.php', false);
         } else {
             ?>
             <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">

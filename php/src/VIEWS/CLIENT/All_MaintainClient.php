@@ -74,7 +74,7 @@
                         </script>
                     </div>
                     <div class="col-1 d-flex justify-content-end">
-                        <input type="submit" value="Submit" class="btn btn-primary" name="submitClientForm">
+                        <input type="submit" value="Submit" class="btn btn-secondary" name="submitClientForm">
                     </div>
                 </div>
             </form>

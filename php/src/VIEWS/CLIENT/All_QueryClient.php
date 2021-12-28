@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-3"></div>
                     <div class="col-1 d-flex justify-content-end">
-                        <a href="All_MaintainClient.php" class="btn btn-primary button">Edit</a>
+                        <a href="All_MaintainClient.php" class="btn btn-secondary button">Edit</a>
                     </div>
                 </div>
             </header>
