@@ -14,6 +14,7 @@
     ?>
     <section>
         <div class="container mt-5">
+            <h1>Branch Number: <?=$_SESSION['branchno']?></h1>
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>

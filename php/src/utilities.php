@@ -27,11 +27,11 @@
         return $lConnection;
     }
 
-    function GetData($pTable, $pCriteria)
+    function GetData($pColumns, $pTable, $pCriteria)
     {
         $lConnection = ConnectToDatabase();
 
-        $lQuery="SELECT*FROM $pTable" . $pCriteria;
+        $lQuery="SELECT" . $pColumns . "FROM $pTable" . $pCriteria;
         $lResult = pg_query($lConnection, $lQuery);
     
         $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
@@ -90,20 +90,71 @@
         $lResult = pg_update($lConnection, 'client', $_POST, $lCondition);
         if ($lResult) {
             unset($_SESSION['clientno']);
+            unset($_POST);
             Redirect('VIEWS/CLIENT/All_QueryClient.php', false);
         } else {
             echo "User must have sent wrong inputs\n";
         }        
     }
 
+    function EditViewingData() 
+    {
+        unset($_POST['submitViewingForm']);
+        
+        $lConnection = ConnectToDatabase();
+
+        // Viewing record identifier
+        $lPropertyNumber = $_POST['propertyno'];
+        $lClientNumber = $_POST['clientno'];
+        $lViewdate = $_POST['viewdate'];
+        $lComment = $_POST['comment'];
+
+        // New Data
+        $lNewData = array('viewdate' => $_POST['viewdate'], 'comment' => $_POST['comment']);
+        // Condition
+        $lCondition = array('propertyno' => $_SESSION['propertyno'], 'clientno' => $_SESSION['clientno'], 'viewdate' => $_SESSION['viewdate'], 'comment' => $_SESSION['comment']);
+
+        // Update
+        
+        $lResult = pg_update($lConnection, 'viewing', $_POST, $lCondition);
+        if ($lResult) {
+            unset($_POST);
+            unset($_SESSION['clientno']);
+            unset($_SESSION['propertyno']);
+            unset($_SESSION['viewdate']);
+            unset($_SESSION['comment']);
+            Redirect('VIEWS/VIEWING/Branch_ReportViewing.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }     
+          
+    }
+
+    /* Edit record */
     if(isset($_POST['submitClientForm'])) EditClientData();
+    if(isset($_POST['submitViewingForm'])) EditViewingData();
+
+    /* View details */
     if(isset($_POST['allQueryPropertyForm'])) {
         $_SESSION['propertyno'] = $_POST['propertyno'];
+        unset($_POST['propertyno']);
         Redirect('VIEWS/PROPERTY/All_QueryProperty.php', false);
     }
     if(isset($_POST['branchQueryPropertyForm'])) {
         $_SESSION['propertyno'] = $_POST['propertyno'];
+        unset($_POST['propertyno']);
         Redirect('VIEWS/PROPERTY/Branch_QueryProperty.php', false);
+    }
+    if(isset($_POST['branchQueryPropertyViewingForm'])) {
+        $_SESSION['propertyno'] = $_POST['propertyno'];
+        $_SESSION['clientno'] = $_POST['clientno'];
+        $_SESSION['viewdate'] = $_POST['viewdate'];
+        $_SESSION['comment'] = $_POST['comment'];
+        unset($_POST['propertyno']);
+        unset($_POST['clientno']);
+        unset($_POST['viewdate']);
+        unset($_POST['comment']);
+        Redirect('VIEWS/VIEWING/Branch_QueryViewing.php', false);
     }
     
 ?>

@@ -23,7 +23,7 @@
         $credentials = "user=DREAMHOME_USER password=DREAMHOME_PASSWORD";
 
         // Create connection
-        $connection = pg_connect( "$host $port $dbname $credentials");
+        $connection = pg_connect("$host $port $dbname $credentials");
         // Check connection
         if(!$connection) {
             die("Connection failed: " . $connection->connect_error);

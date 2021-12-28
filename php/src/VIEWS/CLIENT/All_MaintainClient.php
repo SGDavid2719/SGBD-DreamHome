@@ -6,14 +6,14 @@
 </head>
 <body>
 <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../utilities.php');
-        $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
-        $lEmail = $_SESSION['email'];
-        $lCriteria = " where email='$lEmail'";
-        $lData = GetData($lTable, $lCriteria);
-        $_SESSION['clientno'] = $lData['clientno'];
-    ?>
+    include_once('../../ELEMENTS/header.php');
+    include_once('../../utilities.php');
+    $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
+    $lEmail = $_SESSION['email'];
+    $lCriteria = " where email='$lEmail'";
+    $lData = GetData('*', $lTable, $lCriteria);
+    $_SESSION['clientno'] = $lData['clientno'];
+?>
     <section>
         <div class="container mt-5">
             <form action="../../utilities.php" method="post">
@@ -33,7 +33,7 @@
                     <h4>Contact info</h4>
                     <hr>
                     <div class="col-6">
-                        <label for="fname">Telephone number:</label><br>
+                        <label for="telno">Telephone number:</label><br>
                         <input type="text" id="telno" name="telno" value=<?php echo $lData['telno'] ?>><br>
                     </div>
                     <div class="col-6"></div>
@@ -42,11 +42,11 @@
                     <h4>Preferences info</h4>
                     <hr>
                     <div class="col-6">
-                        <label for="lname">Pref Type:</label><br>
+                        <label for="preftype">Pref Type:</label><br>
                         <input type="text" id="preftype" name="preftype" value=<?php echo $lData['preftype'] ?>><br>
                     </div>
                     <div class="col-6">
-                        <label for="fname">Maxrent</label><br>
+                        <label for="maxrent">Max Rent</label><br>
                         <input type="text" id="maxrent" name="maxrent" value=<?php echo $lData['maxrent'] ?>><br>
                     </div>
                 </div>
@@ -54,11 +54,11 @@
                     <h4>Account info</h4>
                     <hr>
                     <div class="col-6">
-                        <label for="lname">Email:</label><br>
+                        <label for="email">Email:</label><br>
                         <input type="text" id="email" name="email" value=<?php echo $lData['email'] ?>><br>
                     </div>
                     <div class="col-6">
-                        <label for="fname">Password:</label><br>
+                        <label for="password">Password:</label><br>
                         <input type="password" id="password" name="password" value=<?php echo $lData['password'] ?>><br>
                     </div>
                 </div>

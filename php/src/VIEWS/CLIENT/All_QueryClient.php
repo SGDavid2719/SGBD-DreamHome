@@ -11,7 +11,7 @@
         $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
         $lEmail = $_SESSION['email'];
         $lCriteria = " where email='$lEmail'";
-        $lData = GetData($lTable, $lCriteria);
+        $lData = GetData('*', $lTable, $lCriteria);
     ?>
     <section>
         <div class="container">

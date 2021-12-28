@@ -5,6 +5,8 @@
     $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_QueryClient.php" : "client.php";
     /* Property section */
     $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ReportProperty.php" : "../PROPERTY/Branch_ReportProperty.php";
+    /* Viewing section */
+    $lPropertyViewingLink = "../VIEWING/Branch_ReportViewing.php";
 ?>
 
 <header>
@@ -34,7 +36,7 @@
                         <a href=<?=$lClientLink?>>Client</a>
                     </li>
                     <li id="propertyViewingLink">
-                        <a href="property_viewing.php">Property viewing</a>
+                        <a href=<?=$lPropertyViewingLink?>>Property viewing</a>
                     </li>
                     <li id="newspaperLink">
                         <a href="newspaper.php">Newspaper</a>
