@@ -8,7 +8,7 @@
     <?php
         include_once('../../ELEMENTS/header.php');
         include_once('../../utilities.php');
-        $lDataArray = GetAllData('propertyno, street, city, postcode, type, rooms, rent', 'propertyforrent');
+        $lDataArray = GetAllData('propertyno, street, city, postcode, type, rooms, rent', 'propertyforrent', '');
     ?>
     <section>
         <div class="container mt-5">
@@ -25,7 +25,7 @@
                             <td>
                                 <form action="../../utilities.php" method="post">
                                     <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?php echo $lRow['propertyno'] ?>>
-                                    <input type="submit" value="More info" class="btn btn-secondary" name="queryPropertyForm">
+                                    <input type="submit" value="More info" class="btn btn-secondary" name="allQueryPropertyForm">
                                 </form>
                             </td>
                         </tr>

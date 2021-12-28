@@ -41,6 +41,7 @@
             $_SESSION['fname'] = $data['fname'];
             $_SESSION['lname'] = $data['lname'];
             $_SESSION['role'] = ($lTable == 'staff') ? $data['position'] : 'Client';
+            if($lTable == 'staff') $_SESSION['branchno'] = $data['branchno'];
             $_SESSION['email'] = $data['email'];
             Redirect('VIEWS/INDEX/Index.php', false);
         } else {

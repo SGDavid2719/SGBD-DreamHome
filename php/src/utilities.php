@@ -46,29 +46,32 @@
         pg_close($lConnection);
     }
 
-    function GetAllData($pColumns, $pTable)
+    function GetAllData($pColumns, $pTable, $pCriteria)
     {
         $lConnection = ConnectToDatabase();
 
-        $lQuery="SELECT " . $pColumns . " FROM $pTable";
+        $lQuery="SELECT " . $pColumns . " FROM $pTable " . $pCriteria;
         $lResult = pg_query($lConnection, $lQuery);
-    
-        $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
-        $lRows = pg_num_rows($lResult);
-        $lDataArray = array();
-    
-        if($lRows) {
-            while($lData != null) {
-                // Success
-                array_push($lDataArray, $lData);
-                $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
+
+        if($lResult) {
+            $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
+            $lRows = pg_num_rows($lResult);
+            $lDataArray = array();
+        
+            if($lRows) {
+                while($lData != null) {
+                    // Success
+                    array_push($lDataArray, $lData);
+                    $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
+                }
+                return $lDataArray;
+            } else {
+                // Error
             }
-            return $lDataArray;
-        } else {
-            // Error
+            pg_free_result($lResult);
         }
-        pg_free_result($lResult);
         pg_close($lConnection);
+        return null;
     }
 
     function EditClientData() 
@@ -94,9 +97,13 @@
     }
 
     if(isset($_POST['submitClientForm'])) EditClientData();
-    if(isset($_POST['queryPropertyForm'])) {
+    if(isset($_POST['allQueryPropertyForm'])) {
         $_SESSION['propertyno'] = $_POST['propertyno'];
         Redirect('VIEWS/PROPERTY/All_QueryProperty.php', false);
+    }
+    if(isset($_POST['branchQueryPropertyForm'])) {
+        $_SESSION['propertyno'] = $_POST['propertyno'];
+        Redirect('VIEWS/PROPERTY/Branch_QueryProperty.php', false);
     }
     
 ?>

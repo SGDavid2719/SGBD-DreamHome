@@ -1,7 +1,10 @@
 <?php
     $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
 
+    /* Client section */
     $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_QueryClient.php" : "client.php";
+    /* Property section */
+    $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ReportProperty.php" : "../PROPERTY/Branch_ReportProperty.php";
 ?>
 
 <header>
@@ -22,7 +25,7 @@
                         <a href="staff.php">Staff</a>
                     </li>
                     <li id="propertyForRentLink">
-                        <a href="../PROPERTY/All_ReportProperty.php">Property for rent</a>
+                        <a href=<?=$lPropertyLink?>>Property for rent</a>
                     </li>
                     <li id="ownerLink">
                         <a href="owner.php">Owner</a>
