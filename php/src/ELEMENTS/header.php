@@ -1,5 +1,7 @@
 <?php
     $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
+
+    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_QueryClient.php" : "client.php";
 ?>
 
 <header>
@@ -10,7 +12,7 @@
         <div class="m-2 navigation-elements">
             <nav id="navigation-main" class="navigation-main">
                 <!-- Brand -->
-                <a href="index.php"><img src="../IMG/dream-home.png" alt="DreamHome Logo" class="iconImg invert"></a>
+                <a href="../INDEX/Index.php"><img src="../../IMG/dream-home.png" alt="DreamHome Logo" class="iconImg invert"></a>
                 <!-- Left Nav -->
                 <ul class="navigation-menu mt-2">
                     <li id="branchLink">
@@ -20,13 +22,13 @@
                         <a href="staff.php">Staff</a>
                     </li>
                     <li id="propertyForRentLink">
-                        <a href="property_for_rent.php">Property for rent</a>
+                        <a href="../PROPERTY/All_ReportProperty.php">Property for rent</a>
                     </li>
                     <li id="ownerLink">
                         <a href="owner.php">Owner</a>
                     </li>
                     <li id="clientLink">
-                        <a href="client.php">Client</a>
+                        <a href=<?=$lClientLink?>>Client</a>
                     </li>
                     <li id="propertyViewingLink">
                         <a href="property_viewing.php">Property viewing</a>
@@ -37,7 +39,7 @@
                 </ul>
                 <ul class="navigation-menu-user mt-2">
                     <li>
-                        <a href="../logout_action.php">   
+                        <a href="../../logout_action.php">   
                             <i class="far fa-user"></i>
                             Logout
                         </a>
