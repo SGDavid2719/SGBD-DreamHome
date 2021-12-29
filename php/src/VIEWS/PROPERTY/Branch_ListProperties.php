@@ -9,8 +9,10 @@
         include_once('../../ELEMENTS/header.php');
         include_once('../../PHP/Utilities.php');
         $lBranchNumber = $_SESSION['branchno'];
-        $lCriteria = "WHERE branchno='$lBranchNumber'";
-        $lDataArray = GetAllData('branchno, propertyno, street, city, postcode, type, rooms, rent', 'propertyforrent', $lCriteria);
+        $lColumns = "p.propertyno, p.type, p.rooms, p.rent, a.city, a.postcode, a.street";
+        $lTables = "staff s, propertyforrent p, address a";
+        $lCriteria = "WHERE s.staffno = p.staffno AND p.addressno = a.addressno AND s.branchno='$lBranchNumber'";
+        $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
     ?>
     <section>
         <div class="container mt-5">

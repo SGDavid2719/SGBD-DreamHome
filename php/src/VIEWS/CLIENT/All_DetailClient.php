@@ -13,9 +13,6 @@
         $lRoleNumber = $_SESSION['roleno'];
         $lCriteria = ($_SESSION['role'] == 'Client') ? "WHERE clientno='$lRoleNumber'" : "WHERE staffno='$lRoleNumber'";
         $lData = GetData($lColumns, $lTable, $lCriteria);
-        print_r($_SESSION);
-        print_r($_GET);
-        print_r($_POST);
     ?>
     <section>
         <div class="container">

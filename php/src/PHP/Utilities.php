@@ -159,7 +159,7 @@
         $lResult = pg_insert($lConnection, 'propertyforrent', $_POST);
         if ($lResult) {
             unset($_POST);
-            Redirect('../VIEWS/PROPERTY/Branch_ShowProperties.php', false);
+            Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
         } else {
             echo "User must have sent wrong inputs\n";
         }  

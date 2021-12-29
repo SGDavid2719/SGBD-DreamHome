@@ -12,9 +12,6 @@
         $lTables = "propertyforrent p, address a";
         $lCriteria = "WHERE p.addressno = a.addressno";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
-        print_r($_SESSION);
-        print_r($_GET);
-        print_r($_POST);
     ?>
     <section>
         <div class="container mt-5">
