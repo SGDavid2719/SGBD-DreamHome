@@ -13,6 +13,11 @@
         $lTable = "staff";
         $lCriteria = "RIGHT JOIN propertyforrent ON staff.branchno = propertyforrent.branchno RIGHT JOIN viewing ON propertyforrent.propertyno = viewing.propertyno WHERE staff.branchno = '$lBranchNumber'";
         $lDataArray = GetAllData($lColumns, $lTable, $lCriteria);
+        /* Unset variables */
+        if (isset($_SESSION['propertyno'])) unset($_SESSION['propertyno']);
+        if (isset($_SESSION['clientno'])) unset($_SESSION['clientno']);
+        if (isset($_SESSION['viewdate'])) unset($_SESSION['viewdate']);
+        if (isset($_SESSION['comment'])) unset($_SESSION['comment']);
     ?>
     <section>
         <div class="container mt-5">

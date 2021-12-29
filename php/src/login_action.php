@@ -42,7 +42,7 @@
             $_SESSION['lname'] = $data['lname'];
             $_SESSION['role'] = ($lTable == 'staff') ? $data['position'] : 'Client';
             if($lTable == 'staff') $_SESSION['branchno'] = $data['branchno'];
-            $_SESSION['email'] = $data['email'];
+            if($lTable == 'staff') $_SESSION['staffno'] = $data['staffno'];
             Redirect('VIEWS/INDEX/Index.php', false);
         } else {
             ?>

@@ -4,7 +4,7 @@
     /* Client section */
     $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_QueryClient.php" : "client.php";
     /* Property section */
-    $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ReportProperty.php" : "../PROPERTY/Branch_ReportProperty.php";
+    $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ReportProperty.php" : "../PROPERTY/Branch_ShowProperties.php";
     /* Viewing section */
     $lPropertyViewingLink = "../VIEWING/Branch_ReportViewing.php";
     /* Viewing section */

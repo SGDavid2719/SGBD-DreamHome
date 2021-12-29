@@ -127,12 +127,29 @@
         } else {
             echo "User must have sent wrong inputs\n";
         }     
-          
+    }
+
+    function InsertPropertyData() 
+    {
+        unset($_POST['submitAddProperty']);
+
+        $lConnection = ConnectToDatabase();
+
+        $lResult = pg_insert($lConnection, 'propertyforrent', $_POST);
+        if ($lResult) {
+            unset($_POST);
+            Redirect('VIEWS/PROPERTY/Branch_ShowProperties.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }  
     }
 
     /* Edit record */
     if(isset($_POST['submitClientForm'])) EditClientData();
     if(isset($_POST['submitViewingForm'])) EditViewingData();
+
+    /* Add record */
+    if(isset($_POST['submitAddProperty'])) InsertPropertyData();
 
     /* View details */
     if(isset($_POST['allQueryPropertyForm'])) {
@@ -155,6 +172,10 @@
         unset($_POST['viewdate']);
         unset($_POST['comment']);
         Redirect('VIEWS/VIEWING/Branch_QueryViewing.php', false);
+    }
+
+    if(isset($_POST['branchAddProperty'])) {
+        Redirect('VIEWS/PROPERTY/Branch_AddProperty.php', false);
     }
     
 ?>

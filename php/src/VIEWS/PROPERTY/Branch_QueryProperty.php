@@ -66,7 +66,7 @@
                             var lBtn = document.getElementById('ReturnBtn');
                             lBtn.addEventListener('click', function() {
                                 <?php unset($_GET['propertyno']);?>
-                                document.location.href = 'Branch_ReportProperty.php';
+                                document.location.href = 'Branch_ShowProperties.php';
                             });
                         </script>
                     </div>

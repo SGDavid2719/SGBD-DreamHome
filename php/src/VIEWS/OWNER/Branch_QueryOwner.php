@@ -16,21 +16,25 @@
     ?>
     <section>
         <div class="container mt-5">
-            <h1>Branch Number: <?=$_SESSION['branchno']?></h1>
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col"><?php echo implode('</th><th scope="col">', array_keys(current($lDataArray))); ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($lDataArray as $lRow): array_map('htmlentities', $lRow); ?>
+            <div class="row">
+                <h1>Branch Number: <?=$_SESSION['branchno']?></h1>
+            </div>
+            <div class="row">
+                <table class="table table-striped">
+                    <thead class="thead-dark">
                         <tr>
-                            <td><?php echo implode('</td><td>', $lRow); ?></td>
+                            <th scope="col"><?php echo implode('</th><th scope="col">', array_keys(current($lDataArray))); ?></th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($lDataArray as $lRow): array_map('htmlentities', $lRow); ?>
+                            <tr>
+                                <td><?php echo implode('</td><td>', $lRow); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </section>
     <?php
