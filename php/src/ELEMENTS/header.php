@@ -2,9 +2,9 @@
     $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
 
     /* Client section */
-    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_QueryClient.php" : "client.php";
+    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_DetailClient.php" : "client.php";
     /* Property section */
-    $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ReportProperty.php" : "../PROPERTY/Branch_ShowProperties.php";
+    $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ListProperties.php" : "../PROPERTY/Branch_ShowProperties.php";
     /* Viewing section */
     $lPropertyViewingLink = "../VIEWING/Branch_ReportViewing.php";
     /* Viewing section */
@@ -46,7 +46,7 @@
                 </ul>
                 <ul class="navigation-menu-user mt-2">
                     <li>
-                        <a href="../../logout_action.php">   
+                        <a href="../../PHP/Logout_Action.php">   
                             <i class="far fa-user"></i>
                             Logout
                         </a>

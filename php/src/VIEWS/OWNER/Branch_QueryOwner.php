@@ -7,7 +7,7 @@
 <body>
     <?php
         include_once('../../ELEMENTS/header.php');
-        include_once('../../utilities.php');
+        include_once('../../PHP/Utilities.php');
         $lBranchNumber = $_SESSION['branchno'];
         $lColumns = "DISTINCT privateowner.fname, privateowner.lname, privateowner.address, privateowner.telno, privateowner.email";
         $lTable = "staff";

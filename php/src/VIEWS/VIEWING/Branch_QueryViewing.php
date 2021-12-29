@@ -7,7 +7,7 @@
 <body>
     <?php
         include_once('../../ELEMENTS/header.php');
-        include_once('../../utilities.php');
+        include_once('../../PHP/Utilities.php');
         $lPropertyNumber = $_SESSION['propertyno'];
         $lClientNumber = $_SESSION['clientno'];
         $lViewdate = $_SESSION['viewdate'];
@@ -16,7 +16,7 @@
     <section>
         <div class="container mt-5">
             <h1>Branch Number: <?=$_SESSION['branchno']?></h1>
-            <form action="../../utilities.php" method="post">
+            <form action="../../PHP/Utilities.php" method="post">
                 <div class="row mt-4">
                     <h4>Intern info</h4>
                     <hr>
