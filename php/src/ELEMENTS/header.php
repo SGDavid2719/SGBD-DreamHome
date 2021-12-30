@@ -6,9 +6,11 @@
     /* Property section */
     $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ListProperties.php" : "../PROPERTY/Branch_ListProperties.php";
     /* Viewing section */
-    $lPropertyViewingLink = "../VIEWING/Branch_ReportViewing.php";
-    /* Viewing section */
+    $lPropertyViewingLink = "../VIEWING/Branch_ListViewings.php";
+    /* Owner section */
     $lOwnerViewingLink = "../OWNER/Branch_ListOwners.php";
+    /* Lease section */
+    $lLeaseLink = "../LEASE/Branch_ListLeases.php";
 ?>
 
 <header>
@@ -39,6 +41,9 @@
                     </li>
                     <li id="propertyViewingLink">
                         <a href=<?=$lPropertyViewingLink?>>Property viewing</a>
+                    </li>
+                    <li id="leaseLink">
+                        <a href=<?=$lLeaseLink?>>Lease</a>
                     </li>
                     <li id="newspaperLink">
                         <a href="newspaper.php">Newspaper</a>
@@ -73,5 +78,6 @@
         echo '<style>#ownerLink { display:none;}</style>';
         echo '<style>#propertyViewingLink { display:none;}</style>';
         echo '<style>#newspaperLink { display:none;}</style>';
+        echo '<style>#leaseLink { display:none;}</style>';
     }
 ?>

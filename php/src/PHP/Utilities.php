@@ -149,37 +149,35 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+    function ShowViewingInfo() {
+        $_SESSION['viewingno'] = $_POST['viewingno'];
+        unset($_POST['viewingno']);
+        Redirect('../VIEWS/VIEWING/Branch_ShowViewing.php', false);
+    }
+    
+    if(isset($_POST['showViewingInfo_BRANCH'])) ShowViewingInfo();
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
     function EditViewingData() 
     {
         unset($_POST['submitViewingForm']);
         
         $lConnection = ConnectToDatabase();
 
-        // Viewing record identifier
-        $lPropertyNumber = $_POST['propertyno'];
-        $lClientNumber = $_POST['clientno'];
-        $lViewdate = $_POST['viewdate'];
-        $lComment = $_POST['comment'];
-
-        // New Data
-        $lNewData = array('viewdate' => $_POST['viewdate'], 'comment' => $_POST['comment']);
-        // Condition
-        $lCondition = array('propertyno' => $_SESSION['propertyno'], 'clientno' => $_SESSION['clientno'], 'viewdate' => $_SESSION['viewdate'], 'comment' => $_SESSION['comment']);
-
-        // Update
-        
+        $lCondition = array('viewingno' => $_SESSION['viewingno']);
+      
         $lResult = pg_update($lConnection, 'viewing', $_POST, $lCondition);
         if ($lResult) {
             unset($_POST);
-            unset($_SESSION['clientno']);
-            unset($_SESSION['propertyno']);
-            unset($_SESSION['viewdate']);
-            unset($_SESSION['comment']);
-            Redirect('../VIEWS/VIEWING/Branch_ReportViewing.php', false);
+            unset($_SESSION['viewingno']);
+            Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
         } else {
             echo "User must have sent wrong inputs\n";
         }     
     }
+
+    if(isset($_POST['submitViewingEdition'])) EditViewingData();
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -187,7 +185,7 @@
 
     /* ------------------------EDIT RECORD--------------------------- */
     
-    if(isset($_POST['submitViewingForm'])) EditViewingData();
+    
 
     /* -------------------------ADD RECORD------------------------------------ */
     
@@ -195,16 +193,6 @@
     /* -------------------------VIEW DETAILS------------------------------------ */
     
     
-    if(isset($_POST['branchQueryPropertyViewingForm'])) {
-        $_SESSION['propertyno'] = $_POST['propertyno'];
-        $_SESSION['clientno'] = $_POST['clientno'];
-        $_SESSION['viewdate'] = $_POST['viewdate'];
-        $_SESSION['comment'] = $_POST['comment'];
-        unset($_POST['propertyno']);
-        unset($_POST['clientno']);
-        unset($_POST['viewdate']);
-        unset($_POST['comment']);
-        Redirect('../VIEWS/VIEWING/Branch_QueryViewing.php', false);
-    }
+    
     
 ?>
