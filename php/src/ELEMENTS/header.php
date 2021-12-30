@@ -1,7 +1,16 @@
 <?php
     $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
 
-    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_QueryClient.php" : "client.php";
+    /* Client section */
+    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_DetailClient.php" : "../CLIENT/Branch_ListClients.php";
+    /* Property section */
+    $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ListProperties.php" : "../PROPERTY/Branch_ListProperties.php";
+    /* Viewing section */
+    $lPropertyViewingLink = "../VIEWING/Branch_ListViewings.php";
+    /* Owner section */
+    $lOwnerViewingLink = "../OWNER/Branch_ListOwners.php";
+    /* Lease section */
+    $lLeaseLink = "../LEASE/Branch_ListLeases.php";
 ?>
 
 <header>
@@ -22,16 +31,19 @@
                         <a href="staff.php">Staff</a>
                     </li>
                     <li id="propertyForRentLink">
-                        <a href="../PROPERTY/All_ReportProperty.php">Property for rent</a>
+                        <a href=<?=$lPropertyLink?>>Property for rent</a>
                     </li>
                     <li id="ownerLink">
-                        <a href="owner.php">Owner</a>
+                        <a href=<?=$lOwnerViewingLink?>>Owner</a>
                     </li>
                     <li id="clientLink">
                         <a href=<?=$lClientLink?>>Client</a>
                     </li>
                     <li id="propertyViewingLink">
-                        <a href="property_viewing.php">Property viewing</a>
+                        <a href=<?=$lPropertyViewingLink?>>Property viewing</a>
+                    </li>
+                    <li id="leaseLink">
+                        <a href=<?=$lLeaseLink?>>Lease</a>
                     </li>
                     <li id="newspaperLink">
                         <a href="newspaper.php">Newspaper</a>
@@ -39,7 +51,7 @@
                 </ul>
                 <ul class="navigation-menu-user mt-2">
                     <li>
-                        <a href="../../logout_action.php">   
+                        <a href="../../PHP/Logout_Action.php">   
                             <i class="far fa-user"></i>
                             Logout
                         </a>
@@ -66,5 +78,6 @@
         echo '<style>#ownerLink { display:none;}</style>';
         echo '<style>#propertyViewingLink { display:none;}</style>';
         echo '<style>#newspaperLink { display:none;}</style>';
+        echo '<style>#leaseLink { display:none;}</style>';
     }
 ?>

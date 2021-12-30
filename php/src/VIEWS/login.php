@@ -30,7 +30,7 @@
                     <label for="eaddress">Login</label><br>
                     <hr class="mb-5"/>
                 </div>
-                <form action="../login_action.php" method="post">
+                <form action="../PHP/Login_Action.php" method="post">
                     <div class="mb-2">
                         <label for="eaddress">Email Address:</label><br>
                         <input type="text" id="eaddress" name="eaddress" value=""><br>

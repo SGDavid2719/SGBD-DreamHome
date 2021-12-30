@@ -7,9 +7,9 @@
 <body>
     <?php
         include_once('../../ELEMENTS/header.php');
-        include_once('../../utilities.php');
+        include_once('../../PHP/Utilities.php');
         $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
-        $lData = GetData($lTable, "");
+        $lData = GetData('*', $lTable, "");
     ?>
     <section>
         <div class="container mt-5">
