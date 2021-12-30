@@ -32,8 +32,8 @@
                                 <td><?php echo implode('</td><td>', $lRow); ?></td>
                                 <td>
                                     <form action="../../PHP/Utilities.php" method="post">
-                                        <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?php echo $lRow['propertyno'] ?>>
-                                        <input type="submit" value="More info" class="btn btn-secondary" name="branchQueryPropertyForm">
+                                        <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
+                                        <input type="submit" value="More info" class="btn btn-secondary" name="showPropertyInfo_BRANCH">
                                     </form>
                                 </td>
                             </tr>
@@ -43,13 +43,11 @@
             </div>
             <div class="row">
                 <div class="col-10"></div>
-                <div class="col-1">
+                <div class="col-2 d-flex justify-content-end">
                     <form action="../../PHP/Utilities.php" method="post">
-                        <input type="text" id="branchno" class="d-none" name="branchno" value=<?=$_SESSION['branchno']?>>
-                        <input type="submit" value="Add Property" class="btn btn-secondary" name="branchAddProperty">
+                        <input type="submit" value="Add Property" class="btn btn-secondary" name="addProperty_BRANCH">
                     </form> 
                 </div>
-                <div class="col-1"></div>
             </div>
         </div>
     </section>

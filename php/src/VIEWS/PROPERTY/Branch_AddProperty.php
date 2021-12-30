@@ -23,17 +23,17 @@
                     <hr>
                     <div class="col-6">
                         <label for="branchno">Branch Number:</label><br>
-                        <input type="text" id="branchno" name="branchno" value=<?=$_SESSION['branchno']?>disabled><br>
+                        <input type="text" id="branchno" name="branchno" value=<?=$_SESSION['branchno']?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="staffno">Staff Number:</label><br>
-                        <input type="text" id="staffno" name="staffno" value=<?=$_SESSION['staffno']?> disabled><br>
+                        <input type="text" id="staffno" name="staffno" value=<?=$_SESSION['roleno']?> class="form-control" disabled><br>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="propertyno">Owner Number:</label><br>
-                        <select type="text" id="ownerno" name="ownerno" required>
+                        <select type="text" id="ownerno" name="ownerno" class="form-select form-select-sm" required>
                             <?php 
                             foreach (array_keys($lOwnerArrayData) as $lRow) {
                                 echo '<option value=' . "$lOwnerArrayData[$lRow]['ownerno']" . '>' . $lOwnerArrayData[$lRow]['ownerno'] . '</option>';
@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-6">
                         <label for="propertyno">Property Number:</label><br>
-                        <input type="text" id="propertyno" name="propertyno" required><br>
+                        <input type="text" id="propertyno" name="propertyno" class="form-control" required><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -51,21 +51,21 @@
                     <hr>
                     <div class="col-6">
                         <label for="street">Street:</label><br>
-                        <input type="text" id="street" name="street" required><br>
+                        <input type="text" id="street" name="street" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="city">City:</label><br>
-                        <input type="text" id="city" name="city" required><br>
+                        <input type="text" id="city" name="city" class="form-control" required><br>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="postcode">Postcode:</label><br>
-                        <input type="text" id="postcode" name="postcode" required><br>
+                        <input type="text" id="postcode" name="postcode" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="type">Type</label><br>
-                        <input type="text" id="type" name="type" required><br>
+                        <input type="text" id="type" name="type" class="form-control" required><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -73,11 +73,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="rooms">Rooms:</label><br>
-                        <input type="text" id="rooms" name="rooms" required><br>
+                        <input type="text" id="rooms" name="rooms" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="rent">Rent:</label><br>
-                        <input type="text" id="rent" name="rent" required><br>
+                        <input type="text" id="rent" name="rent" class="form-control" required><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -93,7 +93,7 @@
                         </script>
                     </div>
                     <div class="col-1 d-flex justify-content-end">
-                        <input type="submit" value="Submit" class="btn btn-primary" name="submitAddProperty">
+                        <input type="submit" value="Submit" class="btn btn-primary" name="submitAddProperty_BRANCH">
                     </div>
                 </div>
             </form>

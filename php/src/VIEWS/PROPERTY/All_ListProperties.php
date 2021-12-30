@@ -28,7 +28,7 @@
                             <td>
                                 <form action="../../PHP/Utilities.php" method="post">
                                     <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
-                                    <input type="submit" value="More info" class="btn btn-secondary" name="showPropertyInfo">
+                                    <input type="submit" value="More info" class="btn btn-secondary" name="showPropertyInfo_ALL">
                                 </form>
                             </td>
                         </tr>

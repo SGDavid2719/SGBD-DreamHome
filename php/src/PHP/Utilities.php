@@ -112,7 +112,40 @@
         Redirect('../VIEWS/PROPERTY/All_ShowProperty.php', false);
     }
 
-    if(isset($_POST['showPropertyInfo'])) ShowPropertyInfo();
+    if(isset($_POST['showPropertyInfo_ALL'])) ShowPropertyInfo();
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    function ShowPropertyInfo2() 
+    {
+        $_SESSION['propertyno'] = $_POST['propertyno'];
+        unset($_POST['propertyno']);
+        Redirect('../VIEWS/PROPERTY/Branch_ShowProperty.php', false);
+    }
+
+    if(isset($_POST['showPropertyInfo_BRANCH'])) ShowPropertyInfo2();
+
+    
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    function InsertPropertyData() 
+    {
+        unset($_POST['submitAddProperty_BRANCH']);
+
+        $lConnection = ConnectToDatabase();
+
+        $lResult = pg_insert($lConnection, 'propertyforrent', $_POST);
+        if ($lResult) {
+            unset($_POST);
+            Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }  
+    }
+
+    if(isset($_POST['submitAddProperty_BRANCH'])) InsertPropertyData();
+
+    if(isset($_POST['addProperty_BRANCH'])) Redirect('../VIEWS/PROPERTY/Branch_AddProperty.php', false);
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -150,35 +183,18 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    function InsertPropertyData() 
-    {
-        unset($_POST['submitAddProperty']);
-
-        $lConnection = ConnectToDatabase();
-
-        $lResult = pg_insert($lConnection, 'propertyforrent', $_POST);
-        if ($lResult) {
-            unset($_POST);
-            Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        }  
-    }
+    
 
     /* ------------------------EDIT RECORD--------------------------- */
     
     if(isset($_POST['submitViewingForm'])) EditViewingData();
 
     /* -------------------------ADD RECORD------------------------------------ */
-    if(isset($_POST['submitAddProperty'])) InsertPropertyData();
+    
 
     /* -------------------------VIEW DETAILS------------------------------------ */
     
-    if(isset($_POST['branchQueryPropertyForm'])) {
-        $_SESSION['propertyno'] = $_POST['propertyno'];
-        unset($_POST['propertyno']);
-        Redirect('../VIEWS/PROPERTY/Branch_QueryProperty.php', false);
-    }
+    
     if(isset($_POST['branchQueryPropertyViewingForm'])) {
         $_SESSION['propertyno'] = $_POST['propertyno'];
         $_SESSION['clientno'] = $_POST['clientno'];
@@ -189,10 +205,6 @@
         unset($_POST['viewdate']);
         unset($_POST['comment']);
         Redirect('../VIEWS/VIEWING/Branch_QueryViewing.php', false);
-    }
-
-    if(isset($_POST['branchAddProperty'])) {
-        Redirect('../VIEWS/PROPERTY/Branch_AddProperty.php', false);
     }
     
 ?>

@@ -22,7 +22,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="propertyno">Property Number:</label><br>
-                        <input type="text" id="propertyno" value=<?=$lData['propertyno']?> disabled><br>
+                        <input type="text" id="propertyno" value=<?=$lData['propertyno']?> class="form-control" disabled><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -30,21 +30,21 @@
                     <hr>
                     <div class="col-6">
                         <label for="street">Street:</label><br>
-                        <input type="text" id="street" name="street" value=<?=$lData['street']?> disabled><br>
+                        <input type="text" id="street" name="street" value=<?=$lData['street']?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="city">City:</label><br>
-                        <input type="text" id="city" name="city" value=<?=$lData['city']?> disabled><br>
+                        <input type="text" id="city" name="city" value=<?=$lData['city']?> class="form-control" disabled><br>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="postcode">Postcode:</label><br>
-                        <input type="text" id="postcode" name="postcode" value=<?=$lData['postcode']?> disabled><br>
+                        <input type="text" id="postcode" name="postcode" value=<?=$lData['postcode']?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="type">Type</label><br>
-                        <input type="text" id="type" name="type" value=<?=$lData['type']?> disabled><br>
+                        <input type="text" id="type" name="type" value=<?=$lData['type']?> class="form-control" disabled><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -52,11 +52,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="rooms">Rooms:</label><br>
-                        <input type="text" id="rooms" name="rooms" value=<?=$lData['rooms']?> disabled><br>
+                        <input type="text" id="rooms" name="rooms" value=<?=$lData['rooms']?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="rent">Rent:</label><br>
-                        <input type="text" id="rent" name="rent" value=<?=$lData['rent']?> disabled><br>
+                        <input type="text" id="rent" name="rent" value=<?=$lData['rent']?> class="form-control" disabled><br>
                     </div>
                 </div>
                 <div class="row mt-4">

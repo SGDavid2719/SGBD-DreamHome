@@ -22,11 +22,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="fname">First name:</label><br>
-                        <input type="text" id="fname" value=<?=$lData['fname']?> disabled><br>
+                        <input type="text" id="fname" value=<?=$lData['fname']?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="lname">Last name:</label><br>
-                        <input type="text" id="lname" value=<?=$lData['lname']?> disabled><br>
+                        <input type="text" id="lname" value=<?=$lData['lname']?> class="form-control" disabled><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -34,7 +34,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="telno">Telephone number:</label><br>
-                        <input type="text" id="telno" name="telno" value=<?=$lData['telno']?>><br>
+                        <input type="text" id="telno" name="telno" value=<?=$lData['telno']?> class="form-control"><br>
                     </div>
                     <div class="col-6"></div>
                 </div>
@@ -43,11 +43,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="preftype">Pref Type:</label><br>
-                        <input type="text" id="preftype" name="preftype" value=<?=$lData['preftype']?>><br>
+                        <input type="text" id="preftype" name="preftype" value=<?=$lData['preftype']?> class="form-control"><br>
                     </div>
                     <div class="col-6">
                         <label for="maxrent">Max Rent</label><br>
-                        <input type="text" id="maxrent" name="maxrent" value=<?=$lData['maxrent']?>><br>
+                        <input type="text" id="maxrent" name="maxrent" value=<?=$lData['maxrent']?> class="form-control"><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -55,11 +55,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="email">Email:</label><br>
-                        <input type="text" id="email" name="email" value=<?=$lData['email']?>><br>
+                        <input type="text" id="email" name="email" value=<?=$lData['email']?> class="form-control"><br>
                     </div>
                     <div class="col-6">
                         <label for="password">Password:</label><br>
-                        <input type="password" id="password" name="password" value=<?=$lData['password']?>><br>
+                        <input type="password" id="password" name="password" value=<?=$lData['password']?> class="form-control"><br>
                     </div>
                 </div>
                 <div class="row mt-4">
