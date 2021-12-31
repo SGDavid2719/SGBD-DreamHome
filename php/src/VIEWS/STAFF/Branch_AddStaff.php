@@ -18,7 +18,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="branchno">Branch Number:</label><br>
-                        <input type="text" id="branchno" name="branchno" value=<?=$_SESSION['branchno']?> class="form-control" disabled><br>
+                        <input type="text" id="branchno" name="branchno" value=<?=$_SESSION['branchno']?> class="form-control" readonly><br>
                     </div>
                     <div class="col-6">
                         <label for="staffno">Staff Number:</label><br>
@@ -79,12 +79,12 @@
                 <div class="row mt-4">
                     <div class="col-10"></div>
                     <div class="col-1 d-flex justify-content-end">
-                        <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
+                        <button id='ReturnBtn' type="button" class="btn btn-danger">Cancel</button>
                         <script>
                             var lBtn = document.getElementById('ReturnBtn');
                             lBtn.addEventListener('click', function() {
                                 <?php unset($_GET['propertyno']);?>
-                                document.location.href = 'Branch_ListProperties.php';
+                                document.location.href = 'Branch_ListStaff.php';
                             });
                         </script>
                     </div>

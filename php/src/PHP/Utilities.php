@@ -203,8 +203,6 @@
 
         $_POST['password'] = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
 
-        print_r($_POST);
-
         $lResult = pg_insert($lConnection, 'staff', $_POST);
         if ($lResult) {
             unset($_POST);
@@ -219,6 +217,52 @@
     if(isset($_POST['addStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_AddStaff.php', false);
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    function EditOwnerData() 
+    {
+        unset($_POST['submitOwnerEdition']);
+        
+        $lConnection = ConnectToDatabase();
+
+        $lCondition = array('ownerno' => $_POST['ownerno']);
+
+        unset($_POST['ownerno']);
+      
+        $lResult = pg_update($lConnection, 'owner', $_POST, $lCondition);
+        if ($lResult) {
+            unset($_POST);
+            unset($_SESSION['ownerno']);
+            Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }     
+    }
+
+    if(isset($_POST['submitOwnerEdition'])) EditOwnerData();
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    function InsertViewingData() 
+    {
+        unset($_POST['submitAddViewing_BRANCH']);
+
+        $lConnection = ConnectToDatabase();
+
+        $_POST['viewingno'] = "V" . $_POST['viewingno'];
+
+        $lResult = pg_insert($lConnection, 'viewing', $_POST);
+        if ($lResult) {
+            unset($_POST);
+            Redirect('../VIEWS/VIEWING/Branch_ListViewing.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        } 
+    }
+
+    if(isset($_POST['submitAddViewing_BRANCH'])) InsertViewingData();
+
+    if(isset($_POST['addView_BRANCH'])) Redirect('../VIEWS/VIEWING/Branch_AddViewing.php', false);
+
 
 
 ?>
