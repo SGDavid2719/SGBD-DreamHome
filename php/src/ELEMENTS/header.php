@@ -11,6 +11,8 @@
     $lOwnerViewingLink = "../OWNER/Branch_ListOwners.php";
     /* Lease section */
     $lLeaseLink = "../LEASE/Branch_ListLeases.php";
+    /* Staff section */
+    $lStaffLink = "../STAFF/Branch_ListStaff.php";
 ?>
 
 <header>
@@ -28,7 +30,7 @@
                         <a href="branch.php">Branch</a>
                     </li>
                     <li id="staffLink">
-                        <a href="staff.php">Staff</a>
+                        <a href=<?=$lStaffLink?>>Staff</a>
                     </li>
                     <li id="propertyForRentLink">
                         <a href=<?=$lPropertyLink?>>Property for rent</a>

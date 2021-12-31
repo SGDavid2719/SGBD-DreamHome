@@ -181,18 +181,44 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+    function ShowStaffInfo() {
+        $_SESSION['staffno'] = $_POST['staffno'];
+        unset($_POST['staffno']);
+        Redirect('../VIEWS/STAFF/Branch_ShowStaff.php', false);
+    }
     
+    if(isset($_POST['showStaffInfo_BRANCH'])) ShowStaffInfo();
 
-    /* ------------------------EDIT RECORD--------------------------- */
-    
-    
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    /* -------------------------ADD RECORD------------------------------------ */
-    
+    function InsertStaffData() 
+    {
+        unset($_POST['submitAddStaff_BRANCH']);
 
-    /* -------------------------VIEW DETAILS------------------------------------ */
-    
-    
-    
-    
+        $lConnection = ConnectToDatabase();
+
+        $lFNameLetter = substr($_POST['fname'], 0, 1);
+        $lLNameLetter = substr($_POST['lname'], 0, 1);
+        $lCurrentYear = date("Y");
+
+        $_POST['password'] = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
+
+        print_r($_POST);
+
+        $lResult = pg_insert($lConnection, 'staff', $_POST);
+        if ($lResult) {
+            unset($_POST);
+            Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }  
+    }
+
+    if(isset($_POST['submitAddStaff_BRANCH'])) InsertStaffData();
+
+    if(isset($_POST['addStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_AddStaff.php', false);
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
 ?>
