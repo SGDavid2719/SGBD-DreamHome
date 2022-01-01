@@ -9,9 +9,9 @@
         include_once('../../ELEMENTS/header.php');
         include_once('../../PHP/Utilities.php');
         $lBranchNumber = $_SESSION['branchno'];
-        $lColumns = "p.propertyno, p.type, p.rooms, p.rent, a.city, a.postcode, a.street";
-        $lTables = "staff s, propertyforrent p, address a";
-        $lCriteria = "WHERE s.staffno = p.staffno AND p.addressno = a.addressno AND s.branchno='$lBranchNumber'";
+        $lColumns = "propertyforrent.propertyno, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent, address.city, address.postcode, address.street";
+        $lTables = "propertyforrent INNER JOIN staff ON propertyforrent.staffno = staff.staffno INNER JOIN address ON propertyforrent.addressno = address.addressno";
+        $lCriteria = "WHERE staff.branchno = '$lBranchNumber'";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
     ?>
     <section>
