@@ -263,6 +263,77 @@
 
     if(isset($_POST['addView_BRANCH'])) Redirect('../VIEWS/VIEWING/Branch_AddViewing.php', false);
 
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+    // SHOW INFO PAGE
+    function ShowLeaseInfo() {
+        $_SESSION['contractno'] = $_POST['contractno'];
+        unset($_POST['showContractInfo_BRANCH']);
+        unset($_POST['contractno']);
+        Redirect('../VIEWS/LEASE/Branch_ShowLease.php', false);
+    }
+    
+    if(isset($_POST['showContractInfo_BRANCH'])) ShowLeaseInfo();
+
+    // SHOW EDIT PAGE
+    function ShowEditingLeaseInfo() {
+        $_SESSION['contractno'] = $_POST['contractno'];
+        unset($_POST['editContractInfo_BRANCH']);
+        unset($_POST['contractno']);
+        Redirect('../VIEWS/LEASE/Branch_EditLease.php', false);
+    }
+
+    if(isset($_POST['editContractInfo_BRANCH'])) ShowEditingLeaseInfo();
+
+    // SUBMIT EDITION
+    function EditLeaseData() 
+    {
+        unset($_POST['submitLeaseEdition']);
+        
+        $lConnection = ConnectToDatabase();
+
+        $lCondition = array('contractno' => $_POST['contractno']);
+
+        unset($_POST['contractno']);
+      
+        $lResult = pg_update($lConnection, 'contract', $_POST, $lCondition);
+        if ($lResult) {
+            unset($_POST);
+            unset($_SESSION['contractno']);
+            Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }     
+    }
+
+    if(isset($_POST['submitLeaseEdition'])) EditLeaseData();
+
+    // SHOW ADD PAGE
+    function ShowAddLease() {
+        unset($_POST['addContract_BRANCH']);
+        Redirect('../VIEWS/LEASE/Branch_AddLease.php', false);
+    }
+
+    if(isset($_POST['addContract_BRANCH'])) ShowAddLease();
+
+    // SUBMIT ADDITION
+    function InsertLeaseData() 
+    {
+        unset($_POST['submitAddLease_BRANCH']);
+
+        $lConnection = ConnectToDatabase();
+
+        $_POST['contractno'] = "LN" . $_POST['contractno'];
+
+        $lResult = pg_insert($lConnection, 'contract', $_POST);
+        if ($lResult) {
+            unset($_POST);
+            Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        } 
+    }
+
+    if(isset($_POST['submitAddLease_BRANCH'])) InsertLeaseData();
 
 ?>

@@ -9,7 +9,7 @@
         include_once('../../ELEMENTS/header.php');
         include_once('../../PHP/Utilities.php');
         $lBranchNumber = $_SESSION['branchno'];
-        $lColumns = "contract.contractno, contract.description, contract.startdate, contract.enddate, contract.paymode";
+        $lColumns = "contract.contractno, contract.startdate, contract.enddate, contract.paymode";
         $lTables = "contract INNER JOIN propertyforrent ON contract.propertyno = propertyforrent.propertyno INNER JOIN staff ON propertyforrent.staffno = staff.staffno";
         $lCriteria = "WHERE staff.branchno='$lBranchNumber'";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
@@ -32,8 +32,14 @@
                                 <td><?php echo implode('</td><td>', $lRow); ?></td>
                                 <td>
                                     <form action="../../PHP/Utilities.php" method="post">
-                                        <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
-                                        <input type="submit" value="More info" class="btn btn-secondary" name="showPropertyInfo_BRANCH">
+                                        <input type="text" id="contractno" class="d-none" name="contractno" value=<?=$lRow['contractno']?>>
+                                        <input type="submit" value="More info" class="btn btn-secondary" name="showContractInfo_BRANCH">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form id="editContract" action="../../PHP/Utilities.php" method="post">
+                                        <input type="text" id="contractno" class="d-none" name="contractno" value=<?=$lRow['contractno']?>>
+                                        <input type="submit" value="Edit" class="btn btn-primary" name="editContractInfo_BRANCH">
                                     </form>
                                 </td>
                             </tr>
@@ -44,13 +50,23 @@
             <div class="row">
                 <div class="col-10"></div>
                 <div class="col-2 d-flex justify-content-end">
-                    <form action="../../PHP/Utilities.php" method="post">
-                        <input type="submit" value="Add Property" class="btn btn-secondary" name="addProperty_BRANCH">
+                    <form id="addContract" action="../../PHP/Utilities.php" method="post">
+                        <input type="submit" value="Add Contract" class="btn btn-secondary" name="addContract_BRANCH">
                     </form> 
                 </div>
             </div>
         </div>
     </section>
+
+    <?php
+
+    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager' && $_SESSION['role'] != 'Supervisor') {
+        echo '<style>#editContract { display:none;}</style>';
+        echo '<style>#addContract { display:none;}</style>';
+    } 
+
+    ?>
+
     <?php
         include_once('../../ELEMENTS/footer.php');
     ?>

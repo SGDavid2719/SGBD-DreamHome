@@ -8,10 +8,10 @@
     <?php
         include_once('../../ELEMENTS/header.php');
         include_once('../../PHP/Utilities.php');
-        $lPropertyNumber = $_SESSION['viewingno'];
+        $lViewingNumber = $_SESSION['viewingno'];
         $lColumns = "viewing.viewingno, viewing.viewdate, viewing.comment, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent, address.street, address.city, address.postcode";
         $lTable = "viewing INNER JOIN propertyforrent ON viewing.propertyno = propertyforrent.propertyno INNER JOIN address ON propertyforrent.addressno = address.addressno";
-        $lCriteria = "WHERE viewing.viewingno = '$lPropertyNumber '";
+        $lCriteria = "WHERE viewing.viewingno = '$lViewingNumber '";
         $lData = GetData($lColumns, $lTable, $lCriteria);
     ?>
     <section>
