@@ -36,13 +36,28 @@
                                         <input type="submit" value="More info" class="btn btn-secondary" name="showStaffInfo_BRANCH">
                                     </form>
                                 </td>
+                                <td>
+                                    <form id="editStaff" action="../../PHP/Utilities.php" method="post">
+                                        <input type="text" id="staffno" class="d-none" name="staffno" value=<?=$lRow['staffno']?>>
+                                        <input type="submit" value="Edit" class="btn btn-primary" name="editStaffInfo_BRANCH">
+                                    </form>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
             <div class="row">
-                <div class="col-10"></div>
+                <div class="col-8"></div>
+                <div class="col-2 d-flex justify-content-end">
+                    <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
+                    <script>
+                        var lBtn = document.getElementById('ReturnBtn');
+                        lBtn.addEventListener('click', function() {
+                            document.location.href = 'All_ListStaff.php';
+                        });
+                    </script>
+                </div>
                 <div class="col-2 d-flex justify-content-end">
                     <form action="../../PHP/Utilities.php" method="post">
                         <input type="submit" value="Add Staff" class="btn btn-secondary" name="addStaff_BRANCH">
@@ -50,7 +65,17 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>    
+
+    <?php
+
+    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') {
+        echo '<style>#ReturnBtn { display:none;}</style>';
+        echo '<style>#editStaff { display:none;}</style>';
+    } 
+
+    ?>
+    
     <?php
         include_once('../../ELEMENTS/footer.php');
     ?>

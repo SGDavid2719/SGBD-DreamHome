@@ -29,8 +29,8 @@
                     <div class="col-6">
                         <label for="position">Staff position:</label><br>
                         <select type="text" id="position" name="position" class="form-select form-select-sm" required>
-                            <option value="Supervisor">Supervisor</option>
                             <option value="Assistant">Assistant</option>
+                            <option value="Supervisor">Supervisor</option>
                         </select>
                     </div>
                     <div class="col-6"></div>

@@ -336,4 +336,75 @@
 
     if(isset($_POST['submitAddLease_BRANCH'])) InsertLeaseData();
 
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW BRANCH INFO
+    if(isset($_POST['editBranchInfo_BRANCH'])) Redirect('../VIEWS/BRANCH/Branch_EditBranch.php', false);
+
+    // SUBMIT EDITION
+    function EditBranchData() 
+    {
+        unset($_POST['submitBranchEdition']);
+        
+        $lConnection = ConnectToDatabase();
+
+        $lCondition = array('addressno' => $_SESSION['addressno']);
+
+        unset($_POST['addressno']);
+      
+        $lResult = pg_update($lConnection, 'address', $_POST, $lCondition);
+        if ($lResult) {
+            unset($_POST);
+            unset($_SESSION['addressno']);
+            Redirect('../VIEWS/BRANCH/All_ListBranches.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }     
+    }
+
+    if(isset($_POST['submitBranchEdition'])) EditBranchData();
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW BRANCH STAFF PAGE
+    if(isset($_POST['showBranchStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
+
+    // SHOW EDIT PAGE
+    function ShowEditingStaffInfo() {
+        $_SESSION['staffno'] = $_POST['staffno'];
+        unset($_POST['editStaffInfo_BRANCH']);
+        unset($_POST['staffno']);
+        Redirect('../VIEWS/STAFF/Branch_EditStaff.php', false);
+    }
+
+    if(isset($_POST['editStaffInfo_BRANCH'])) ShowEditingStaffInfo();
+
+    // SUBMIT EDITION
+    function EditStaffData() 
+    {
+        unset($_POST['submitStaffEdition']);
+        
+        $lConnection = ConnectToDatabase();
+
+        $lCondition = array('staffno' => $_SESSION['staffno']);
+
+        unset($_POST['staffno']);
+      
+        $lResult = pg_update($lConnection, 'staff', $_POST, $lCondition);
+        if ($lResult) {
+            unset($_POST);
+            unset($_SESSION['staffno']);
+            Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }     
+    }
+
+    if(isset($_POST['submitStaffEdition'])) EditStaffData();
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW BRANCH PROPERTIES PAGE
+    if(isset($_POST['showBranchProperties_BRANCH'])) Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
+
 ?>

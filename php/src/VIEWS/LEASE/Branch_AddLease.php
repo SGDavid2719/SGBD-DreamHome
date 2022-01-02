@@ -44,7 +44,6 @@
                         <select type="text" id="clientno" name="clientno" class="form-select form-select-sm" required>
                             <?php 
                             foreach (array_keys($lClientArrayData) as $lRow) {
-                                print_r($lClientArrayData[$lRow]);
                                 echo '<option value=' . $lClientArrayData[$lRow]['clientno'] . '>' . $lClientArrayData[$lRow]['clientno'] . '</option>';
                             }
                             ?>

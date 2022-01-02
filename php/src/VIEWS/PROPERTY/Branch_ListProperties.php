@@ -42,7 +42,16 @@
                 </table>
             </div>
             <div class="row">
-                <div class="col-10"></div>
+                <div class="col-8"></div>
+                <div class="col-2 d-flex justify-content-end">
+                    <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
+                    <script>
+                        var lBtn = document.getElementById('ReturnBtn');
+                        lBtn.addEventListener('click', function() {
+                            document.location.href = 'All_ListProperties.php';
+                        });
+                    </script>
+                </div>
                 <div class="col-2 d-flex justify-content-end">
                     <form action="../../PHP/Utilities.php" method="post">
                         <input type="submit" value="Add Property" class="btn btn-secondary" name="addProperty_BRANCH">

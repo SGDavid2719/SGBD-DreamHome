@@ -4,7 +4,7 @@
     /* Client section */
     $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_DetailClient.php" : "../CLIENT/Branch_ListClients.php";
     /* Property section */
-    $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ListProperties.php" : "../PROPERTY/Branch_ListProperties.php";
+    $lPropertyLink = ($_SESSION['role'] == 'Client' || $_SESSION['role'] == 'Manager') ? "../PROPERTY/All_ListProperties.php" : "../PROPERTY/Branch_ListProperties.php";
     /* Viewing section */
     $lPropertyViewingLink = "../VIEWING/Branch_ListViewings.php";
     /* Owner section */
@@ -12,7 +12,9 @@
     /* Lease section */
     $lLeaseLink = "../LEASE/Branch_ListLeases.php";
     /* Staff section */
-    $lStaffLink = "../STAFF/Branch_ListStaff.php";
+    $lStaffLink = ($_SESSION['role'] == 'Manager') ? "../STAFF/All_ListStaff.php" : "../STAFF/Branch_ListStaff.php";
+    /* Branch section */
+    $lBranchLink = "../BRANCH/All_ListBranches.php";
 ?>
 
 <header>
@@ -27,7 +29,7 @@
                 <!-- Left Nav -->
                 <ul class="navigation-menu mt-2">
                     <li id="branchLink">
-                        <a href="branch.php">Branch</a>
+                        <a href=<?=$lBranchLink?>>Branch</a>
                     </li>
                     <li id="staffLink">
                         <a href=<?=$lStaffLink?>>Staff</a>
