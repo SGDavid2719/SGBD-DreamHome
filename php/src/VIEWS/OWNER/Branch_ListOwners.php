@@ -44,13 +44,31 @@
                 </tbody>
             </table>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-8"></div>
+            <div class="col-2 d-flex justify-content-end">
+                <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
+                <script>
+                    var lBtn = document.getElementById('ReturnBtn');
+                    lBtn.addEventListener('click', function() {
+                        document.location.href = 'All_ListOwners.php';
+                    });
+                </script>
+            </div>
+            <div class="col-2 d-flex justify-content-end">
+                <form id="addOwner" action="../../PHP/Utilities.php" method="post">
+                    <input type="submit" value="Add Owner" class="btn btn-secondary" name="addOwner_BRANCH">
+                </form> 
+            </div>
+        </div>
     </section>
 
     <?php
 
     if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager' && $_SESSION['role'] != 'Supervisor') {
         echo '<style>#editOwner { display:none;}</style>';
+        echo '<style>#ReturnBtn { display:none;}</style>';
+        echo '<style>#addOwner { display:none;}</style>';
     } 
 
     ?>

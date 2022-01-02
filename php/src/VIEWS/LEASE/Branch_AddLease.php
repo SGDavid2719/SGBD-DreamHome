@@ -20,7 +20,7 @@
         $lCriteria = "WHERE staff.branchno = '$lBranchNumber'";
         $lPropertyArrayData = GetAllData($lColumns, $lTable, $lCriteria);
         // Pay mode
-        $lColumns = 'contract.paymode';
+        $lColumns = 'DISTINCT contract.paymode';
         $lTable = 'contract';
         $lCriteria = "";
         $lPayModeArrayData = GetAllData($lColumns, $lTable, $lCriteria);

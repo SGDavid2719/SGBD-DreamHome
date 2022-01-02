@@ -49,14 +49,6 @@
     </section>
 
     <?php
-
-    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') {
-        echo '<style>#ReturnBtn { display:none;}</style>';
-    } 
-
-    ?>
-
-    <?php
         include_once('../../ELEMENTS/footer.php');
     ?>
 </body>

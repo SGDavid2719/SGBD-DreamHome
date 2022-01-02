@@ -48,7 +48,16 @@
                 </table>
             </div>
             <div class="row">
-                <div class="col-10"></div>
+                <div class="col-8"></div>
+                <div class="col-2 d-flex justify-content-end">
+                    <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
+                    <script>
+                        var lBtn = document.getElementById('ReturnBtn');
+                        lBtn.addEventListener('click', function() {
+                            document.location.href = 'All_ListLeases.php';
+                        });
+                    </script>
+                </div>
                 <div class="col-2 d-flex justify-content-end">
                     <form id="addContract" action="../../PHP/Utilities.php" method="post">
                         <input type="submit" value="Add Contract" class="btn btn-secondary" name="addContract_BRANCH">
@@ -64,6 +73,10 @@
         echo '<style>#editContract { display:none;}</style>';
         echo '<style>#addContract { display:none;}</style>';
     } 
+
+    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') {
+        echo '<style>#ReturnBtn { display:none;}</style>';
+    }
 
     ?>
 

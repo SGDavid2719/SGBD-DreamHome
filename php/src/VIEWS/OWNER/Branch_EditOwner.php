@@ -9,11 +9,11 @@
         include_once('../../ELEMENTS/header.php');
         include_once('../../PHP/Utilities.php');
         $lBranchNumber = $_SESSION['branchno'];
-        $lOwnerNumber = $_POST['ownerno'];
-        unset($_POST['ownerno']);
-        $lColumns = "DISTINCT owner.ownerno, owner.fname, owner.lname, owner.address, owner.telno, owner.email";
+        $lOwnerNumber = (isset($_POST['ownerno'])) ? $_POST['ownerno'] : $_SESSION['ownerno'];
+        if(isset($_POST['ownerno'])) unset($_POST['ownerno']);
+        $lColumns = "owner.*";
         $lTable = "owner";
-        $lCriteria = "INNER JOIN propertyforrent ON owner.ownerno = propertyforrent.ownerno INNER JOIN staff ON propertyforrent.staffno = staff.staffno WHERE staff.branchno = '$lBranchNumber ' AND owner.ownerno = '$lOwnerNumber'";
+        $lCriteria = "WHERE owner.ownerno = '$lOwnerNumber'";
         $lData = GetData($lColumns, $lTable, $lCriteria);
     ?>
     <section>

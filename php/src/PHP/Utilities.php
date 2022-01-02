@@ -407,4 +407,117 @@
     // SHOW BRANCH PROPERTIES PAGE
     if(isset($_POST['showBranchProperties_BRANCH'])) Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
 
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW EDIT PAGE
+    function ShowEditingOwnerInfo() {
+        $_SESSION['ownerno'] = $_POST['ownerno'];
+        unset($_POST['editOwnerInfo_ALL']);
+        unset($_POST['ownerno']);
+        Redirect('../VIEWS/OWNER/Branch_EditOwner.php', false);
+    }
+
+    if(isset($_POST['editOwnerInfo_ALL'])) ShowEditingOwnerInfo();
+
+    // SHOW BRANCH PROPERTIES PAGE
+    if(isset($_POST['showBranchOwners_BRANCH'])) Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
+
+    // SHOW ADD PAGE
+    function ShowAddOwner() {
+        unset($_POST['addOwner_BRANCH']);
+        Redirect('../VIEWS/OWNER/Branch_AddOwner.php', false);
+    }
+
+    if(isset($_POST['addOwner_BRANCH'])) ShowAddOwner();
+
+    // SUBMIT ADDITION
+    function InsertOwnerData() 
+    {
+        unset($_POST['submitOwnerAddition']);
+
+        $lConnection = ConnectToDatabase();
+
+        $_POST['ownerno'] = "CO" . $_POST['ownerno'];
+
+        $lResult = pg_insert($lConnection, 'owner', $_POST);
+        if ($lResult) {
+            unset($_POST);
+            Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        } 
+    }
+
+    if(isset($_POST['submitOwnerAddition'])) InsertOwnerData();
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW EDIT PAGE
+    function ShowEditingClientInfo() {
+        $_SESSION['clientno'] = $_POST['clientno'];
+        unset($_POST['ediClientInfo_ALL']);
+        unset($_POST['clientno']);
+        Redirect('../VIEWS/CLIENT/Branch_EditClient.php', false);
+    }
+
+    if(isset($_POST['ediClientInfo_ALL'])) ShowEditingClientInfo();
+
+    // SHOW BRANCH PROPERTIES PAGE
+    if(isset($_POST['showBranchClients_BRANCH'])) Redirect('../VIEWS/CLIENT/Branch_ListClients.php', false);
+
+    // SHOW ADD PAGE
+    function ShowAddClient() {
+        unset($_POST['addClient_BRANCH']);
+        Redirect('../VIEWS/CLIENT/Branch_AddClient.php', false);
+    }
+
+    if(isset($_POST['addClient_BRANCH'])) ShowAddClient();
+
+    // SUBMIT EDITION
+    function EditClientData_Branch() 
+    {
+        unset($_POST['submitClientEdition_BRANCH']);
+        
+        $lConnection = ConnectToDatabase();
+
+        $lCondition = array('clientno' => $_SESSION['clientno']);
+
+        unset($_POST['clientno']);
+        $lResult = pg_update($lConnection, 'client', $_POST, $lCondition);
+        if ($lResult) {
+            unset($_POST);
+            unset($_SESSION['clientno']);
+            Redirect('../VIEWS/CLIENT/Branch_ListClients.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        }     
+    }
+
+    if(isset($_POST['submitClientEdition_BRANCH'])) EditClientData_Branch();
+
+    // SUBMIT ADDITION
+    function InsertClientData() 
+    {
+        unset($_POST['submitClientAddition']);
+
+        $lConnection = ConnectToDatabase();
+
+        $_POST['clientno'] = "CR" . $_POST['clientno'];
+
+        $lResult = pg_insert($lConnection, 'client', $_POST);
+        if ($lResult) {
+            unset($_POST);
+            Redirect('../VIEWS/CLIENT/Branch_ListClients.php', false);
+        } else {
+            echo "User must have sent wrong inputs\n";
+        } 
+    }
+
+    if(isset($_POST['submitClientAddition'])) InsertClientData();
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW BRANCH LEASES PAGE
+    if(isset($_POST['showBranchLeases_ALL'])) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
+
 ?>

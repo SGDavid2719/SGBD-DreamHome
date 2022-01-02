@@ -2,15 +2,21 @@
     $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
 
     /* Client section */
-    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_DetailClient.php" : "../CLIENT/Branch_ListClients.php";
+    if($_SESSION['role'] == 'Client') {
+        $lClientLink = "../CLIENT/All_DetailClient.php";
+    } else if ($_SESSION['role'] == 'Manager') {
+        $lClientLink = "../CLIENT/All_ListClients.php";
+    } else {
+        $lClientLink = "../CLIENT/Branch_ListClients.php";
+    }
     /* Property section */
     $lPropertyLink = ($_SESSION['role'] == 'Client' || $_SESSION['role'] == 'Manager') ? "../PROPERTY/All_ListProperties.php" : "../PROPERTY/Branch_ListProperties.php";
     /* Viewing section */
     $lPropertyViewingLink = "../VIEWING/Branch_ListViewings.php";
     /* Owner section */
-    $lOwnerViewingLink = "../OWNER/Branch_ListOwners.php";
+    $lOwnerViewingLink = ($_SESSION['role'] == 'Manager') ? "../OWNER/All_ListOwners.php" : "../OWNER/Branch_ListOwners.php";
     /* Lease section */
-    $lLeaseLink = "../LEASE/Branch_ListLeases.php";
+    $lLeaseLink = ($_SESSION['role'] == 'Manager') ? "../LEASE/All_ListLeases.php" : "../LEASE/Branch_ListLeases.php";
     /* Staff section */
     $lStaffLink = ($_SESSION['role'] == 'Manager') ? "../STAFF/All_ListStaff.php" : "../STAFF/Branch_ListStaff.php";
     /* Branch section */
