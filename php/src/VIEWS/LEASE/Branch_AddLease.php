@@ -34,7 +34,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="contractno">Contract Number:</label><br>
-                        <input type="text" id="contractno" name="contractno" class="form-control"><br>
+                        <input type="text" id="contractno" name="contractno" maxlength="3" class="form-control"><br>
                     </div>
                     <div class="col-6"></div>
                 </div>

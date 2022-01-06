@@ -57,12 +57,12 @@
                     <h4>Property info</h4>
                     <hr>
                     <div class="col-6">
-                        <label for="type">Type:</label><br>
-                        <input type="text" id="type" value=<?=$lData['type']?> class="form-control" disabled><br>
+                        <label for="propertyno">Property Number:</label><br>
+                        <input type="text" id="propertyno" value=<?=$lData['propertyno']?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
-                        <label for="rooms">Rooms:</label><br>
-                        <input type="text" id="rooms" value=<?=$lData['rooms']?> class="form-control" disabled><br>
+                        <label for="type">Type:</label><br>
+                        <input type="text" id="type" value=<?=$lData['type']?> class="form-control" disabled><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -70,7 +70,10 @@
                         <label for="rent">Rent:</label><br>
                         <input type="text" id="rent" value=<?=$lData['rent']?> class="form-control" disabled><br>
                     </div>
-                    <div class="col-6"></div>
+                    <div class="col-6">
+                        <label for="rooms">Rooms:</label><br>
+                        <input type="text" id="rooms" value=<?=$lData['rooms']?> class="form-control" disabled><br>
+                    </div>
                 </div>
                 <div class="row mt-4">
                     <h4>Owner info</h4>

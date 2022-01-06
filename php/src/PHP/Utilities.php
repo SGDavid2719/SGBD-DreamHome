@@ -276,6 +276,69 @@
     if(isset($_POST['addView_BRANCH'])) Redirect('../VIEWS/VIEWING/Branch_AddViewing.php', false);
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW INFO PAGE --> CONTRACT/LEASE
+    if(isset($_POST['showContractInfo_BRANCH'])) 
+    {
+        $_SESSION['contractno'] = $_POST['contractno'];
+        unset($_POST['showContractInfo_BRANCH']);
+        unset($_POST['contractno']);
+        Redirect('../VIEWS/LEASE/Branch_ShowLease.php', false);
+    }
+
+    // SHOW EDIT PAGE --> CONTRACT/LEASE
+
+    if(isset($_POST['editContractInfo_BRANCH']))
+    {
+        $_SESSION['contractno'] = $_POST['contractno'];
+        unset($_POST['editContractInfo_BRANCH']);
+        unset($_POST['contractno']);
+        Redirect('../VIEWS/LEASE/Branch_EditLease.php', false);
+    }
+
+    // SUBMIT EDITION --> CONTRACT/LEASE
+
+    if(isset($_POST['submitLeaseEdition']))
+    {
+        unset($_POST['submitLeaseEdition']);
+
+        $lCondition = array('contractno' => $_POST['contractno']);
+        unset($_POST['contractno']);
+        $lNewData = $_POST;
+    
+        $lResult = EditData('contract', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        unset($_POST);
+        unset($_SESSION['contractno']);
+
+        if ($lResult) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
+        else echo "User must have sent wrong inputs\n";
+    }
+
+    // SHOW ADD PAGE --> CONTRACT/LEASE
+    if(isset($_POST['addContract_BRANCH'])) 
+    {
+        unset($_POST['addContract_BRANCH']);
+        Redirect('../VIEWS/LEASE/Branch_AddLease.php', false);
+    }
+
+    // SUBMIT ADDITION --> CONTRACT/LEASE
+    if(isset($_POST['submitAddLease_BRANCH'])) 
+    {
+        unset($_POST['submitAddLease_BRANCH']);
+
+        $_POST['contractno'] = "LN" . $_POST['contractno'];
+        $lNewData = $_POST;
+
+        $lResult = InsertData('contract', $lNewData, $_SESSION['roleno']);
+
+        unset($_POST);
+
+        if ($lResult) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
+        else echo "User must have sent wrong inputs\n";
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     
     if(isset($_POST['showStaffInfo_BRANCH'])) 
     {
@@ -313,66 +376,6 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    // SHOW INFO PAGE --> CONTRACT/LEASE
-    if(isset($_POST['showContractInfo_BRANCH'])) 
-    {
-        $_SESSION['contractno'] = $_POST['contractno'];
-        unset($_POST['showContractInfo_BRANCH']);
-        unset($_POST['contractno']);
-        Redirect('../VIEWS/LEASE/Branch_ShowLease.php', false);
-    }
-
-    // SHOW EDIT PAGE --> CONTRACT/LEASE
-
-    if(isset($_POST['editContractInfo_BRANCH']))
-    {
-        $_SESSION['contractno'] = $_POST['contractno'];
-        unset($_POST['editContractInfo_BRANCH']);
-        unset($_POST['contractno']);
-        Redirect('../VIEWS/LEASE/Branch_EditLease.php', false);
-    }
-
-    // SUBMIT EDITION --> CONTRACT/LEASE
-
-    if(isset($_POST['submitLeaseEdition']))
-    {
-        unset($_POST['submitLeaseEdition']);
-
-        $lCondition = array('contractno' => $_POST['contractno']);
-        unset($_POST['contractno']);
-        $lNewData = $_POST;
-      
-        $lResult = EditData('contract', $lNewData, $lCondition, $_SESSION['roleno']);
-
-        unset($_POST);
-        unset($_SESSION['contractno']);
-
-        if ($lResult) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
-        else echo "User must have sent wrong inputs\n";
-    }
-
-    // SHOW ADD PAGE --> CONTRACT/LEASE
-    if(isset($_POST['addContract_BRANCH'])) 
-    {
-        unset($_POST['addContract_BRANCH']);
-        Redirect('../VIEWS/LEASE/Branch_AddLease.php', false);
-    }
-
-    // SUBMIT ADDITION --> CONTRACT/LEASE
-    if(isset($_POST['submitAddLease_BRANCH'])) 
-    {
-        unset($_POST['submitAddLease_BRANCH']);
-
-        $_POST['contractno'] = "LN" . $_POST['contractno'];
-        $lNewData = $_POST;
-
-        $lResult = InsertData('contract', $lNewData, $_SESSION['roleno']);
-
-        unset($_POST);
-
-        if ($lResult) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
-        else echo "User must have sent wrong inputs\n";
-    }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
