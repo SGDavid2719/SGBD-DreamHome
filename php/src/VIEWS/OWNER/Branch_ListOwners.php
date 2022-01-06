@@ -64,13 +64,12 @@
     </section>
 
     <?php
-
-    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager' && $_SESSION['role'] != 'Supervisor') {
-        echo '<style>#editOwner { display:none;}</style>';
+    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') 
+    {
         echo '<style>#ReturnBtn { display:none;}</style>';
         echo '<style>#addOwner { display:none;}</style>';
+        if ($_SESSION['role'] != 'Supervisor') echo '<style>#editOwner { display:none;}</style>';
     } 
-
     ?>
     
     <?php

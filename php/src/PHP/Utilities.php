@@ -169,6 +169,61 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+    /* OWNER SECTION */
+
+    if(isset($_POST['submitOwnerEdition'])) 
+    {
+        unset($_POST['submitOwnerEdition']);
+
+        $lCondition = array('ownerno' => $_POST['ownerno']);
+        unset($_POST['ownerno']);
+        $lNewData = $_POST;
+      
+        $lResult = EditData('owner', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        unset($_POST);
+        unset($_SESSION['ownerno']);
+
+        if ($lResult) Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
+        else echo "User must have sent wrong inputs\n";
+    }
+
+    // SHOW EDIT PAGE --> OWNER
+    if(isset($_POST['editOwnerInfo_ALL'])) 
+    {
+        $_SESSION['ownerno'] = $_POST['ownerno'];
+        unset($_POST['editOwnerInfo_ALL']);
+        unset($_POST['ownerno']);
+        Redirect('../VIEWS/OWNER/Branch_EditOwner.php', false);
+    }
+
+    // SHOW BRANCH PAGE --> OWNER
+    if(isset($_POST['showBranchOwners_BRANCH'])) Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
+
+    // SHOW ADD PAGE --> OWNER
+    if(isset($_POST['addOwner_BRANCH'])) 
+    {
+        unset($_POST['addOwner_BRANCH']);
+        Redirect('../VIEWS/OWNER/Branch_AddOwner.php', false);
+    }
+
+    // SUBMIT ADDITION
+    if(isset($_POST['submitOwnerAddition'])) 
+    {
+        unset($_POST['submitOwnerAddition']);
+
+        $_POST['ownerno'] = "CO" . $_POST['ownerno'];
+        $lNewData = $_POST;
+        $lResult = InsertData('owner', $lNewData, $_SESSION['roleno']);
+
+        unset($_POST);
+
+        if ($lResult)  Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
+        else echo "User must have sent wrong inputs\n";
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    
     if(isset($_POST['showViewingInfo_BRANCH']))
     {
         $_SESSION['viewingno'] = $_POST['viewingno'];
@@ -221,22 +276,7 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    if(isset($_POST['submitOwnerEdition'])) 
-    {
-        unset($_POST['submitOwnerEdition']);
-
-        $lCondition = array('ownerno' => $_POST['ownerno']);
-        unset($_POST['ownerno']);
-        $lNewData = $_POST;
-      
-        $lResult = EditData('owner', $lNewData, $lCondition, $_SESSION['roleno']);
-
-        unset($_POST);
-        unset($_SESSION['ownerno']);
-
-        if ($lResult) Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
-        else echo "User must have sent wrong inputs\n";
-    }
+    
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -385,46 +425,7 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    // SHOW EDIT PAGE
-    function ShowEditingOwnerInfo() {
-        $_SESSION['ownerno'] = $_POST['ownerno'];
-        unset($_POST['editOwnerInfo_ALL']);
-        unset($_POST['ownerno']);
-        Redirect('../VIEWS/OWNER/Branch_EditOwner.php', false);
-    }
-
-    if(isset($_POST['editOwnerInfo_ALL'])) ShowEditingOwnerInfo();
-
-    // SHOW BRANCH PROPERTIES PAGE
-    if(isset($_POST['showBranchOwners_BRANCH'])) Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
-
-    // SHOW ADD PAGE
-    function ShowAddOwner() {
-        unset($_POST['addOwner_BRANCH']);
-        Redirect('../VIEWS/OWNER/Branch_AddOwner.php', false);
-    }
-
-    if(isset($_POST['addOwner_BRANCH'])) ShowAddOwner();
-
-    // SUBMIT ADDITION
-    function InsertOwnerData() 
-    {
-        unset($_POST['submitOwnerAddition']);
-
-        $lConnection = ConnectToDatabase();
-
-        $_POST['ownerno'] = "CO" . $_POST['ownerno'];
-
-        $lResult = pg_insert($lConnection, 'owner', $_POST);
-        if ($lResult) {
-            unset($_POST);
-            Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        } 
-    }
-
-    if(isset($_POST['submitOwnerAddition'])) InsertOwnerData();
+    
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 

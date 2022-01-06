@@ -30,15 +30,15 @@
                             <tr>
                                 <td><?php echo implode('</td><td>', $lRow); ?></td>
                                 <td>
-                                    <form action="../../PHP/Utilities.php" method="post">
+                                    <form id="showPropertyButton" action="../../PHP/Utilities.php" method="post">
                                         <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
                                         <input type="submit" value="More info" class="btn btn-secondary" name="showPropertyInfo_ALL">
                                     </form>
                                     <td>
-                                        <form action="../../PHP/Utilities.php" method="post">
-                                            <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
-                                            <input type="submit" value="Edit" class="btn btn-primary" name="editPropertyInfo_ALL">
-                                        </form>
+                                    <form id="editPropertyButton" action="../../PHP/Utilities.php" method="post">
+                                        <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
+                                        <input type="submit" value="Edit" class="btn btn-primary" name="editPropertyInfo_ALL">
+                                    </form>
                                     </td>
                                 </td>
                             </tr>
@@ -62,6 +62,8 @@
     if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') 
     {
         echo '<style>#showBranchProperties { display:none;}</style>';
+        echo '<style>#showPropertyButton { display:none;}</style>';
+        echo '<style>#editPropertyButton { display:none;}</style>';
     } 
 
     ?>
