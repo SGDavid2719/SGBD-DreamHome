@@ -1,12 +1,12 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
 <link rel="stylesheet" type="text/css" href="../../CSS/index.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
+        include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
         $lData = GetData('*', $lTable, "");
@@ -24,7 +24,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

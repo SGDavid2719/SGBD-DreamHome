@@ -1,18 +1,20 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
 <link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
+        include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lBranchNumber = $_SESSION['branchno'];
         $lColumns = "client.clientno, client.fname, client.lname, client.telno, client.preftype, client.maxrent, client.email";
         $lTable = "client";
         $lCriteria = "";
         $lDataArray = GetAllData($lColumns, $lTable, $lCriteria);
+        // DELETE
+        print_r($_SESSION);
     ?>
     <section>
         <div class="container mt-5">
@@ -75,7 +77,7 @@
     ?>
 
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

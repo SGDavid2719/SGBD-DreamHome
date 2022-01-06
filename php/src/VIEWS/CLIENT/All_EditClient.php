@@ -1,17 +1,17 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
 <link rel="stylesheet" type="text/css" href="../../CSS/CLIENT/Query.css" />
 </head>
 <body>
 <?php
-    include_once('../../ELEMENTS/header.php');
+    include_once('../../ELEMENTS/Header.php');
     include_once('../../PHP/Utilities.php');
-    $lColumns = "*";
-    $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
-    $lRoleNumber = $_SESSION['roleno'];
-    $lCriteria = ($_SESSION['role'] == 'Client') ? "WHERE clientno='$lRoleNumber'" : "WHERE staffno='$lRoleNumber'";
+    $lClientNumber = ($_SESSION['role'] == 'Client') ? $_SESSION['roleno'] : $_SESSION['clientno'];
+    $lColumns = "client.clientno, client.fname, client.lname, client.telno, client.preftype, client.maxrent, client.email";
+    $lTable = "client";
+    $lCriteria = "WHERE client.clientno = '$lClientNumber'";
     $lData = GetData($lColumns, $lTable, $lCriteria);
 ?>
     <section>
@@ -22,11 +22,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="fname">First name:</label><br>
-                        <input type="text" id="fname" value=<?=$lData['fname']?> class="form-control" disabled><br>
+                        <input type="text" id="fname" value=<?=$lData['fname']?> class="form-control"><br>
                     </div>
                     <div class="col-6">
                         <label for="lname">Last name:</label><br>
-                        <input type="text" id="lname" value=<?=$lData['lname']?> class="form-control" disabled><br>
+                        <input type="text" id="lname" value=<?=$lData['lname']?> class="form-control"><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -57,10 +57,7 @@
                         <label for="email">Email:</label><br>
                         <input type="text" id="email" name="email" value=<?=$lData['email']?> class="form-control"><br>
                     </div>
-                    <div class="col-6">
-                        <label for="password">Password:</label><br>
-                        <input type="password" id="password" name="password" value=<?=$lData['password']?> class="form-control"><br>
-                    </div>
+                    <div class="col-6"></div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-10"></div>
@@ -68,8 +65,10 @@
                         <button id='ReturnBtn' type="button" class="btn btn-danger">Cancel</button>
                         <script>
                             var lBtn = document.getElementById('ReturnBtn');
+                            var lRole = "<?php echo $_SESSION['role']; ?>";
                             lBtn.addEventListener('click', function() {
-                                document.location.href = 'All_DetailClient.php';
+                                if (lRole == 'Client') document.location.href = 'All_DetailClient.php';
+                                else document.location.href = 'All_ListClients.php';
                             });
                         </script>
                     </div>
@@ -81,7 +80,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

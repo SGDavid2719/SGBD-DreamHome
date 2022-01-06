@@ -14,7 +14,7 @@
     if(isset($_POST['login']))
     {
         $user_address=$_POST['eaddress'];
-        $user_password=$_POST['password'];
+        $user_password=base64_encode($_POST['password']);
     
         // Connection arguments
         $host        = "host = postgresdb";

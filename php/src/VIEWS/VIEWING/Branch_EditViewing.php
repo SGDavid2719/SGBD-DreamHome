@@ -1,12 +1,12 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
 <link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
+        include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lViewingNumber = $_SESSION['viewingno'];
         $lColumns = "viewing.viewingno, viewing.viewdate, viewing.comment, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent, address.street, address.city, address.postcode";
@@ -96,7 +96,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

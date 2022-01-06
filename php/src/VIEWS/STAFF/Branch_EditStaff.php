@@ -1,12 +1,12 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
 <link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
+        include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lStaffNumber = $_SESSION['staffno'];
         $lColumns = "staff.*";
@@ -117,7 +117,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

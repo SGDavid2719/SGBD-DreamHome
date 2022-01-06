@@ -1,12 +1,12 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
 <link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
+        include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lContractNumber = $_SESSION['contractno'];
         $lColumns = "contract.contractno, contract.clientno, contract.propertyno, contract.startdate, contract.enddate, contract.paymode, contract.depositpaid, propertyforrent.propertyno, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent, client.fname, client.lname, client.email";
@@ -109,7 +109,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

@@ -1,17 +1,19 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
 <link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
+        include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lColumns = "client.clientno, client.fname, client.lname, client.telno, client.preftype, client.maxrent, client.email";
         $lTables = "client";
         $lCriteria = "";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
+        // DELETE
+        print_r($_SESSION);
     ?>
     <section>
         <div class="container mt-5">
@@ -29,7 +31,7 @@
                                 <td>
                                     <form action="../../PHP/Utilities.php" method="post">
                                         <input type="text" id="clientno" class="d-none" name="clientno" value=<?=$lRow['clientno']?>>
-                                        <input type="submit" value="Edit" class="btn btn-primary" name="ediClientInfo_ALL">
+                                        <input type="submit" value="Edit" class="btn btn-primary" name="editClientInfo_ALL">
                                     </form>
                                 </td>
                             </tr>
@@ -40,15 +42,21 @@
             <div class="row">
                 <div class="col-10"></div>
                 <div class="col-2 d-flex justify-content-end">
-                    <form action="../../PHP/Utilities.php" method="post">
-                        <input type="submit" value="Show Branch Clients" class="btn btn-secondary" name="showBranchClients_BRANCH">
+                    <form id="addClient" action="../../PHP/Utilities.php" method="post">
+                        <input type="submit" value="Add Client" class="btn btn-secondary" name="addClient">
                     </form> 
                 </div>
             </div>
         </div>
     </section>
+
+    
     <?php
-        include_once('../../ELEMENTS/footer.php');
+    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') {
+        echo '<style>#addClient { display:none;}</style>';
+    }
+
+    include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

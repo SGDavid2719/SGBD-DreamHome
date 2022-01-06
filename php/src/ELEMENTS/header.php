@@ -2,13 +2,7 @@
     $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
 
     /* Client section */
-    if($_SESSION['role'] == 'Client') {
-        $lClientLink = "../CLIENT/All_DetailClient.php";
-    } else if ($_SESSION['role'] == 'Manager') {
-        $lClientLink = "../CLIENT/All_ListClients.php";
-    } else {
-        $lClientLink = "../CLIENT/Branch_ListClients.php";
-    }
+    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_DetailClient.php" : "../CLIENT/All_ListClients.php";
     /* Property section */
     $lPropertyLink = ($_SESSION['role'] == 'Client' || $_SESSION['role'] == 'Manager') ? "../PROPERTY/All_ListProperties.php" : "../PROPERTY/Branch_ListProperties.php";
     /* Viewing section */

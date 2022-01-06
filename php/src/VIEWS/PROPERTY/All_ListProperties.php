@@ -1,12 +1,12 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
 <link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
+        include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lColumns = "p.propertyno, p.type, p.rooms, p.rent, a.city, a.postcode, a.street";
         $lTables = "propertyforrent p, address a";
@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-10"></div>
                 <div class="col-2 d-flex justify-content-end">
-                    <form action="../../PHP/Utilities.php" method="post">
+                    <form id="showBranchProperties" action="../../PHP/Utilities.php" method="post">
                         <input type="submit" value="Show Branch Properties" class="btn btn-secondary" name="showBranchProperties_BRANCH">
                     </form> 
                 </div>
@@ -49,7 +49,16 @@
     </section>
 
     <?php
-        include_once('../../ELEMENTS/footer.php');
+
+    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') 
+    {
+        echo '<style>#showBranchProperties { display:none;}</style>';
+    } 
+
+    ?>
+
+    <?php
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>
