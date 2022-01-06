@@ -15,6 +15,8 @@
     $lStaffLink = ($_SESSION['role'] == 'Manager') ? "../STAFF/All_ListStaff.php" : "../STAFF/Branch_ListStaff.php";
     /* Branch section */
     $lBranchLink = "../BRANCH/All_ListBranches.php";
+    /* Newspaper section */
+    $lNewspaperLink = "../NEWSPAPER/All_ListNewspapers.php";
 ?>
 
 <header>
@@ -50,7 +52,7 @@
                         <a href=<?=$lLeaseLink?>>Lease</a>
                     </li>
                     <li id="newspaperLink">
-                        <a href="newspaper.php">Newspaper</a>
+                        <a href=<?=$lNewspaperLink?>>Newspaper</a>
                     </li>
                 </ul>
                 <ul class="navigation-menu-user mt-2">

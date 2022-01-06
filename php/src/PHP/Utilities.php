@@ -422,4 +422,58 @@
         else echo "User must have sent wrong inputs\n";  
     }
 
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW EDIT PAGE --> VIEWING
+
+    if(isset($_POST['editNewspaperInfo']))
+    {
+        $_SESSION['newspaperno'] = $_POST['newspaperno'];
+        //print_r($_POST['newspaperno']);
+        unset($_POST['editNewspaperInfo']);
+        unset($_POST['newspaperno']);
+        Redirect('../VIEWS/NEWSPAPER/Branch_EditNewspaper.php', false);
+    }
+
+    // SUBMIT EDITION
+    if(isset($_POST['submitNewspaperEdition']))
+    {
+        unset($_POST['submitNewspaperEdition']);
+
+        $lCondition = array('newspaperno' => $_SESSION['newspaperno']);
+        unset($_POST['newspaperno']);
+        $lNewData = $_POST;
+      
+        $lResult = EditData('newspaper', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        unset($_POST);
+        unset($_SESSION['newspaperno']);
+
+        if ($lResult) Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
+        else echo "User must have sent wrong inputs\n";  
+    }
+
+    // SHOW ADD PAGE --> NEWSPAPER
+    if(isset($_POST['addNewspaper'])) 
+    {
+        unset($_POST['addNewspaper']);
+        Redirect('../VIEWS/NEWSPAPER/Branch_AddNewspaper.php', false);
+    }
+
+    // SUBMIT ADDITION --> NEWSPAPER
+    if(isset($_POST['submitNewspaperAddition'])) 
+    {
+        unset($_POST['submitNewspaperAddition']);
+
+        $_POST['newspaperno'] = "NS" . $_POST['newspaperno'];
+        $lNewData = $_POST;
+
+        $lResult = InsertData('newspaper', $lNewData, $_SESSION['roleno']);
+
+        unset($_POST);
+
+        if ($lResult) Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
+        else echo "User must have sent wrong inputs\n";
+    }
+
 ?>
