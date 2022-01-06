@@ -224,6 +224,9 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     
+    /* VIEWING SECTION */
+
+    // SHOW INFO PAGE --> VIEWING
     if(isset($_POST['showViewingInfo_BRANCH']))
     {
         $_SESSION['viewingno'] = $_POST['viewingno'];
@@ -231,9 +234,18 @@
         Redirect('../VIEWS/VIEWING/Branch_ShowViewing.php', false);
     }
 
+    // SHOW EDIT PAGE --> VIEWING
+    if(isset($_POST['editViewingInfo_BRANCH'])) 
+    {
+        $_SESSION['viewingno'] = $_POST['viewingno'];
+        unset($_POST['editViewingInfo_BRANCH']);
+        unset($_POST['viewingno']);
+        Redirect('../VIEWS/VIEWING/Branch_EditViewing.php', false);
+    }
+
     if(isset($_POST['submitViewingEdition'])) 
     {
-        unset($_POST['submitViewingForm']);
+        unset($_POST['submitViewingEdition']);
 
         $lNewData = $_POST;
         $lCondition = array('viewingno' => $_SESSION['viewingno']);
@@ -245,6 +257,23 @@
         if ($lResult) Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
         else echo "User must have sent wrong inputs\n";
     }
+
+    if(isset($_POST['submitAddViewing_BRANCH']))
+    {
+        unset($_POST['submitAddViewing_BRANCH']);
+
+        $_POST['viewingno'] = "V" . $_POST['viewingno'];
+        $lNewData = $_POST;
+
+        $lResult = InsertData('viewing', $lNewData, $_SESSION['roleno']);
+
+        unset($_POST);
+
+        if ($lResult) Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
+        else echo "User must have sent wrong inputs\n";
+    }
+
+    if(isset($_POST['addView_BRANCH'])) Redirect('../VIEWS/VIEWING/Branch_AddViewing.php', false);
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     
@@ -280,22 +309,7 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    if(isset($_POST['submitAddViewing_BRANCH']))
-    {
-        unset($_POST['submitAddViewing_BRANCH']);
-
-        $_POST['viewingno'] = "V" . $_POST['viewingno'];
-        $lNewData = $_POST;
-
-        $lResult = InsertData('viewing', $lNewData, $_SESSION['roleno']);
-
-        unset($_POST);
-
-        if ($lResult) Redirect('../VIEWS/VIEWING/Branch_ListViewing.php', false);
-        else echo "User must have sent wrong inputs\n";
-    }
-
-    if(isset($_POST['addView_BRANCH'])) Redirect('../VIEWS/VIEWING/Branch_AddViewing.php', false);
+    
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 

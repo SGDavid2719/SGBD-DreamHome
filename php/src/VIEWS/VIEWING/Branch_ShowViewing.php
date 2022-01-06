@@ -79,7 +79,7 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-9"></div>
-                    <div class="col-1 d-flex justify-content-center">
+                    <div class="col-3 d-flex justify-content-end">
                         <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
                         <script>
                             var lBtn = document.getElementById('ReturnBtn');
@@ -87,9 +87,6 @@
                                 document.location.href = 'Branch_ListViewings.php';
                             });
                         </script>
-                    </div>
-                    <div class="col-2 d-flex justify-content-center">
-                        <a href="Branch_EditViewing.php" class="btn btn-secondary button">Edit</a>
                     </div>
                 </div>
             </form>

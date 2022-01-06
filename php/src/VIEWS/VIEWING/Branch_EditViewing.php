@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-6">
                         <label for="comment">Comment:</label><br>
-                        <input type="text" id="comment" name="comment" value=<?=(!empty($lData['comment'])) ? print($lData['comment']) : print("-")?> class="form-control"><br>
+                        <input type="text" id="comment" name="comment" value=<?php (!empty($lData['comment'])) ? print($lData['comment']) : print("-")?> class="form-control"><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -84,7 +84,7 @@
                         <script>
                             var lBtn = document.getElementById('ReturnBtn');
                             lBtn.addEventListener('click', function() {
-                                document.location.href = 'Branch_ShowViewing.php';
+                                document.location.href = 'Branch_ListViewings.php';
                             });
                         </script>
                     </div>

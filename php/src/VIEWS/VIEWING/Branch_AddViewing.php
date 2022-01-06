@@ -28,7 +28,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="viewingno">Viewing Number:</label><br>
-                        <input type="text" id="viewingno" name="viewingno" class="form-control" required><br>
+                        <input type="text" id="viewingno" name="viewingno" maxlength="4" class="form-control" required><br>
                     </div>
                     <div class="col-6"></div>
                 </div>
