@@ -12,8 +12,6 @@
         $lTables = "client";
         $lCriteria = "";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
-        // DELETE
-        print_r($_SESSION);
     ?>
     <section>
         <div class="container mt-5">

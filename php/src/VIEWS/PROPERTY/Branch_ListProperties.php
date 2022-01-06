@@ -13,6 +13,9 @@
         $lTables = "propertyforrent INNER JOIN staff ON propertyforrent.staffno = staff.staffno INNER JOIN address ON propertyforrent.addressno = address.addressno";
         $lCriteria = "WHERE staff.branchno = '$lBranchNumber'";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
+        // DELETE
+        print_r($_SESSION);
+        print_r($_POST);
     ?>
     <section>
         <div class="container mt-5">
@@ -34,6 +37,12 @@
                                     <form action="../../PHP/Utilities.php" method="post">
                                         <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
                                         <input type="submit" value="More info" class="btn btn-secondary" name="showPropertyInfo_BRANCH">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form id="editPropertyButton" action="../../PHP/Utilities.php" method="post">
+                                        <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
+                                        <input type="submit" value="Edit" class="btn btn-primary" name="editPropertyInfo_ALL">
                                     </form>
                                 </td>
                             </tr>
@@ -65,6 +74,8 @@
 
     if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') {
         echo '<style>#ReturnBtn { display:none;}</style>';
+
+        if ($_SESSION['role'] != 'Supervisor') echo '<style>#editPropertyButton { display:none;}</style>';
     } 
 
     ?>

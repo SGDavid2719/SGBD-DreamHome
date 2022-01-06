@@ -8,11 +8,13 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
-        /* change this table for 'owner' */
-        $lColumns = 'ownerno';
-        $lTable = 'propertyforrent';
+        $lColumns = 'owner.ownerno';
+        $lTable = 'owner';
         $lCriteria = '';
         $lOwnerArrayData = GetAllData($lColumns, $lTable, $lCriteria);
+        // DELETE
+        print_r($_SESSION);
+        print_r($_POST);
     ?>
     <section>
         <div class="container mt-5">
@@ -32,6 +34,10 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
+                        <label for="propertyno">Property Number:</label><br>
+                        <input type="text" id="propertyno" name="propertyno" class="form-control" required><br>
+                    </div>
+                    <div class="col-6">
                         <label for="propertyno">Owner Number:</label><br>
                         <select type="text" id="ownerno" name="ownerno" class="form-select form-select-sm" required>
                             <?php 
@@ -40,10 +46,6 @@
                             }
                             ?>
                         </select>
-                    </div>
-                    <div class="col-6">
-                        <label for="propertyno">Property Number:</label><br>
-                        <input type="text" id="propertyno" name="propertyno" class="form-control" required><br>
                     </div>
                 </div>
                 <div class="row mt-4">

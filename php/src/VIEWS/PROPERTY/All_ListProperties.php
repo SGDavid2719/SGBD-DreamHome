@@ -12,6 +12,9 @@
         $lTables = "propertyforrent p, address a";
         $lCriteria = "WHERE p.addressno = a.addressno";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
+        // DELETE
+        print_r($_SESSION);
+        print_r($_POST);
     ?>
     <section>
         <div class="container mt-5">
@@ -31,6 +34,12 @@
                                         <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
                                         <input type="submit" value="More info" class="btn btn-secondary" name="showPropertyInfo_ALL">
                                     </form>
+                                    <td>
+                                        <form action="../../PHP/Utilities.php" method="post">
+                                            <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
+                                            <input type="submit" value="Edit" class="btn btn-primary" name="editPropertyInfo_ALL">
+                                        </form>
+                                    </td>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

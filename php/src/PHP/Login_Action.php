@@ -36,6 +36,9 @@
     
         $data = pg_fetch_array($result);
         $rows = pg_num_rows($result);
+
+        pg_free_result($result);
+        pg_close($connection);
     
         if($rows) {
             $_SESSION['fname'] = $data['fname'];
@@ -51,9 +54,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <?php
+            unset($_POST);
             include_once('../VIEWS/Login.php');
         }
-        pg_free_result($result);
-        pg_close($connection);
     }
 ?>

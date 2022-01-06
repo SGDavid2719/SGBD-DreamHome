@@ -104,19 +104,17 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    if(isset($_POST['showPropertyInfo_ALL'])) 
-    {
-        $_SESSION['propertyno'] = $_POST['propertyno'];
-        unset($_POST['propertyno']);
-        Redirect('../VIEWS/PROPERTY/All_ShowProperty.php', false);
-    }
+    /* PROPERTY SECTION */
 
-    if(isset($_POST['showPropertyInfo_BRANCH'])) {
+    // SHOW INFO PAGE --> PROPERTY
+    if(isset($_POST['showPropertyInfo_BRANCH']) || isset($_POST['showPropertyInfo_ALL'])) {
         $_SESSION['propertyno'] = $_POST['propertyno'];
+        $_SESSION['all_or_branch'] = (isset($_POST['showPropertyInfo_BRANCH'])) ? 'showPropertyInfo_BRANCH' : 'showPropertyInfo_ALL';
         unset($_POST['propertyno']);
         Redirect('../VIEWS/PROPERTY/Branch_ShowProperty.php', false);
     }
     
+    // SUBMIT ADDITION --> PROPERTY
     if(isset($_POST['submitAddProperty_BRANCH']))
     {
         unset($_POST['submitAddProperty_BRANCH']);
@@ -129,7 +127,45 @@
         else echo "User must have sent wrong inputs\n"; 
     }
 
+    // PENDING ADDRESS EDITION
+    // SUBMIT EDITION --> PROPERTY
+    if(isset($_POST['submitPropertyEdition'])) 
+    {
+        unset($_POST['submitPropertyEdition']);
+
+        $lNewData = $_POST;
+        $lCondition = array('propertyno' => $_POST['propertyno']);
+        $lResult = EditData('propertyforrent', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        unset($_POST);
+
+        if ($lResult) 
+        {
+            if ($_SESSION['role'] != 'Manager') 
+            {
+                Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false); 
+            }  
+            else Redirect('../VIEWS/PROPERTY/All_ListProperties.php', false); 
+        }
+        else echo "User must have sent wrong inputs\n";
+    }
+
+    // PENDING PROPERTY ADDITION (ADDRESS ISSUE)
+
+    // SHOW ADDITION PAGE --> PROPERTY
     if(isset($_POST['addProperty_BRANCH'])) Redirect('../VIEWS/PROPERTY/Branch_AddProperty.php', false);
+
+    // SHOW BRANCH LIST PAGE --> PROPERTY
+    if(isset($_POST['showBranchProperties_BRANCH'])) Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
+
+    // SHOW EDIT PAGE --> PROPERTY
+    if(isset($_POST['editPropertyInfo_ALL']) || isset($_POST['editPropertyInfo_BRANCH'])) 
+    {
+        $_SESSION['propertyno'] = $_POST['propertyno'];
+        $_SESSION['all_or_branch'] = (isset($_POST['editPropertyInfo_ALL'])) ? 'editPropertyInfo_ALL' : 'editPropertyInfo_BRANCH';
+        unset($_POST['propertyno']);
+        Redirect('../VIEWS/PROPERTY/Branch_EditProperty.php', false);
+    }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -345,8 +381,7 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    // SHOW BRANCH PROPERTIES PAGE
-    if(isset($_POST['showBranchProperties_BRANCH'])) Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
+    
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
