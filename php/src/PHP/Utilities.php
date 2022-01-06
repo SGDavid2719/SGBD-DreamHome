@@ -277,6 +277,8 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
+    /* CONTRACT/LEASE SECTION */
+
     // SHOW INFO PAGE --> CONTRACT/LEASE
     if(isset($_POST['showContractInfo_BRANCH'])) 
     {
@@ -338,6 +340,9 @@
         else echo "User must have sent wrong inputs\n";
     }
 
+    // SHOW BRANCH LEASES PAGE
+    if(isset($_POST['showBranchLeases_ALL'])) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
+
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
     
     if(isset($_POST['showStaffInfo_BRANCH'])) 
@@ -360,11 +365,39 @@
 
         unset($_POST);
 
-        if ($lResult) Redirect('../VIEWS/STAFF/Branch_ShowStaff.php', false);
+        if ($lResult) Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
         else echo "User must have sent wrong inputs\n";
     }
 
     if(isset($_POST['addStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_AddStaff.php', false);
+
+    // SHOW BRANCH STAFF PAGE
+    if(isset($_POST['showBranchStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
+
+    if(isset($_POST['editStaffInfo_BRANCH'])) 
+    {
+        $_SESSION['staffno'] = $_POST['staffno'];
+        unset($_POST['editStaffInfo_BRANCH']);
+        unset($_POST['staffno']);
+        Redirect('../VIEWS/STAFF/Branch_EditStaff.php', false);
+    }
+
+    // SUBMIT EDITION
+    if(isset($_POST['submitStaffEdition'])) 
+    {
+        unset($_POST['submitStaffEdition']);
+
+        $lCondition = array('staffno' => $_SESSION['staffno']);
+        unset($_POST['staffno']);
+        $lNewData = $_POST;
+        $lResult = EditData('staff', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        unset($_POST);
+        unset($_SESSION['staffno']);
+
+        if ($lResult) Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
+        else echo "User must have sent wrong inputs\n";
+    }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -402,39 +435,7 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    // SHOW BRANCH STAFF PAGE
-    if(isset($_POST['showBranchStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
-
-    if(isset($_POST['editStaffInfo_BRANCH'])) 
-    {
-        $_SESSION['staffno'] = $_POST['staffno'];
-        unset($_POST['editStaffInfo_BRANCH']);
-        unset($_POST['staffno']);
-        Redirect('../VIEWS/STAFF/Branch_EditStaff.php', false);
-    }
-
-    // SUBMIT EDITION
-    function EditStaffData() 
-    {
-        unset($_POST['submitStaffEdition']);
-        
-        $lConnection = ConnectToDatabase();
-
-        $lCondition = array('staffno' => $_SESSION['staffno']);
-
-        unset($_POST['staffno']);
-      
-        $lResult = pg_update($lConnection, 'staff', $_POST, $lCondition);
-        if ($lResult) {
-            unset($_POST);
-            unset($_SESSION['staffno']);
-            Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        }     
-    }
-
-    if(isset($_POST['submitStaffEdition'])) EditStaffData();
+    
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
@@ -449,7 +450,6 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    // SHOW BRANCH LEASES PAGE
-    if(isset($_POST['showBranchLeases_ALL'])) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
+    
 
 ?>

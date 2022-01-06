@@ -19,7 +19,7 @@
         $lCriteria = '';
         $lBranchArrayData = GetAllData($lColumns, $lTable, $lCriteria);
         // Array of positions
-        $lColumns = 'staff.position';
+        $lColumns = 'DISTINCT staff.position';
         $lTable = 'staff';
         $lCriteria = '';
         $lPositionArrayData = GetAllData($lColumns, $lTable, $lCriteria);

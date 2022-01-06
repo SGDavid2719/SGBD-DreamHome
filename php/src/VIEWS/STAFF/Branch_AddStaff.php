@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-6">
                         <label for="staffno">Staff Number:</label><br>
-                        <input type="text" id="staffno" name="staffno" class="form-control"><br>
+                        <input type="text" id="staffno" name="staffno" maxlength="3" class="form-control"><br>
                     </div>
                 </div>
                 <div class="row mt-4">
