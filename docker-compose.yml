@@ -14,6 +14,9 @@ services:
         - ./postgresql/pgdata:/var/lib/postgresql/data
       ports:
         - "5433:5432"
+      networks:
+        dreamnetwork:
+          ipv4_address: 172.32.199.6
   php-apache-environment:
     container_name: php-apache
     build:
@@ -25,6 +28,9 @@ services:
       - ./php/src:/var/www/html/
     ports:
       - "8000:80"
+    networks:
+      dreamnetwork:
+        ipv4_address: 172.32.199.7
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -36,3 +42,6 @@ services:
       - "8081:80"
     depends_on:
       - postgresdb
+    networks:
+      dreamnetwork:
+        ipv4_address: 172.32.199.8  
