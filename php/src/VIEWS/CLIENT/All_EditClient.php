@@ -22,11 +22,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="fname">First name:</label><br>
-                        <input type="text" id="fname" value=<?=$lData['fname']?> class="form-control"><br>
+                        <input type="text" id="fname" name="fname" value=<?=$lData['fname']?> class="form-control"><br>
                     </div>
                     <div class="col-6">
                         <label for="lname">Last name:</label><br>
-                        <input type="text" id="lname" value=<?=$lData['lname']?> class="form-control"><br>
+                        <input type="text" id="lname" name="lname" value=<?=$lData['lname']?> class="form-control"><br>
                     </div>
                 </div>
                 <div class="row mt-4">

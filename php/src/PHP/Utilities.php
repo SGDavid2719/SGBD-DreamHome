@@ -29,18 +29,19 @@
 
         unset($_POST);
 
-        if ($lResult) {
-            if ($_SESSION['role'] == 'Client') 
-            {
-                unset($_SESSION['clientno']);
-                Redirect('../VIEWS/CLIENT/All_DetailClient.php', false); 
-            }  
-            else Redirect('../VIEWS/CLIENT/All_ListClients.php', false); 
-        } 
-        else 
+        if ($lResult == false) 
         {
-            echo "User must have sent wrong inputs\n"; 
+            $lClientNo = ($_SESSION['role'] == 'Client') ? $_SESSION['roleno'] : $_SESSION['clientno'];
+            $lDescription = 'Error editing client: ' . $lClientNo;
+            InsertWarning('client', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }
+
+        if ($_SESSION['role'] == 'Client') 
+        {
+            unset($_SESSION['clientno']);
+            Redirect('../VIEWS/CLIENT/All_DetailClient.php', false); 
+        }  
+        else Redirect('../VIEWS/CLIENT/All_ListClients.php', false); 
     }
 
     // SUBMIT PASSWORD EDITION --> CLIENT
@@ -59,8 +60,11 @@
             $lCondition = array('clientno' => $_SESSION['roleno']);
             $lResult = EditData('client', $lNewData, $lCondition, $_SESSION['roleno']);
 
-            if ($lResult) Redirect('../VIEWS/CLIENT/All_DetailClient.php', false); 
-            else echo "User must have sent wrong inputs\n";
+            if ($lResult == false) 
+            {
+                $lDescription = 'Error editing client password: ' . $_SESSION['roleno'];
+                InsertWarning('client', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            }
         }
         unset($_POST);
         Redirect('../VIEWS/CLIENT/All_DetailClient.php', false); 
@@ -96,10 +100,14 @@
         $lNewData = $_POST;
         $lResult = InsertData('client', $lNewData, $_SESSION['roleno']);
 
+        if ($lResult == false)
+        {
+            $lDescription = 'Error inserting client';
+            InsertWarning('client', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
+        
         unset($_POST);
-
-        if ($lResult) Redirect('../VIEWS/CLIENT/All_ListClients.php', false);
-        else echo "User must have sent wrong inputs\n";
+        Redirect('../VIEWS/CLIENT/All_ListClients.php', false);
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -121,10 +129,14 @@
 
         $lResult = InsertData('propertyforrent', $_POST, $_SESSION['roleno']);
 
-        unset($_POST);
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error inserting property for rent';
+            InsertWarning('propertyforrent', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
 
-        if ($lResult) Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false); 
-        else echo "User must have sent wrong inputs\n"; 
+        unset($_POST);
+        Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false); 
     }
 
     // PENDING ADDRESS EDITION
@@ -137,17 +149,19 @@
         $lCondition = array('propertyno' => $_POST['propertyno']);
         $lResult = EditData('propertyforrent', $lNewData, $lCondition, $_SESSION['roleno']);
 
+        if ($lResult == false)
+        {
+            $lDescription = 'Error editing property for rent: ' . $_POST['propertyno'];
+            InsertWarning('propertyforrent', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+
         unset($_POST);
 
-        if ($lResult) 
+        if ($_SESSION['role'] != 'Manager') 
         {
-            if ($_SESSION['role'] != 'Manager') 
-            {
-                Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false); 
-            }  
-            else Redirect('../VIEWS/PROPERTY/All_ListProperties.php', false); 
-        }
-        else echo "User must have sent wrong inputs\n";
+            Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false); 
+        }  
+        else Redirect('../VIEWS/PROPERTY/All_ListProperties.php', false); 
     }
 
     // PENDING PROPERTY ADDITION (ADDRESS ISSUE)
@@ -181,11 +195,15 @@
       
         $lResult = EditData('owner', $lNewData, $lCondition, $_SESSION['roleno']);
 
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing owner: ' . $_SESSION['ownerno'];
+            InsertWarning('owner', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+        
         unset($_POST);
         unset($_SESSION['ownerno']);
-
-        if ($lResult) Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
-        else echo "User must have sent wrong inputs\n";
+        Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
     }
 
     // SHOW EDIT PAGE --> OWNER
@@ -216,10 +234,14 @@
         $lNewData = $_POST;
         $lResult = InsertData('owner', $lNewData, $_SESSION['roleno']);
 
-        unset($_POST);
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error inserting owner';
+            InsertWarning('owner', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
 
-        if ($lResult)  Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
-        else echo "User must have sent wrong inputs\n";
+        unset($_POST);
+        Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -251,11 +273,15 @@
         $lCondition = array('viewingno' => $_SESSION['viewingno']);
         $lResult = EditData('viewing', $lNewData, $lCondition, $_SESSION['roleno']);
 
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing viewing: ' . $_SESSION['viewingno'];
+            InsertWarning('viewing', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+        
         unset($_POST);
         unset($_SESSION['viewingno']);
-
-        if ($lResult) Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
-        else echo "User must have sent wrong inputs\n";
+        Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
     }
 
     if(isset($_POST['submitAddViewing_BRANCH']))
@@ -265,12 +291,16 @@
         $_POST['viewingno'] = "V" . $_POST['viewingno'];
         $lNewData = $_POST;
 
-        $lResult = InsertData('viewing', $lNewData, $_SESSION['roleno']);
+        $lResult = InsertData('viewing', $lNewData, $_SESSION['roleno']);    
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error inserting viewing';
+            InsertWarning('viewing', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
 
         unset($_POST);
-
-        if ($lResult) Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
-        else echo "User must have sent wrong inputs\n";
+        Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
     }
 
     if(isset($_POST['addView_BRANCH'])) Redirect('../VIEWS/VIEWING/Branch_AddViewing.php', false);
@@ -310,11 +340,15 @@
     
         $lResult = EditData('contract', $lNewData, $lCondition, $_SESSION['roleno']);
 
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing contract: ' . $_POST['contractno'];
+            InsertWarning('contract', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+
         unset($_POST);
         unset($_SESSION['contractno']);
-
-        if ($lResult) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
-        else echo "User must have sent wrong inputs\n";
+        Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
     }
 
     // SHOW ADD PAGE --> CONTRACT/LEASE
@@ -334,10 +368,14 @@
 
         $lResult = InsertData('contract', $lNewData, $_SESSION['roleno']);
 
-        unset($_POST);
+        if ($lResult == false)
+        {
+            $lDescription = 'Error inserting contract';
+            InsertWarning('contract', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
 
-        if ($lResult) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
-        else echo "User must have sent wrong inputs\n";
+        unset($_POST);
+        Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
     }
 
     // SHOW BRANCH LEASES PAGE
@@ -359,14 +397,19 @@
         $lFNameLetter = substr($_POST['fname'], 0, 1);
         $lLNameLetter = substr($_POST['lname'], 0, 1);
         $lCurrentYear = date("Y");
-        $_POST['password'] = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
+        $lPassword = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
+        $_POST['password'] = base64_encode($lPassword);
 
         $lResult = InsertData('staff', $_POST, $_SESSION['roleno']);
 
-        unset($_POST);
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error inserting staff';
+            InsertWarning('staff', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }        
 
-        if ($lResult) Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
-        else echo "User must have sent wrong inputs\n";
+        unset($_POST);
+        Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
     }
 
     if(isset($_POST['addStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_AddStaff.php', false);
@@ -392,11 +435,15 @@
         $lNewData = $_POST;
         $lResult = EditData('staff', $lNewData, $lCondition, $_SESSION['roleno']);
 
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing staff: ' . $_SESSION['staffno'];
+            InsertWarning('staff', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+
         unset($_POST);
         unset($_SESSION['staffno']);
-
-        if ($lResult) Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
-        else echo "User must have sent wrong inputs\n";
+        Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -418,8 +465,13 @@
         unset($_POST);
         unset($_SESSION['addressno']);
 
-        if ($lResult) Redirect('../VIEWS/BRANCH/All_ListBranches.php', false);
-        else echo "User must have sent wrong inputs\n";  
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing branch: ' . $_SESSION['addressno'];
+            InsertWarning('branch', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }        
+
+        Redirect('../VIEWS/BRANCH/All_ListBranches.php', false);
     }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -449,8 +501,13 @@
         unset($_POST);
         unset($_SESSION['newspaperno']);
 
-        if ($lResult) Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
-        else echo "User must have sent wrong inputs\n";  
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing newspaper: ' . $_SESSION['newspaperno'];
+            InsertWarning('newspaper', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+
+        Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
     }
 
     // SHOW ADD PAGE --> NEWSPAPER
@@ -472,8 +529,13 @@
 
         unset($_POST);
 
-        if ($lResult) Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
-        else echo "User must have sent wrong inputs\n";
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error inserting newspaper';
+            InsertWarning('newspaper', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
+
+        Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
     }
 
 ?>
