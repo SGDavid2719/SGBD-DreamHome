@@ -10,6 +10,8 @@
         include_once('../../PHP/Utilities.php');
         $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
         $lData = GetData('*', $lTable, "");
+        //DELETE
+        print_r($_SESSION);
     ?>
     <section>
         <div class="container mt-5">

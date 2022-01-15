@@ -9,9 +9,10 @@
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lBranchNumber = $_SESSION['branchno'];
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lColumns = "staff.staffno, staff.fname, staff.lname, staff.branchno, staff.position";
         $lTables = "staff";
-        $lCriteria = "WHERE staff.branchno='$lBranchNumber '";
+        $lCriteria = "WHERE staff.branchno='$lBranchNumber' AND staff.securityclass<=$lRoleSecurityClass";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
     ?>
     <section>

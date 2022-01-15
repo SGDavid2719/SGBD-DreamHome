@@ -8,14 +8,12 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         $lColumns = "propertyforrent.propertyno, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent, address.city, address.postcode, address.street";
         $lTables = "propertyforrent INNER JOIN staff ON propertyforrent.staffno = staff.staffno INNER JOIN address ON propertyforrent.addressno = address.addressno";
-        $lCriteria = "WHERE staff.branchno = '$lBranchNumber'";
+        $lCriteria = "WHERE staff.branchno = '$lBranchNumber' AND propertyforrent.securityclass<=$lRoleSecurityClass";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
-        // DELETE
-        print_r($_SESSION);
-        print_r($_POST);
     ?>
     <section>
         <div class="container mt-5">

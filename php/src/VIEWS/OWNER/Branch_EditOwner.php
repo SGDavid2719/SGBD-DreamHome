@@ -8,12 +8,13 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         $lOwnerNumber = (isset($_POST['ownerno'])) ? $_POST['ownerno'] : $_SESSION['ownerno'];
         if(isset($_POST['ownerno'])) unset($_POST['ownerno']);
         $lColumns = "owner.*";
         $lTable = "owner";
-        $lCriteria = "WHERE owner.ownerno = '$lOwnerNumber'";
+        $lCriteria = "WHERE owner.ownerno = '$lOwnerNumber' AND owner.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
     ?>
     <section>
@@ -34,11 +35,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="fname">First name:</label><br>
-                        <input type="text" id="fname" name="fname" value=<?=$lData['fname']?> class="form-control" required><br>
+                        <input type="text" id="fname" name="fname" value=<?=$lData['fname']?> maxlength="10" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="lname">Last name:</label><br>
-                        <input type="text" id="lname" name="lname" value=<?=$lData['lname']?> class="form-control" required><br>
+                        <input type="text" id="lname" name="lname" value=<?=$lData['lname']?> maxlength="10" class="form-control" required><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -46,7 +47,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="address">Address:</label><br>
-                        <input type="text" id="address" name="address" value=<?=$lData['address']?> class="form-control" required><br>
+                        <input type="text" id="address" name="address" value=<?=$lData['address']?> maxlength="50" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="telno">Telephone number:</label><br>
@@ -56,7 +57,7 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="email">Email:</label><br>
-                        <input type="text" id="email" name="email" value=<?=$lData['email']?> class="form-control" required><br>
+                        <input type="text" id="email" name="email" value=<?=$lData['email']?> maxlength="50" class="form-control" required><br>
                     </div>
                     <div class="col-6"></div>
                 </div>

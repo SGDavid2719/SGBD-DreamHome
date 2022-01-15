@@ -15,18 +15,18 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="password">Previous Password:</label><br>
-                        <input type="password" id="password" name="password" class="form-control"><br>
+                        <input type="password" id="password" name="password" maxlength="40" class="form-control"><br>
                     </div>
                     <div class="col-6"></div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="newPassword1">New password:</label><br>
-                        <input type="password" id="newPassword1" name="newPassword1" class="form-control"><br>
+                        <input type="password" id="newPassword1" name="newPassword1" maxlength="40" class="form-control"><br>
                     </div>
                     <div class="col-6">
                         <label for="newPassword2">Repeat password:</label><br>
-                        <input type="password" id="newPassword2" name="newPassword2" class="form-control"><br>
+                        <input type="password" id="newPassword2" name="newPassword2" maxlength="40" class="form-control"><br>
                     </div>
                 </div>
                 <div class="row mt-4">

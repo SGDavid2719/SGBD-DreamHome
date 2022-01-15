@@ -8,16 +8,17 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lNewspaperNumber = $_SESSION['newspaperno'];
         // Newspaper data
         $lColumns = "*";
         $lTable = "newspaper";
-        $lCriteria = "WHERE newspaperno='$lNewspaperNumber'";
+        $lCriteria = "WHERE newspaperno='$lNewspaperNumber' AND newspaper.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
         // Array of addresses
         $lColumns = 'DISTINCT address.addressno';
         $lTable = 'address';
-        $lCriteria = '';
+        $lCriteria = "WHERE address.securityclass<=$lRoleSecurityClass";
         $lAddressesArrayData = GetAllData($lColumns, $lTable, $lCriteria);
     ?>
     <section>

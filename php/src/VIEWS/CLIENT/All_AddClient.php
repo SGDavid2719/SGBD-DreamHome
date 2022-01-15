@@ -8,6 +8,8 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        // Property types
+        $lPropertyTypes = array("Flat", "House");
     ?>
     <section>
         <div class="container mt-5">
@@ -17,7 +19,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="clientno">Client Number:</label><br>
-                        <input type="text" id="clientno" name="clientno" class="form-control" required><br>
+                        <input type="text" id="clientno" name="clientno" maxlength="3" class="form-control" required><br>
                     </div>
                     <div class="col-6"></div>
                 </div>
@@ -26,11 +28,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="fname">First name:</label><br>
-                        <input type="text" id="fname" name="fname" class="form-control" required><br>
+                        <input type="text" id="fname" name="fname" maxlength="10" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="lname">Last name:</label><br>
-                        <input type="text" id="lname" name="lname" class="form-control" required><br>
+                        <input type="text" id="lname" name="lname" maxlength="10" class="form-control" required><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -38,7 +40,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="email">Email:</label><br>
-                        <input type="text" id="email" name="email" class="form-control" required><br>
+                        <input type="text" id="email" name="email" maxlength="50" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="telno">Telephone number:</label><br>
@@ -48,7 +50,14 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="preftype">Pref type:</label><br>
-                        <input type="text" id="preftype" name="preftype" class="form-control" required><br>
+                        <select type="text" id="preftype" name="preftype" class="form-select form-select-sm" required>
+                            <?php 
+                            foreach ($lPropertyTypes as $lRow) 
+                            {
+                                echo '<option value=' . "$lRow" . '>' . $lRow . '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="col-6">
                         <label for="maxrent">Max rent:</label><br>

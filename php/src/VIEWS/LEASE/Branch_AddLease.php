@@ -8,21 +8,22 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         // Client numbers
         $lColumns = 'client.clientno';
         $lTable = 'client';
-        $lCriteria = '';
+        $lCriteria = "WHERE client.securityclass<=$lRoleSecurityClass";
         $lClientArrayData = GetAllData($lColumns, $lTable, $lCriteria);
         // Properties
         $lColumns = 'propertyforrent.propertyno';
         $lTable = 'propertyforrent INNER JOIN staff ON propertyforrent.staffno = staff.staffno';
-        $lCriteria = "WHERE staff.branchno = '$lBranchNumber'";
+        $lCriteria = "WHERE staff.branchno = '$lBranchNumber' AND propertyforrent.securityclass<=$lRoleSecurityClass";
         $lPropertyArrayData = GetAllData($lColumns, $lTable, $lCriteria);
         // Pay mode
         $lColumns = 'DISTINCT contract.paymode';
         $lTable = 'contract';
-        $lCriteria = "";
+        $lCriteria = "WHERE contract.securityclass<=$lRoleSecurityClass";
         $lPayModeArrayData = GetAllData($lColumns, $lTable, $lCriteria);
     ?>
     <section>

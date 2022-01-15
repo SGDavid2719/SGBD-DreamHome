@@ -8,6 +8,8 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lPositionsArray = array('Assistant');
+        if ($_SESSION['role'] == 'Manager') array_push($lPositionsArray, 'Supervisor');
     ?>
     <section>
         <div class="container mt-5">
@@ -29,8 +31,12 @@
                     <div class="col-6">
                         <label for="position">Staff position:</label><br>
                         <select type="text" id="position" name="position" class="form-select form-select-sm" required>
-                            <option value="Assistant">Assistant</option>
-                            <option value="Supervisor">Supervisor</option>
+                            <?php 
+                            foreach ($lPositionsArray as $lRow) 
+                            {
+                               echo '<option value=' . "$lRow" . '>' . $lRow . '</option>';
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="col-6"></div>
@@ -40,17 +46,17 @@
                     <hr>
                     <div class="col-6">
                         <label for="fname">First name:</label><br>
-                        <input type="text" id="fname" name="fname"class="form-control" ><br>
+                        <input type="text" id="fname" name="fname" maxlength="10" class="form-control" ><br>
                     </div>
                     <div class="col-6">
                         <label for="lname">Last name:</label><br>
-                        <input type="text" id="lname" name="lname"class="form-control" ><br>
+                        <input type="text" id="lname" name="lname" maxlength="10" class="form-control" ><br>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="sex">Sex:</label><br>
-                        <select type="text" id="sex" name="sex" class="form-select form-select-sm" required>
+                        <select type="text" id="sex" name="sex" maxlength="1" class="form-select form-select-sm" required>
                             <option value="M">M</option>
                             <option value="F ">F</option>
                         </select>
@@ -72,7 +78,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="email">Email:</label><br>
-                        <input type="text" id="email" name="email" class="form-control" ><br>
+                        <input type="text" id="email" name="email" maxlength="50" class="form-control" ><br>
                     </div>
                     <div class="col-6"></div>
                 </div>

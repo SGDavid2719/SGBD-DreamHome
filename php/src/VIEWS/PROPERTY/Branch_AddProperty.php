@@ -8,13 +8,13 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
-        $lColumns = 'owner.ownerno';
-        $lTable = 'owner';
-        $lCriteria = '';
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
+        $lColumns = "owner.ownerno";
+        $lTable = "owner";
+        $lCriteria = "WHERE owner.securityclass<=$lRoleSecurityClass";
         $lOwnerArrayData = GetAllData($lColumns, $lTable, $lCriteria);
-        // DELETE
-        print_r($_SESSION);
-        print_r($_POST);
+        // Property types
+        $lPropertyTypes = array("Flat", "House");
     ?>
     <section>
         <div class="container mt-5">
@@ -35,7 +35,7 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="propertyno">Property Number:</label><br>
-                        <input type="text" id="propertyno" name="propertyno" class="form-control" required><br>
+                        <input type="text" id="propertyno" name="propertyno" maxlength="3" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="propertyno">Owner Number:</label><br>
@@ -67,7 +67,14 @@
                     </div>
                     <div class="col-6">
                         <label for="type">Type</label><br>
-                        <input type="text" id="type" name="type" class="form-control" required><br>
+                        <select type="text" id="type" name="type" class="form-select form-select-sm" required>
+                            <?php 
+                            foreach ($lPropertyTypes as $lRow) 
+                            {
+                                echo '<option value=' . "$lRow" . '>' . $lRow . '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
                 <div class="row mt-4">

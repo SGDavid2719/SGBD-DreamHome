@@ -8,10 +8,11 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         $lColumns = "DISTINCT owner.ownerno, owner.fname, owner.lname, owner.address, owner.telno, owner.email";
         $lTable = "owner";
-        $lCriteria = "INNER JOIN propertyforrent ON owner.ownerno = propertyforrent.ownerno INNER JOIN staff ON propertyforrent.staffno = staff.staffno WHERE staff.branchno = '$lBranchNumber '";
+        $lCriteria = "INNER JOIN propertyforrent ON owner.ownerno = propertyforrent.ownerno INNER JOIN staff ON propertyforrent.staffno = staff.staffno WHERE staff.branchno = '$lBranchNumber ' AND owner.securityclass<=$lRoleSecurityClass";
         $lDataArray = GetAllData($lColumns, $lTable, $lCriteria);
         // Clear session data
         if (isset($_SESSION['ownerno'])) unset($_SESSION['ownerno']);

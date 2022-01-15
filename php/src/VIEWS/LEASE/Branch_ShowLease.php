@@ -8,10 +8,11 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lContractNumber = $_SESSION['contractno'];
         $lColumns = "contract.contractno, contract.clientno, contract.propertyno, contract.startdate, contract.enddate, contract.paymode, contract.depositpaid, propertyforrent.propertyno, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent, client.fname, client.lname, client.email";
         $lTable = "contract INNER JOIN propertyforrent ON contract.propertyno = propertyforrent.propertyno INNER JOIN client ON contract.clientno = client.clientno";
-        $lCriteria = "WHERE contract.contractno='$lContractNumber'";
+        $lCriteria = "WHERE contract.contractno='$lContractNumber' AND contract.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
         //print_r($lData)
     ?>

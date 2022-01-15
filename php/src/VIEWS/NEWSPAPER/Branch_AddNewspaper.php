@@ -8,10 +8,11 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         // Array of addresses
         $lColumns = 'DISTINCT address.addressno';
         $lTable = 'address';
-        $lCriteria = '';
+        $lCriteria = "WHERE address.securityclass<=$lRoleSecurityClass";
         $lAddressesArrayData = GetAllData($lColumns, $lTable, $lCriteria);
     ?>
     <section>

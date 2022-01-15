@@ -97,6 +97,8 @@
         $lCurrentYear = date("Y");
         $lPassword = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
         $_POST['password'] = base64_encode($lPassword);
+        $_POST['clientsecurityclass'] = 0;
+        $_POST['securityclass'] = 0;
         $lNewData = $_POST;
         $lResult = InsertData('client', $lNewData, $_SESSION['roleno']);
 
@@ -126,6 +128,8 @@
     if(isset($_POST['submitAddProperty_BRANCH']))
     {
         unset($_POST['submitAddProperty_BRANCH']);
+
+        $_POST['securityclass'] = 0;
 
         $lResult = InsertData('propertyforrent', $_POST, $_SESSION['roleno']);
 
@@ -231,6 +235,8 @@
         unset($_POST['submitOwnerAddition']);
 
         $_POST['ownerno'] = "CO" . $_POST['ownerno'];
+        $_POST['securityclass'] = 1;
+        $_POST['password'] = base64_encode(123);
         $lNewData = $_POST;
         $lResult = InsertData('owner', $lNewData, $_SESSION['roleno']);
 
@@ -289,6 +295,7 @@
         unset($_POST['submitAddViewing_BRANCH']);
 
         $_POST['viewingno'] = "V" . $_POST['viewingno'];
+        $_POST['securityclass'] = 1;
         $lNewData = $_POST;
 
         $lResult = InsertData('viewing', $lNewData, $_SESSION['roleno']);    
@@ -364,6 +371,7 @@
         unset($_POST['submitAddLease_BRANCH']);
 
         $_POST['contractno'] = "LN" . $_POST['contractno'];
+        $_POST['securityclass'] = 1;
         $lNewData = $_POST;
 
         $lResult = InsertData('contract', $lNewData, $_SESSION['roleno']);
@@ -399,6 +407,18 @@
         $lCurrentYear = date("Y");
         $lPassword = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
         $_POST['password'] = base64_encode($lPassword);
+        switch ($_POST['position']) {
+            case 'Assistant':
+                $_POST['staffsecurityclass'] = 1;
+                break;
+            case 'Supervisor':
+                $_POST['staffsecurityclass'] = 2;
+                break;  
+            case 'Manager':
+                $_POST['staffsecurityclass'] = 3;
+                break;
+        }
+        $_POST['securityclass'] = 2;
 
         $lResult = InsertData('staff', $_POST, $_SESSION['roleno']);
 
@@ -476,12 +496,11 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    // SHOW EDIT PAGE --> VIEWING
+    // SHOW EDIT PAGE --> NEWSPAPER
 
     if(isset($_POST['editNewspaperInfo']))
     {
         $_SESSION['newspaperno'] = $_POST['newspaperno'];
-        //print_r($_POST['newspaperno']);
         unset($_POST['editNewspaperInfo']);
         unset($_POST['newspaperno']);
         Redirect('../VIEWS/NEWSPAPER/Branch_EditNewspaper.php', false);
@@ -523,6 +542,7 @@
         unset($_POST['submitNewspaperAddition']);
 
         $_POST['newspaperno'] = "NS" . $_POST['newspaperno'];
+        $_POST['securityclass'] = 3;
         $lNewData = $_POST;
 
         $lResult = InsertData('newspaper', $lNewData, $_SESSION['roleno']);

@@ -8,18 +8,21 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         $pPropertyno = $_SESSION['propertyno'];
         /* Fetch property data */
         $lColumns = "p.propertyno, p.ownerno, p.type, p.rooms, p.rent, a.city, a.postcode, a.street";
         $lTables = "staff s, propertyforrent p, address a";
-        $lCriteria = "WHERE p.addressno = a.addressno AND p.propertyno='$pPropertyno'";
+        $lCriteria = "WHERE p.addressno = a.addressno AND p.propertyno='$pPropertyno' AND p.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTables, $lCriteria);
         /* Fetch owners */
         $lColumns = 'owner.ownerno';
         $lTable = 'owner';
         $lCriteria = '';
         $lOwnerArrayData = GetAllData($lColumns, $lTable, $lCriteria);
+        // Property types
+        $lPropertyTypes = array("Flat", "House");
     ?>
     <section>
         <div class="container mt-5">
@@ -65,7 +68,15 @@
                     </div>
                     <div class="col-6">
                         <label for="type">Type</label><br>
-                        <input type="text" id="type" name="type" value=<?=$lData['type']?> class="form-control"><br>
+                        <select type="text" id="type" name="type" class="form-select form-select-sm" required>
+                            <?php 
+                            foreach ($lPropertyTypes as $lRow) 
+                            {
+                                if ($lRow == $lData['type']) echo '<option value=' . "$lRow" . ' selected>' . $lRow . '</option>';
+                                else echo '<option value=' . "$lRow" . '>' . $lRow . '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -104,10 +115,6 @@
     </section>
     <?php
         include_once('../../ELEMENTS/Footer.php');
-        // DELETE
-        print_r($_SESSION);
-        print_r($_POST);
-        print_r($lData);
     ?>
 </body>
 </html>

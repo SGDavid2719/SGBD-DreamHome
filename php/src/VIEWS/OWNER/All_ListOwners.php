@@ -8,9 +8,10 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lColumns = "owner.ownerno, owner.fname, owner.lname, owner.address, owner.telno, owner.email";
         $lTables = "owner";
-        $lCriteria = "";
+        $lCriteria = "WHERE owner.securityclass<=$lRoleSecurityClass";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
     ?>
     <section>

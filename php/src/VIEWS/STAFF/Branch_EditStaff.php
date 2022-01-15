@@ -8,10 +8,11 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lStaffNumber = $_SESSION['staffno'];
         $lColumns = "staff.*";
         $lTable = "staff";
-        $lCriteria = "WHERE staff.staffno='$lStaffNumber'";
+        $lCriteria = "WHERE staff.staffno='$lStaffNumber' AND staff.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
         // Array of branches
         $lColumns = 'branch.branchno';
@@ -21,7 +22,7 @@
         // Array of positions
         $lColumns = 'DISTINCT staff.position';
         $lTable = 'staff';
-        $lCriteria = '';
+        $lCriteria = "WHERE staff.securityclass<=$lRoleSecurityClass";
         $lPositionArrayData = GetAllData($lColumns, $lTable, $lCriteria);
     ?>
     <section>

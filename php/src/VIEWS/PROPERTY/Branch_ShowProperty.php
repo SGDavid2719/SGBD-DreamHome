@@ -8,16 +8,13 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         $pPropertyno = $_SESSION['propertyno'];
         $lColumns = "p.propertyno, p.type, p.rooms, p.rent, a.city, a.postcode, a.street";
         $lTables = "staff s, propertyforrent p, address a";
-        $lCriteria = "WHERE p.addressno = a.addressno AND p.propertyno='$pPropertyno'";
+        $lCriteria = "WHERE p.addressno = a.addressno AND p.propertyno='$pPropertyno' AND p.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTables, $lCriteria);
-        // DELETE
-        print_r($_SESSION);
-        print_r($_POST);
-        print_r($lData);
     ?>
     <section>
         <div class="container mt-5">

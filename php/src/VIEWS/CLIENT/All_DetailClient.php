@@ -8,10 +8,12 @@
     <?php
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lColumns = "*";
         $lTable = ($_SESSION['role'] == 'Client') ? "client" : "staff";
         $lRoleNumber = $_SESSION['roleno'];
         $lCriteria = ($_SESSION['role'] == 'Client') ? "WHERE clientno='$lRoleNumber'" : "WHERE staffno='$lRoleNumber'";
+        $lCriteria .= "AND securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
     ?>
     <section>

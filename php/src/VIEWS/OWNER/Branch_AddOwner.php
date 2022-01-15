@@ -18,7 +18,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="ownerno">Owner Number:</label><br>
-                        <input type="text" id="ownerno" name="ownerno" class="form-control" required><br>
+                        <input type="text" id="ownerno" name="ownerno" maxlength="3" class="form-control" required><br>
                     </div>
                     <div class="col-6"></div>
                 </div>
@@ -27,11 +27,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="fname">First name:</label><br>
-                        <input type="text" id="fname" name="fname" class="form-control" required><br>
+                        <input type="text" id="fname" name="fname" maxlength="10" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="lname">Last name:</label><br>
-                        <input type="text" id="lname" name="lname" class="form-control" required><br>
+                        <input type="text" id="lname" name="lname" maxlength="10" class="form-control" required><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -39,7 +39,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="address">Address:</label><br>
-                        <input type="text" id="address" name="address" class="form-control" required><br>
+                        <input type="text" id="address" name="address" maxlength="50" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="telno">Telephone number:</label><br>
@@ -49,7 +49,7 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="email">Email:</label><br>
-                        <input type="text" id="email" name="email" class="form-control" required><br>
+                        <input type="text" id="email" name="email" maxlength="50" class="form-control" required><br>
                     </div>
                     <div class="col-6"></div>
                 </div>

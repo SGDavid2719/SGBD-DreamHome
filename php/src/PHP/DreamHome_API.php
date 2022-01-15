@@ -82,7 +82,7 @@ function InsertData ($pTable, $pNewData, $pRoleNumber)
 
     if ($lResult) 
     {
-        $lNewData = array('type' => "INFO", 'staffno' => $pRoleNumber, 'eventtype' => "INSERT", 'eventdata' => json_encode($pNewData), 'tablename' => $pTable);
+        $lNewData = array('type' => "INFO", 'staffno' => $pRoleNumber, 'eventtype' => "INSERT", 'eventdata' => json_encode($pNewData), 'tablename' => $pTable, 'securityclass' => 4);
         $lSaveLog = pg_insert($lConnection, 'log', $lNewData);
     }
 
@@ -113,7 +113,7 @@ function EditData ($pTable, $pNewData, $pCondition, $pRoleNumber)
 
     if ($lResult) 
     {
-        $lNewData = array('type' => "INFO", 'eventtype' => "EDIT", 'eventdata' => json_encode($lEditedData), 'tablename' => $pTable);
+        $lNewData = array('type' => "INFO", 'eventtype' => "EDIT", 'eventdata' => json_encode($lEditedData), 'tablename' => $pTable, 'securityclass' => 4);
         $lRoleData = (str_contains($pRoleNumber, 'CR')) ? array('clientno' => $pRoleNumber) : array('staffno' => $pRoleNumber);
         $lMergedArray = array_merge($lNewData, $lRoleData);
         $lSaveLog = pg_insert($lConnection, 'log', $lMergedArray);
@@ -126,7 +126,7 @@ function InsertWarning ($pTable, $pType, $pEventType, $pDescription, $pRoleNumbe
 
     $lConnection = ConnectToDatabase();
 
-    $lNewData = array('type' => $pType, 'eventtype' => $pEventType, 'description' => $pDescription, 'tablename' => $pTable);
+    $lNewData = array('type' => $pType, 'eventtype' => $pEventType, 'description' => $pDescription, 'tablename' => $pTable, 'securityclass' => 4);
     $lRoleData = (str_contains($pRoleNumber, 'CR')) ? array('clientno' => $pRoleNumber) : array('staffno' => $pRoleNumber);
     $lMergedArray = array_merge($lNewData, $lRoleData);
     $lSaveLog = pg_insert($lConnection, 'log', $lMergedArray);

@@ -41,7 +41,7 @@
                 <div class="col-10"></div>
                 <div class="col-2 d-flex justify-content-end">
                     <form action="../../PHP/Utilities.php" method="post">
-                        <input type="submit" value="Add Staff" class="btn btn-secondary" name="addNewspaper">
+                        <input type="submit" value="Add Newspaper" class="btn btn-secondary" name="addNewspaper">
                     </form> 
                 </div>
             </div>

@@ -9,9 +9,10 @@
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lBranchNumber = $_SESSION['branchno'];
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lColumns = "branch.branchno, address.*";
         $lTable = "branch INNER JOIN address ON branch.addressno = address.addressno";
-        $lCriteria = "WHERE branchno='$lBranchNumber'";
+        $lCriteria = "WHERE branchno='$lBranchNumber' AND branch.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
         $_SESSION['addressno'] = $lData['addressno'];
     ?>
