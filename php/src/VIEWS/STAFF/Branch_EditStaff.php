@@ -10,6 +10,8 @@
         include_once('../../PHP/Utilities.php');
         $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lStaffNumber = $_SESSION['staffno'];
+        unset($_SESSION['staffno']);
+        // Get Staff data
         $lColumns = "staff.*";
         $lTable = "staff";
         $lCriteria = "WHERE staff.staffno='$lStaffNumber' AND staff.securityclass<=$lRoleSecurityClass";

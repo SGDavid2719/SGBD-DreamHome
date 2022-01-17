@@ -129,14 +129,29 @@
     {
         unset($_POST['submitAddProperty_BRANCH']);
 
-        $_POST['securityclass'] = 0;
+        $lPropertyNumber = "PA" . $_POST['propertyno'];
+        $lAddressNumber = "S" . $_POST['addressno'];
 
-        $lResult = InsertData('propertyforrent', $_POST, $_SESSION['roleno']);
+        $lAddressData = array('addressno' => $lAddressNumber, 'street' => $_POST['street'], 'city' => $_POST['city'], 'postcode' => $_POST['postcode'], 'securityclass' => 0);
 
-        if ($lResult == false) 
+        $lResultAddress = InsertData('address', $lAddressData, $_SESSION['roleno']);
+
+        if ($lResultAddress == true) 
         {
-            $lDescription = 'Error inserting property for rent';
-            InsertWarning('propertyforrent', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+            $lPropertyData = array('propertyno' => $lPropertyNumber, 'addressno' => $lAddressNumber, 'type' => $_POST['type'], 'rooms' => $_POST['rooms'], 'rent' => $_POST['rent'], 'ownerno' => $_POST['ownerno'], 'staffno' => $_POST['staffno'], 'securityclass' => 0);
+
+            $lResultProperty = InsertData('propertyforrent', $lPropertyData, $_SESSION['roleno']);
+
+            if ($lResultProperty == false) 
+            {
+                $lDescription = 'Error inserting property for rent';
+                InsertWarning('propertyforrent', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+            }
+        }
+        else
+        {
+            $lDescription = 'Error inserting address for rent';
+            InsertWarning('address', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
         }
 
         unset($_POST);

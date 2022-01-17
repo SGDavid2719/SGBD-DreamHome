@@ -15,6 +15,9 @@
         $lCriteria = "WHERE branchno='$lBranchNumber' AND branch.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
         $_SESSION['addressno'] = $lData['addressno'];
+        // Value handler
+        $lStreet = $lData['street'];
+        $lPostcode = $lData['postcode'];
     ?>
     <section>
         <div class="container mt-5">
@@ -36,7 +39,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="street">Street:</label><br>
-                        <input type="text" id="street" name="street" value=<?=$lData['street']?> class="form-control"><br>
+                        <input type="text" id="street" name="street" value=<?="'$lStreet'"?> class="form-control"><br>
                     </div>
                     <div class="col-6">
                         <label for="city">City:</label><br>
@@ -46,7 +49,7 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="postcode">Postcode:</label><br>
-                        <input type="text" id="postcode" name="postcode" value=<?=$lData['postcode']?> class="form-control"><br>
+                        <input type="text" id="postcode" name="postcode" value=<?="'$lPostcode'"?> class="form-control"><br>
                     </div>
                     <div class="col-6"></div>
                 </div>

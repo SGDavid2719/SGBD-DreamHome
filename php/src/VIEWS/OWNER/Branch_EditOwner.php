@@ -16,6 +16,8 @@
         $lTable = "owner";
         $lCriteria = "WHERE owner.ownerno = '$lOwnerNumber' AND owner.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
+        // Value handler
+        $lAddress = $lData['address'];
     ?>
     <section>
         <div class="container mt-5">
@@ -47,7 +49,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="address">Address:</label><br>
-                        <input type="text" id="address" name="address" value=<?=$lData['address']?> maxlength="50" class="form-control" required><br>
+                        <input type="text" id="address" name="address" value=<?="'$lAddress'"?> maxlength="50" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="telno">Telephone number:</label><br>

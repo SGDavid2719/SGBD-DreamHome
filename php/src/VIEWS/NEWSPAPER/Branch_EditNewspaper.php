@@ -10,6 +10,7 @@
         include_once('../../PHP/Utilities.php');
         $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lNewspaperNumber = $_SESSION['newspaperno'];
+        unset($_SESSION['newspaperno']);
         // Newspaper data
         $lColumns = "*";
         $lTable = "newspaper";

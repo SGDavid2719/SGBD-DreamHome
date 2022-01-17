@@ -9,7 +9,7 @@
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
-        $lColumns = "branch.branchno, address.*";
+        $lColumns = "branch.branchno, address.addressno, address.street, address.city, address.postcode";
         $lTables = "branch INNER JOIN address ON branch.addressno = address.addressno";
         $lCriteria = "WHERE branch.securityclass<=$lRoleSecurityClass";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);

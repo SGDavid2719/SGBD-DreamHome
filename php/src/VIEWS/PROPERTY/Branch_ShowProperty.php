@@ -15,6 +15,9 @@
         $lTables = "staff s, propertyforrent p, address a";
         $lCriteria = "WHERE p.addressno = a.addressno AND p.propertyno='$pPropertyno' AND p.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTables, $lCriteria);
+        // Value handler
+        $lStreet = $lData['street'];
+        $lPostcode = $lData['postcode'];
     ?>
     <section>
         <div class="container mt-5">
@@ -33,7 +36,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="street">Street:</label><br>
-                        <input type="text" id="street" name="street" value=<?=$lData['street']?> class="form-control" disabled><br>
+                        <input type="text" id="street" name="street" value=<?="'$lStreet'"?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="city">City:</label><br>
@@ -43,7 +46,7 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="postcode">Postcode:</label><br>
-                        <input type="text" id="postcode" name="postcode" value=<?=$lData['postcode']?> class="form-control" disabled><br>
+                        <input type="text" id="postcode" name="postcode" value=<?="'$lPostcode'"?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="type">Type</label><br>

@@ -13,6 +13,8 @@
         $lTable = "viewing INNER JOIN propertyforrent ON viewing.propertyno = propertyforrent.propertyno INNER JOIN address ON propertyforrent.addressno = address.addressno";
         $lCriteria = "WHERE viewing.viewingno = '$lViewingNumber '";
         $lData = GetData($lColumns, $lTable, $lCriteria);
+        // Value handler
+        $lStreet = $lData['street'];
     ?>
     <section>
         <div class="container mt-5">
@@ -63,7 +65,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="street">Street:</label><br>
-                        <input type="text" id="street" value=<?=$lData['street']?> class="form-control" disabled><br>
+                        <input type="text" id="street" value=<?="'$lStreet'"?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="city">City:</label><br>

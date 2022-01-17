@@ -23,6 +23,9 @@
         $lOwnerArrayData = GetAllData($lColumns, $lTable, $lCriteria);
         // Property types
         $lPropertyTypes = array("Flat", "House");
+        // Value handler
+        $lStreet = $lData['street'];
+        $lPostcode = $lData['postcode'];
     ?>
     <section>
         <div class="container mt-5">
@@ -54,17 +57,17 @@
                     <hr>
                     <div class="col-6">
                         <label for="street">Street:</label><br>
-                        <input type="text" id="street"value=<?=$lData['street']?> class="form-control" disabled><br>
+                        <input type="text" id="street"value=<?="'$lStreet'"?> maxlength="35" class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="city">City:</label><br>
-                        <input type="text" id="city" value=<?=$lData['city']?> class="form-control" disabled><br>
+                        <input type="text" id="city" value=<?=$lData['city']?> maxlength="10" class="form-control" disabled><br>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="postcode">Postcode:</label><br>
-                        <input type="text" id="postcode" value=<?=$lData['postcode']?> class="form-control" disabled><br>
+                        <input type="text" id="postcode" value=<?="'$lPostcode'"?> maxlength="10" class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="type">Type</label><br>

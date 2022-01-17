@@ -10,8 +10,11 @@
         include_once('../../PHP/Utilities.php');
         $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
         $lData = GetData('*', $lTable, "");
+        // Branch handler
+        unset($_SESSION['addressno']);
         //DELETE
         print_r($_SESSION);
+        print_r($_POST);
     ?>
     <section>
         <div class="container mt-5">

@@ -9,7 +9,7 @@
         include_once('../../ELEMENTS/Header.php');
         include_once('../../PHP/Utilities.php');
         $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
-        $lColumns = "contract.*";
+        $lColumns = "contract.contractno, contract.startdate, contract.enddate, contract.paymode";
         $lTables = "contract";
         $lCriteria = "WHERE contract.securityclass<=$lRoleSecurityClass";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);

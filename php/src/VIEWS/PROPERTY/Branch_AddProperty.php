@@ -29,41 +29,51 @@
                     </div>
                     <div class="col-6">
                         <label for="staffno">Staff Number:</label><br>
-                        <input type="text" id="staffno" name="staffno" value=<?=$_SESSION['roleno']?> class="form-control" disabled><br>
+                        <input type="text" id="staffno" name="staffno" value=<?=$_SESSION['roleno']?> class="form-control" readonly><br>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="propertyno">Property Number:</label><br>
-                        <input type="text" id="propertyno" name="propertyno" maxlength="3" class="form-control" required><br>
+                        <input type="text" id="propertyno" name="propertyno" maxlength="4" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="propertyno">Owner Number:</label><br>
                         <select type="text" id="ownerno" name="ownerno" class="form-select form-select-sm" required>
                             <?php 
-                            foreach (array_keys($lOwnerArrayData) as $lRow) {
-                                echo '<option value=' . "$lOwnerArrayData[$lRow]['ownerno']" . '>' . $lOwnerArrayData[$lRow]['ownerno'] . '</option>';
+                            foreach (array_keys($lOwnerArrayData) as $lRow) 
+                            {
+                                $lAuxValue = $lOwnerArrayData[$lRow]['ownerno'];
+                                if ($lOwnerArrayData[$lRow]['ownerno'] == $lData['ownerno']) echo '<option value=' . "$lAuxValue" . ' selected>' . $lOwnerArrayData[$lRow]['ownerno'] . '</option>';
+                                else echo '<option value=' . "$lAuxValue" . '>' . $lOwnerArrayData[$lRow]['ownerno'] . '</option>';
                             }
                             ?>
                         </select>
                     </div>
                 </div>
                 <div class="row mt-4">
+                    <div class="col-6">
+                        <label for="addressno">Address Number:</label><br>
+                        <input type="text" id="addressno" name="addressno" maxlength="3" class="form-control" required><br>
+                    </div>
+                    <div class="col-6"></div>
+                </div>
+                <div class="row mt-4">
                     <h4>Basic info</h4>
                     <hr>
                     <div class="col-6">
                         <label for="street">Street:</label><br>
-                        <input type="text" id="street" name="street" class="form-control" required><br>
+                        <input type="text" id="street" name="street" maxlength="35" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="city">City:</label><br>
-                        <input type="text" id="city" name="city" class="form-control" required><br>
+                        <input type="text" id="city" name="city" maxlength="10" class="form-control" required><br>
                     </div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="postcode">Postcode:</label><br>
-                        <input type="text" id="postcode" name="postcode" class="form-control" required><br>
+                        <input type="text" id="postcode" name="postcode" maxlength="10" class="form-control" required><br>
                     </div>
                     <div class="col-6">
                         <label for="type">Type</label><br>
