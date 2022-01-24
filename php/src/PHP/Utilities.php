@@ -4,6 +4,8 @@
         session_start();
     }
 
+    Require_once("DreamHome_API.php");
+
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
     function Redirect($url, $permanent = false)
@@ -14,326 +16,593 @@
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    function ConnectToDatabase() {
-        // Connection arguments
-        $lHost        = "host = postgresdb";
-        $lPort        = "port = 5432";
-        $lDBName      = "dbname = DREAMHOME_DB";
-        $lCredentials = "user=DREAMHOME_USER password=DREAMHOME_PASSWORD";
+    /* CLIENT SECTION */
 
-        // Create connection
-        $lConnection = pg_connect( "$lHost $lPort $lDBName $lCredentials");
-        // Check connection
-        if(!$lConnection) {
-            die("Connection failed: " . $lConnection->connect_error);
-        }
-
-        return $lConnection;
-    }
-
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-    function GetData($pColumns, $pTable, $pCriteria)
-    {
-        $lConnection = ConnectToDatabase();
-
-        $lQuery="SELECT " . $pColumns . " FROM $pTable " . $pCriteria;
-        $lResult = pg_query($lConnection, $lQuery);
-    
-        $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
-        $lRows = pg_num_rows($lResult);
-    
-        if($lRows) {
-            return $lData;
-        } else {
-            // Error
-        }
-        pg_free_result($lResult);
-        pg_close($lConnection);
-    }
-
-    function GetAllData($pColumns, $pTable, $pCriteria)
-    {
-        $lConnection = ConnectToDatabase();
-
-        $lQuery="SELECT " . $pColumns . " FROM $pTable " . $pCriteria;
-        $lResult = pg_query($lConnection, $lQuery);
-
-        if($lResult) {
-            $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
-            $lRows = pg_num_rows($lResult);
-            $lDataArray = array();
-        
-            if($lRows) {
-                while($lData != null) {
-                    // Success
-                    array_push($lDataArray, $lData);
-                    $lData = pg_fetch_array($lResult, NULL, PGSQL_ASSOC);
-                }
-                return $lDataArray;
-            } else {
-                // Error
-            }
-            pg_free_result($lResult);
-        }
-        pg_close($lConnection);
-        return null;
-    }
-
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-    function EditClientData() 
+    // SUBMIT EDITION --> CLIENT
+    if(isset($_POST['submitClientEdition'])) 
     {
         unset($_POST['submitClientEdition']);
+
+        $lNewData = $_POST;
+        $lCondition = ($_SESSION['role'] == 'Client') ? array('clientno' => $_SESSION['roleno']) : array('clientno' => $_SESSION['clientno']);
+        $lResult = EditData('client', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        unset($_POST);
+
+        if ($lResult == false) 
+        {
+            $lClientNo = ($_SESSION['role'] == 'Client') ? $_SESSION['roleno'] : $_SESSION['clientno'];
+            $lDescription = 'Error editing client: ' . $lClientNo;
+            InsertWarning('log', 'client', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+
+        if ($_SESSION['role'] == 'Client') 
+        {
+            unset($_SESSION['clientno']);
+            Redirect('../VIEWS/CLIENT/All_DetailClient.php', false); 
+        }  
+        else Redirect('../VIEWS/CLIENT/All_ListClients.php', false); 
+    }
+
+    // SUBMIT PASSWORD EDITION --> CLIENT
+    if(isset($_POST['submitClientPasswordEdition'])) 
+    {
+        unset($_POST['submitClientPasswordEdition']);
+
+        $lPreviousPassword = $_POST['password'];
+
+        $lClientNumber = $_SESSION['roleno'];
+        $lClientPreviousPassword = GetData('client.password', 'client', "WHERE client.clientno='$lClientNumber'");
+
+        if (base64_decode($lClientPreviousPassword['password']) == $_POST['password'] && $_POST['newPassword1'] == $_POST['newPassword2']) 
+        {
+            $lNewData = array('password' => base64_encode($_POST['newPassword1']));
+            $lCondition = array('clientno' => $_SESSION['roleno']);
+            $lResult = EditData('client', $lNewData, $lCondition, $_SESSION['roleno']);
+
+            if ($lResult == false) 
+            {
+                $lDescription = 'Error editing client password: ' . $_SESSION['roleno'];
+                InsertWarning('log', 'client', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            }
+        }
+        unset($_POST);
+        Redirect('../VIEWS/CLIENT/All_DetailClient.php', false); 
+    }
+    
+    // SHOW EDIT PAGE --> CLIENT
+    if(isset($_POST['editClientInfo_ALL'])) 
+    {
+        $_SESSION['clientno'] = $_POST['clientno'];
+        unset($_POST['editClientInfo_ALL']);
+        unset($_POST['clientno']);
+        Redirect('../VIEWS/CLIENT/All_EditClient.php', false);
+    }
+
+    // SHOW ADD PAGE --> CLIENT
+    if(isset($_POST['addClient'])) 
+    {
+        unset($_POST['addClient']);
+        Redirect('../VIEWS/CLIENT/All_AddClient.php', false);
+    }
+
+    // SUBMIT ADDITION --> CLIENT
+    if(isset($_POST['submitClientAddition'])) 
+    {
+        unset($_POST['submitClientAddition']);
+
+        $_POST['clientno'] = "CR" . $_POST['clientno'];
+        $lFNameLetter = substr($_POST['fname'], 0, 1);
+        $lLNameLetter = substr($_POST['lname'], 0, 1);
+        $lCurrentYear = date("Y");
+        $lPassword = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
+        $_POST['password'] = base64_encode($lPassword);
+        $_POST['clientsecurityclass'] = 0;
+        $_POST['securityclass'] = 0;
+        $lNewData = $_POST;
+        $lResult = InsertData('client', $lNewData, $_SESSION['roleno']);
+
+        if ($lResult == false)
+        {
+            $lDescription = 'Error inserting client';
+            InsertWarning('log', 'client', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
         
-        $lConnection = ConnectToDatabase();
-
-        $lNewData = array('telno' => $_POST['telno'], 'preftype' => $_POST['preftype'], 'maxrent' => $_POST['maxrent'], 'email' => $_POST['email'], 'password' => $_POST['password']);
-
-        $lCondition = array('clientno' => $_SESSION['roleno']);
-
-        $lResult = pg_update($lConnection, 'client', $_POST, $lCondition);
-        if ($lResult) {
-            unset($_POST);
-            Redirect('../VIEWS/CLIENT/All_DetailClient.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        }        
+        unset($_POST);
+        Redirect('../VIEWS/CLIENT/All_ListClients.php', false);
     }
-
-    if(isset($_POST['submitClientEdition'])) EditClientData();
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    function ShowPropertyInfo() 
-    {
+    /* PROPERTY SECTION */
+
+    // SHOW INFO PAGE --> PROPERTY
+    if(isset($_POST['showPropertyInfo_BRANCH']) || isset($_POST['showPropertyInfo_ALL'])) {
         $_SESSION['propertyno'] = $_POST['propertyno'];
-        unset($_POST['propertyno']);
-        Redirect('../VIEWS/PROPERTY/All_ShowProperty.php', false);
-    }
-
-    if(isset($_POST['showPropertyInfo_ALL'])) ShowPropertyInfo();
-
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-    function ShowPropertyInfo2() 
-    {
-        $_SESSION['propertyno'] = $_POST['propertyno'];
+        $_SESSION['all_or_branch'] = (isset($_POST['showPropertyInfo_BRANCH'])) ? 'showPropertyInfo_BRANCH' : 'showPropertyInfo_ALL';
         unset($_POST['propertyno']);
         Redirect('../VIEWS/PROPERTY/Branch_ShowProperty.php', false);
     }
-
-    if(isset($_POST['showPropertyInfo_BRANCH'])) ShowPropertyInfo2();
-
     
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-    function InsertPropertyData() 
+    // SUBMIT ADDITION --> PROPERTY
+    if(isset($_POST['submitAddProperty_BRANCH']))
     {
         unset($_POST['submitAddProperty_BRANCH']);
 
-        $lConnection = ConnectToDatabase();
+        $lPropertyNumber = "PA" . $_POST['propertyno'];
+        $lAddressNumber = "S" . $_POST['addressno'];
 
-        $lResult = pg_insert($lConnection, 'propertyforrent', $_POST);
-        if ($lResult) {
-            unset($_POST);
-            Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        }  
+        $lAddressData = array('addressno' => $lAddressNumber, 'street' => $_POST['street'], 'city' => $_POST['city'], 'postcode' => $_POST['postcode'], 'securityclass' => 0);
+
+        $lResultAddress = InsertData('address', $lAddressData, $_SESSION['roleno']);
+
+        if ($lResultAddress == true) 
+        {
+            $lPropertyData = array('propertyno' => $lPropertyNumber, 'addressno' => $lAddressNumber, 'type' => $_POST['type'], 'rooms' => $_POST['rooms'], 'rent' => $_POST['rent'], 'ownerno' => $_POST['ownerno'], 'staffno' => $_POST['staffno'], 'securityclass' => 0);
+
+            $lResultProperty = InsertData('propertyforrent', $lPropertyData, $_SESSION['roleno']);
+
+            if ($lResultProperty == false) 
+            {
+                $lDescription = 'Error inserting property for rent';
+                InsertWarning('log', 'propertyforrent', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+            }
+        }
+        else
+        {
+            $lDescription = 'Error inserting address for rent';
+            InsertWarning('log', 'address', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
+
+        unset($_POST);
+        Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false); 
     }
 
-    if(isset($_POST['submitAddProperty_BRANCH'])) InsertPropertyData();
+    // PENDING ADDRESS EDITION
+    // SUBMIT EDITION --> PROPERTY
+    if(isset($_POST['submitPropertyEdition'])) 
+    {
+        unset($_POST['submitPropertyEdition']);
 
+        $lNewData = $_POST;
+        $lCondition = array('propertyno' => $_POST['propertyno']);
+        $lResult = EditData('propertyforrent', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        if ($lResult == false)
+        {
+            $lDescription = 'Error editing property for rent: ' . $_POST['propertyno'];
+            InsertWarning('log', 'propertyforrent', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+
+        unset($_POST);
+
+        if ($_SESSION['role'] != 'Manager') 
+        {
+            Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false); 
+        }  
+        else Redirect('../VIEWS/PROPERTY/All_ListProperties.php', false); 
+    }
+
+    // PENDING PROPERTY ADDITION (ADDRESS ISSUE)
+
+    // SHOW ADDITION PAGE --> PROPERTY
     if(isset($_POST['addProperty_BRANCH'])) Redirect('../VIEWS/PROPERTY/Branch_AddProperty.php', false);
+
+    // SHOW BRANCH LIST PAGE --> PROPERTY
+    if(isset($_POST['showBranchProperties_BRANCH'])) Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
+
+    // SHOW EDIT PAGE --> PROPERTY
+    if(isset($_POST['editPropertyInfo_ALL']) || isset($_POST['editPropertyInfo_BRANCH'])) 
+    {
+        $_SESSION['propertyno'] = $_POST['propertyno'];
+        $_SESSION['all_or_branch'] = (isset($_POST['editPropertyInfo_ALL'])) ? 'editPropertyInfo_ALL' : 'editPropertyInfo_BRANCH';
+        unset($_POST['propertyno']);
+        Redirect('../VIEWS/PROPERTY/Branch_EditProperty.php', false);
+    }
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    function ShowViewingInfo() {
+    /* OWNER SECTION */
+
+    if(isset($_POST['submitOwnerEdition'])) 
+    {
+        unset($_POST['submitOwnerEdition']);
+
+        $lCondition = array('ownerno' => $_POST['ownerno']);
+        unset($_POST['ownerno']);
+        $lNewData = $_POST;
+      
+        $lResult = EditData('owner', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing owner: ' . $_SESSION['ownerno'];
+            InsertWarning('log', 'owner', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+        
+        unset($_POST);
+        unset($_SESSION['ownerno']);
+        Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
+    }
+
+    // SHOW EDIT PAGE --> OWNER
+    if(isset($_POST['editOwnerInfo_ALL'])) 
+    {
+        $_SESSION['ownerno'] = $_POST['ownerno'];
+        unset($_POST['editOwnerInfo_ALL']);
+        unset($_POST['ownerno']);
+        Redirect('../VIEWS/OWNER/Branch_EditOwner.php', false);
+    }
+
+    // SHOW BRANCH PAGE --> OWNER
+    if(isset($_POST['showBranchOwners_BRANCH'])) Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
+
+    // SHOW ADD PAGE --> OWNER
+    if(isset($_POST['addOwner_BRANCH'])) 
+    {
+        unset($_POST['addOwner_BRANCH']);
+        Redirect('../VIEWS/OWNER/Branch_AddOwner.php', false);
+    }
+
+    // SUBMIT ADDITION
+    if(isset($_POST['submitOwnerAddition'])) 
+    {
+        unset($_POST['submitOwnerAddition']);
+
+        $_POST['ownerno'] = "CO" . $_POST['ownerno'];
+        $_POST['securityclass'] = 1;
+        $_POST['password'] = base64_encode(123);
+        $lNewData = $_POST;
+        $lResult = InsertData('owner', $lNewData, $_SESSION['roleno']);
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error inserting owner';
+            InsertWarning('log', 'owner', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
+        else 
+        {
+            $lNewData = array('ownerno' => $_POST['ownerno'], 'securityclass' => 1);
+            $lResult = InsertData('privateowner', $lNewData, $_SESSION['roleno']);
+        }  
+
+        unset($_POST);
+        Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    
+    /* VIEWING SECTION */
+
+    // SHOW INFO PAGE --> VIEWING
+    if(isset($_POST['showViewingInfo_BRANCH']))
+    {
         $_SESSION['viewingno'] = $_POST['viewingno'];
         unset($_POST['viewingno']);
         Redirect('../VIEWS/VIEWING/Branch_ShowViewing.php', false);
     }
-    
-    if(isset($_POST['showViewingInfo_BRANCH'])) ShowViewingInfo();
 
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-    function EditViewingData() 
+    // SHOW EDIT PAGE --> VIEWING
+    if(isset($_POST['editViewingInfo_BRANCH'])) 
     {
-        unset($_POST['submitViewingForm']);
-        
-        $lConnection = ConnectToDatabase();
+        $_SESSION['viewingno'] = $_POST['viewingno'];
+        unset($_POST['editViewingInfo_BRANCH']);
+        unset($_POST['viewingno']);
+        Redirect('../VIEWS/VIEWING/Branch_EditViewing.php', false);
+    }
 
+    if(isset($_POST['submitViewingEdition'])) 
+    {
+        unset($_POST['submitViewingEdition']);
+
+        $lNewData = $_POST;
         $lCondition = array('viewingno' => $_SESSION['viewingno']);
-      
-        $lResult = pg_update($lConnection, 'viewing', $_POST, $lCondition);
-        if ($lResult) {
-            unset($_POST);
-            unset($_SESSION['viewingno']);
-            Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        }     
-    }
+        $lResult = EditData('viewing', $lNewData, $lCondition, $_SESSION['roleno']);
 
-    if(isset($_POST['submitViewingEdition'])) EditViewingData();
-
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-    function ShowStaffInfo() {
-        $_SESSION['staffno'] = $_POST['staffno'];
-        unset($_POST['staffno']);
-        Redirect('../VIEWS/STAFF/Branch_ShowStaff.php', false);
-    }
-    
-    if(isset($_POST['showStaffInfo_BRANCH'])) ShowStaffInfo();
-
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-    function InsertStaffData() 
-    {
-        unset($_POST['submitAddStaff_BRANCH']);
-
-        $lConnection = ConnectToDatabase();
-
-        $lFNameLetter = substr($_POST['fname'], 0, 1);
-        $lLNameLetter = substr($_POST['lname'], 0, 1);
-        $lCurrentYear = date("Y");
-
-        $_POST['password'] = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
-
-        $lResult = pg_insert($lConnection, 'staff', $_POST);
-        if ($lResult) {
-            unset($_POST);
-            Redirect('../VIEWS/PROPERTY/Branch_ListProperties.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        }  
-    }
-
-    if(isset($_POST['submitAddStaff_BRANCH'])) InsertStaffData();
-
-    if(isset($_POST['addStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_AddStaff.php', false);
-
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-    function EditOwnerData() 
-    {
-        unset($_POST['submitOwnerEdition']);
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing viewing: ' . $_SESSION['viewingno'];
+            InsertWarning('log', 'viewing', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
         
-        $lConnection = ConnectToDatabase();
-
-        $lCondition = array('ownerno' => $_POST['ownerno']);
-
-        unset($_POST['ownerno']);
-      
-        $lResult = pg_update($lConnection, 'owner', $_POST, $lCondition);
-        if ($lResult) {
-            unset($_POST);
-            unset($_SESSION['ownerno']);
-            Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        }     
+        unset($_POST);
+        unset($_SESSION['viewingno']);
+        Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
     }
 
-    if(isset($_POST['submitOwnerEdition'])) EditOwnerData();
-
-    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
-
-    function InsertViewingData() 
+    if(isset($_POST['submitAddViewing_BRANCH']))
     {
         unset($_POST['submitAddViewing_BRANCH']);
 
-        $lConnection = ConnectToDatabase();
-
         $_POST['viewingno'] = "V" . $_POST['viewingno'];
+        $_POST['securityclass'] = 1;
+        $lNewData = $_POST;
 
-        $lResult = pg_insert($lConnection, 'viewing', $_POST);
-        if ($lResult) {
-            unset($_POST);
-            Redirect('../VIEWS/VIEWING/Branch_ListViewing.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        } 
+        $lResult = InsertData('viewing', $lNewData, $_SESSION['roleno']);    
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error inserting viewing';
+            InsertWarning('log', 'viewing', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
+
+        unset($_POST);
+        Redirect('../VIEWS/VIEWING/Branch_ListViewings.php', false);
     }
-
-    if(isset($_POST['submitAddViewing_BRANCH'])) InsertViewingData();
 
     if(isset($_POST['addView_BRANCH'])) Redirect('../VIEWS/VIEWING/Branch_AddViewing.php', false);
 
     /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    // SHOW INFO PAGE
-    function ShowLeaseInfo() {
+    /* CONTRACT/LEASE SECTION */
+
+    // SHOW INFO PAGE --> CONTRACT/LEASE
+    if(isset($_POST['showContractInfo_BRANCH'])) 
+    {
         $_SESSION['contractno'] = $_POST['contractno'];
         unset($_POST['showContractInfo_BRANCH']);
         unset($_POST['contractno']);
         Redirect('../VIEWS/LEASE/Branch_ShowLease.php', false);
     }
-    
-    if(isset($_POST['showContractInfo_BRANCH'])) ShowLeaseInfo();
 
-    // SHOW EDIT PAGE
-    function ShowEditingLeaseInfo() {
+    // SHOW EDIT PAGE --> CONTRACT/LEASE
+
+    if(isset($_POST['editContractInfo_BRANCH']))
+    {
         $_SESSION['contractno'] = $_POST['contractno'];
         unset($_POST['editContractInfo_BRANCH']);
         unset($_POST['contractno']);
         Redirect('../VIEWS/LEASE/Branch_EditLease.php', false);
     }
 
-    if(isset($_POST['editContractInfo_BRANCH'])) ShowEditingLeaseInfo();
+    // SUBMIT EDITION --> CONTRACT/LEASE
 
-    // SUBMIT EDITION
-    function EditLeaseData() 
+    if(isset($_POST['submitLeaseEdition']))
     {
         unset($_POST['submitLeaseEdition']);
-        
-        $lConnection = ConnectToDatabase();
 
         $lCondition = array('contractno' => $_POST['contractno']);
-
         unset($_POST['contractno']);
-      
-        $lResult = pg_update($lConnection, 'contract', $_POST, $lCondition);
-        if ($lResult) {
-            unset($_POST);
-            unset($_SESSION['contractno']);
-            Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        }     
+        $lNewData = $_POST;
+    
+        $lResult = EditData('contract', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing contract: ' . $_POST['contractno'];
+            InsertWarning('log', 'contract', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+
+        unset($_POST);
+        unset($_SESSION['contractno']);
+        Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
     }
 
-    if(isset($_POST['submitLeaseEdition'])) EditLeaseData();
-
-    // SHOW ADD PAGE
-    function ShowAddLease() {
+    // SHOW ADD PAGE --> CONTRACT/LEASE
+    if(isset($_POST['addContract_BRANCH'])) 
+    {
         unset($_POST['addContract_BRANCH']);
         Redirect('../VIEWS/LEASE/Branch_AddLease.php', false);
     }
 
-    if(isset($_POST['addContract_BRANCH'])) ShowAddLease();
-
-    // SUBMIT ADDITION
-    function InsertLeaseData() 
+    // SUBMIT ADDITION --> CONTRACT/LEASE
+    if(isset($_POST['submitAddLease_BRANCH'])) 
     {
         unset($_POST['submitAddLease_BRANCH']);
 
-        $lConnection = ConnectToDatabase();
-
         $_POST['contractno'] = "LN" . $_POST['contractno'];
+        $_POST['securityclass'] = 1;
+        $lNewData = $_POST;
 
-        $lResult = pg_insert($lConnection, 'contract', $_POST);
-        if ($lResult) {
-            unset($_POST);
-            Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
-        } else {
-            echo "User must have sent wrong inputs\n";
-        } 
+        $lResult = InsertData('contract', $lNewData, $_SESSION['roleno']);
+
+        if ($lResult == false)
+        {
+            $lDescription = 'Error inserting contract';
+            InsertWarning('log', 'contract', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
+
+        unset($_POST);
+        Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
     }
 
-    if(isset($_POST['submitAddLease_BRANCH'])) InsertLeaseData();
+    // SHOW BRANCH LEASES PAGE
+    if(isset($_POST['showBranchLeases_ALL'])) Redirect('../VIEWS/LEASE/Branch_ListLeases.php', false);
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+    
+    if(isset($_POST['showStaffInfo_BRANCH'])) 
+    {
+        $_SESSION['staffno'] = $_POST['staffno'];
+        unset($_POST['staffno']);
+        Redirect('../VIEWS/STAFF/Branch_ShowStaff.php', false);
+    }
+
+    if(isset($_POST['submitAddStaff_BRANCH']))
+    {
+        unset($_POST['submitAddStaff_BRANCH']);
+
+        $lFNameLetter = substr($_POST['fname'], 0, 1);
+        $lLNameLetter = substr($_POST['lname'], 0, 1);
+        $lCurrentYear = date("Y");
+        $_POST['staffno'] = "SA" . $_POST['staffno'];
+        $lPassword = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
+        $_POST['password'] = base64_encode($lPassword);
+        switch ($_POST['position']) {
+            case 'Assistant':
+                $_POST['staffsecurityclass'] = 1;
+                break;
+            case 'Supervisor':
+                $_POST['staffsecurityclass'] = 2;
+                break;  
+            case 'Manager':
+                $_POST['staffsecurityclass'] = 3;
+                break;
+        }
+        $_POST['securityclass'] = 2;
+
+        $lResult = InsertData('staff', $_POST, $_SESSION['roleno']);
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error inserting staff';
+            InsertWarning('log', 'staff', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }      
+        else 
+        {
+            if ($_POST['position'] == 'Supervisor')
+            {
+                $lNewData = array('staffno' => $_POST['staffno']);
+                $lResult = InsertData('supervisor', $lNewData, $_SESSION['roleno']);
+            }
+        }  
+
+        unset($_POST);
+        Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
+    }
+
+    if(isset($_POST['addStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_AddStaff.php', false);
+
+    // SHOW BRANCH STAFF PAGE
+    if(isset($_POST['showBranchStaff_BRANCH'])) Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
+
+    if(isset($_POST['editStaffInfo_BRANCH'])) 
+    {
+        $_SESSION['staffno'] = $_POST['staffno'];
+        unset($_POST['editStaffInfo_BRANCH']);
+        unset($_POST['staffno']);
+        Redirect('../VIEWS/STAFF/Branch_EditStaff.php', false);
+    }
+
+    // SUBMIT EDITION
+    if(isset($_POST['submitStaffEdition'])) 
+    {
+        unset($_POST['submitStaffEdition']);
+
+        $lCondition = array('staffno' => $_SESSION['staffno']);
+        unset($_POST['staffno']);
+        $lNewData = $_POST;
+        $lResult = EditData('staff', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing staff: ' . $_SESSION['staffno'];
+            InsertWarning('log', 'staff', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+
+        unset($_POST);
+        unset($_SESSION['staffno']);
+        Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW INFO PAGE --> BRANCH
+    if(isset($_POST['editBranchInfo_BRANCH'])) Redirect('../VIEWS/BRANCH/Branch_EditBranch.php', false);
+
+    // SUBMIT EDITION
+    if(isset($_POST['submitBranchEdition']))
+    {
+        unset($_POST['submitBranchEdition']);
+
+        $lCondition = array('addressno' => $_SESSION['addressno']);
+        unset($_POST['addressno']);
+        $lNewData = $_POST;
+      
+        $lResult = EditData('address', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        unset($_POST);
+        unset($_SESSION['addressno']);
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing branch: ' . $_SESSION['addressno'];
+            InsertWarning('log', 'branch', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }        
+
+        Redirect('../VIEWS/BRANCH/All_ListBranches.php', false);
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SHOW EDIT PAGE --> NEWSPAPER
+
+    if(isset($_POST['editNewspaperInfo']))
+    {
+        $_SESSION['newspaperno'] = $_POST['newspaperno'];
+        unset($_POST['editNewspaperInfo']);
+        unset($_POST['newspaperno']);
+        Redirect('../VIEWS/NEWSPAPER/Branch_EditNewspaper.php', false);
+    }
+
+    // SUBMIT EDITION
+    if(isset($_POST['submitNewspaperEdition']))
+    {
+        unset($_POST['submitNewspaperEdition']);
+
+        $lCondition = array('newspaperno' => $_SESSION['newspaperno']);
+        unset($_POST['newspaperno']);
+        $lNewData = $_POST;
+      
+        $lResult = EditData('newspaper', $lNewData, $lCondition, $_SESSION['roleno']);
+
+        unset($_POST);
+        unset($_SESSION['newspaperno']);
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error editing newspaper: ' . $_SESSION['newspaperno'];
+            InsertWarning('log', 'newspaper', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+        }
+
+        Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
+    }
+
+    // SHOW ADD PAGE --> NEWSPAPER
+    if(isset($_POST['addNewspaper'])) 
+    {
+        unset($_POST['addNewspaper']);
+        Redirect('../VIEWS/NEWSPAPER/Branch_AddNewspaper.php', false);
+    }
+
+    // SUBMIT ADDITION --> NEWSPAPER
+    if(isset($_POST['submitNewspaperAddition'])) 
+    {
+        unset($_POST['submitNewspaperAddition']);
+
+        $_POST['newspaperno'] = "NS" . $_POST['newspaperno'];
+        $_POST['securityclass'] = 3;
+        $lNewData = $_POST;
+
+        $lResult = InsertData('newspaper', $lNewData, $_SESSION['roleno']);
+
+        unset($_POST);
+
+        if ($lResult == false) 
+        {
+            $lDescription = 'Error inserting newspaper';
+            InsertWarning('log', 'newspaper', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }
+
+        Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
+    }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SECURITY HANDLER
+
+    function CheckRolePermission($pTable) {
+        $lColumns_Security = "DISTINCT securityclass";
+        $lTable_Security = $pTable;
+        $lCriteria_Security = "";
+        $lData_Security = GetData($lColumns_Security, $lTable_Security, $lCriteria_Security);
+        if ($lData_Security['securityclass'] > $_SESSION['rolesecurityclass'])
+        {
+            $lDescription = 'Tried to scale permissions ' . $_SESSION['roleno'];
+            InsertWarning('securitylog', '', 'CRITICAL ERROR', '', $lDescription, '');
+            session_destroy();
+            Redirect("../Login.php",false);
+        }
+    }    
 
 ?>

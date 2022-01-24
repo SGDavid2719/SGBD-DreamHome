@@ -1,13 +1,17 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("viewing");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
         // Client numbers
         $lColumns = 'client.clientno';
         $lTable = 'client';
@@ -28,7 +32,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="viewingno">Viewing Number:</label><br>
-                        <input type="text" id="viewingno" name="viewingno" class="form-control" required><br>
+                        <input type="text" id="viewingno" name="viewingno" maxlength="4" class="form-control" required><br>
                     </div>
                     <div class="col-6"></div>
                 </div>
@@ -38,7 +42,6 @@
                         <select type="text" id="clientno" name="clientno" class="form-select form-select-sm" required>
                             <?php 
                             foreach (array_keys($lClientArrayData) as $lRow) {
-                                print_r($lClientArrayData[$lRow]);
                                 echo '<option value=' . $lClientArrayData[$lRow]['clientno'] . '>' . $lClientArrayData[$lRow]['clientno'] . '</option>';
                             }
                             ?>
@@ -87,7 +90,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

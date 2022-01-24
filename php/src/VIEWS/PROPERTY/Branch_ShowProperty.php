@@ -1,19 +1,27 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("propertyforrent");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         $pPropertyno = $_SESSION['propertyno'];
         $lColumns = "p.propertyno, p.type, p.rooms, p.rent, a.city, a.postcode, a.street";
         $lTables = "staff s, propertyforrent p, address a";
-        $lCriteria = "WHERE s.staffno = p.staffno AND p.addressno = a.addressno AND s.branchno='$lBranchNumber' AND p.propertyno='$pPropertyno'";
+        $lCriteria = "WHERE p.addressno = a.addressno AND p.propertyno='$pPropertyno' AND p.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTables, $lCriteria);
+        // Value handler
+        $lStreet = $lData['street'];
+        $lPostcode = $lData['postcode'];
     ?>
     <section>
         <div class="container mt-5">
@@ -32,7 +40,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="street">Street:</label><br>
-                        <input type="text" id="street" name="street" value=<?=$lData['street']?> class="form-control" disabled><br>
+                        <input type="text" id="street" name="street" value=<?="'$lStreet'"?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="city">City:</label><br>
@@ -42,7 +50,7 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="postcode">Postcode:</label><br>
-                        <input type="text" id="postcode" name="postcode" value=<?=$lData['postcode']?> class="form-control" disabled><br>
+                        <input type="text" id="postcode" name="postcode" value=<?="'$lPostcode'"?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="type">Type</label><br>
@@ -67,9 +75,12 @@
                         <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
                         <script>
                             var lBtn = document.getElementById('ReturnBtn');
+                            var lAll_Or_Branch = '<?php echo $_SESSION['all_or_branch']; ?>';
+                            <?php unset($_SESSION['all_or_branch']);?>
                             lBtn.addEventListener('click', function() {
                                 <?php unset($_SESSION['propertyno']);?>
-                                document.location.href = 'Branch_ListProperties.php';
+                                if (lAll_Or_Branch === 'showPropertyInfo_BRANCH') document.location.href = 'Branch_ListProperties.php';
+                                else document.location.href = 'All_ListProperties.php';
                             });
                         </script>
                     </div>
@@ -78,7 +89,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

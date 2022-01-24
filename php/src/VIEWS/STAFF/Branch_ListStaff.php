@@ -1,17 +1,22 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("staff");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
         $lBranchNumber = $_SESSION['branchno'];
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lColumns = "staff.staffno, staff.fname, staff.lname, staff.branchno, staff.position";
         $lTables = "staff";
-        $lCriteria = "WHERE staff.branchno='$lBranchNumber '";
+        $lCriteria = "WHERE staff.branchno='$lBranchNumber' AND staff.securityclass<=$lRoleSecurityClass";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
     ?>
     <section>
@@ -36,13 +41,28 @@
                                         <input type="submit" value="More info" class="btn btn-secondary" name="showStaffInfo_BRANCH">
                                     </form>
                                 </td>
+                                <td>
+                                    <form id="editStaff" action="../../PHP/Utilities.php" method="post">
+                                        <input type="text" id="staffno" class="d-none" name="staffno" value=<?=$lRow['staffno']?>>
+                                        <input type="submit" value="Edit" class="btn btn-primary" name="editStaffInfo_BRANCH">
+                                    </form>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
             <div class="row">
-                <div class="col-10"></div>
+                <div class="col-8"></div>
+                <div class="col-2 d-flex justify-content-end">
+                    <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
+                    <script>
+                        var lBtn = document.getElementById('ReturnBtn');
+                        lBtn.addEventListener('click', function() {
+                            document.location.href = 'All_ListStaff.php';
+                        });
+                    </script>
+                </div>
                 <div class="col-2 d-flex justify-content-end">
                     <form action="../../PHP/Utilities.php" method="post">
                         <input type="submit" value="Add Staff" class="btn btn-secondary" name="addStaff_BRANCH">
@@ -50,9 +70,19 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>    
+
     <?php
-        include_once('../../ELEMENTS/footer.php');
+
+    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') {
+        echo '<style>#ReturnBtn { display:none;}</style>';
+        echo '<style>#editStaff { display:none;}</style>';
+    } 
+
+    ?>
+    
+    <?php
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

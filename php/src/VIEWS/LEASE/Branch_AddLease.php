@@ -1,28 +1,33 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("contract");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         // Client numbers
         $lColumns = 'client.clientno';
         $lTable = 'client';
-        $lCriteria = '';
+        $lCriteria = "WHERE client.securityclass<=$lRoleSecurityClass";
         $lClientArrayData = GetAllData($lColumns, $lTable, $lCriteria);
         // Properties
         $lColumns = 'propertyforrent.propertyno';
         $lTable = 'propertyforrent INNER JOIN staff ON propertyforrent.staffno = staff.staffno';
-        $lCriteria = "WHERE staff.branchno = '$lBranchNumber'";
+        $lCriteria = "WHERE staff.branchno = '$lBranchNumber' AND propertyforrent.securityclass<=$lRoleSecurityClass";
         $lPropertyArrayData = GetAllData($lColumns, $lTable, $lCriteria);
         // Pay mode
-        $lColumns = 'contract.paymode';
+        $lColumns = 'DISTINCT contract.paymode';
         $lTable = 'contract';
-        $lCriteria = "";
+        $lCriteria = "WHERE contract.securityclass<=$lRoleSecurityClass";
         $lPayModeArrayData = GetAllData($lColumns, $lTable, $lCriteria);
     ?>
     <section>
@@ -34,7 +39,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="contractno">Contract Number:</label><br>
-                        <input type="text" id="contractno" name="contractno" class="form-control"><br>
+                        <input type="text" id="contractno" name="contractno" maxlength="3" class="form-control"><br>
                     </div>
                     <div class="col-6"></div>
                 </div>
@@ -44,7 +49,6 @@
                         <select type="text" id="clientno" name="clientno" class="form-select form-select-sm" required>
                             <?php 
                             foreach (array_keys($lClientArrayData) as $lRow) {
-                                print_r($lClientArrayData[$lRow]);
                                 echo '<option value=' . $lClientArrayData[$lRow]['clientno'] . '>' . $lClientArrayData[$lRow]['clientno'] . '</option>';
                             }
                             ?>
@@ -108,7 +112,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

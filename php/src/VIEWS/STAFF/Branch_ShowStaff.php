@@ -1,18 +1,23 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("staff");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
         $lBranchNumber = $_SESSION['branchno'];
         $pStaffNumber = $_SESSION['staffno'];
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lColumns = "*";
         $lTables = "staff";
-        $lCriteria = "WHERE staff.branchno='$lBranchNumber ' AND staff.staffno='$pStaffNumber '";
+        $lCriteria = "WHERE staff.branchno='$lBranchNumber ' AND staff.staffno='$pStaffNumber ' AND staff.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTables, $lCriteria);
     ?>
     <section>
@@ -86,7 +91,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

@@ -1,13 +1,17 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("viewing");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
         $lBranchNumber = $_SESSION['branchno'];
         $lColumns = "viewing.viewingno, viewing.viewdate, viewing.comment, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent";
         $lTable = "viewing INNER JOIN propertyforrent ON viewing.propertyno = propertyforrent.propertyno INNER JOIN staff ON propertyforrent.staffno = staff.staffno";
@@ -35,9 +39,13 @@
                                 <td>
                                     <form action="../../PHP/Utilities.php" method="post">
                                         <input type="text" id="viewingno" class="d-none" name="viewingno" value=<?=$lRow['viewingno'] ?> class="form-control" >
-                                        <input type="text" id="viewdate" class="d-none" value=<?=$lRow['viewdate'] ?> class="form-control" >
-                                        <input type="text" id="comment" class="d-none" value=<?=$lRow['comment'] ?> class="form-control" >
                                         <input type="submit" value="More info" class="btn btn-secondary" name="showViewingInfo_BRANCH">
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="../../PHP/Utilities.php" method="post">
+                                        <input type="text" id="viewingno" class="d-none" name="viewingno" value=<?=$lRow['viewingno']?>>
+                                        <input type="submit" value="Edit" class="btn btn-primary" name="editViewingInfo_BRANCH">
                                     </form>
                                 </td>
                             </tr>
@@ -56,7 +64,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

@@ -1,17 +1,22 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("propertyforrent");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         $lColumns = "propertyforrent.propertyno, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent, address.city, address.postcode, address.street";
         $lTables = "propertyforrent INNER JOIN staff ON propertyforrent.staffno = staff.staffno INNER JOIN address ON propertyforrent.addressno = address.addressno";
-        $lCriteria = "WHERE staff.branchno = '$lBranchNumber'";
+        $lCriteria = "WHERE staff.branchno = '$lBranchNumber' AND propertyforrent.securityclass<=$lRoleSecurityClass";
         $lDataArray = GetAllData($lColumns, $lTables, $lCriteria);
     ?>
     <section>
@@ -36,13 +41,28 @@
                                         <input type="submit" value="More info" class="btn btn-secondary" name="showPropertyInfo_BRANCH">
                                     </form>
                                 </td>
+                                <td>
+                                    <form id="editPropertyButton" action="../../PHP/Utilities.php" method="post">
+                                        <input type="text" id="propertyno" class="d-none" name="propertyno" value=<?=$lRow['propertyno']?>>
+                                        <input type="submit" value="Edit" class="btn btn-primary" name="editPropertyInfo_ALL">
+                                    </form>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
             <div class="row">
-                <div class="col-10"></div>
+                <div class="col-8"></div>
+                <div class="col-2 d-flex justify-content-end">
+                    <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
+                    <script>
+                        var lBtn = document.getElementById('ReturnBtn');
+                        lBtn.addEventListener('click', function() {
+                            document.location.href = 'All_ListProperties.php';
+                        });
+                    </script>
+                </div>
                 <div class="col-2 d-flex justify-content-end">
                     <form action="../../PHP/Utilities.php" method="post">
                         <input type="submit" value="Add Property" class="btn btn-secondary" name="addProperty_BRANCH">
@@ -51,8 +71,19 @@
             </div>
         </div>
     </section>
+
     <?php
-        include_once('../../ELEMENTS/footer.php');
+
+    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') {
+        echo '<style>#ReturnBtn { display:none;}</style>';
+
+        if ($_SESSION['role'] != 'Supervisor') echo '<style>#editPropertyButton { display:none;}</style>';
+    } 
+
+    ?>
+    
+    <?php
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

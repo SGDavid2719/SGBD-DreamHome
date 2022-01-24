@@ -1,18 +1,29 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("contract");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lContractNumber = $_SESSION['contractno'];
+        unset($_SESSION['contractno']);
         $lColumns = "contract.contractno, contract.clientno, contract.propertyno, contract.startdate, contract.enddate, contract.paymode, contract.depositpaid, propertyforrent.propertyno, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent, client.fname, client.lname, client.email";
         $lTable = "contract INNER JOIN propertyforrent ON contract.propertyno = propertyforrent.propertyno INNER JOIN client ON contract.clientno = client.clientno";
-        $lCriteria = "WHERE contract.contractno='$lContractNumber'";
+        $lCriteria = "WHERE contract.contractno='$lContractNumber' AND contract.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
+        // Pay mode
+        $lColumns = 'DISTINCT contract.paymode';
+        $lTable = 'contract';
+        $lCriteria = "WHERE contract.securityclass<=$lRoleSecurityClass";
+        $lPayModeArrayData = GetAllData($lColumns, $lTable, $lCriteria);
     ?>
     <section>
         <div class="container mt-5">
@@ -45,7 +56,13 @@
                 <div class="row mt-4">
                     <div class="col-6">
                         <label for="paymode">Pay mode:</label><br>
-                        <input type="text" id="paymode" name="paymode" value=<?=$lData['paymode']?> class="form-control"><br>
+                        <select type="text" id="paymode" name="paymode" class="form-select form-select-sm" required>
+                            <?php 
+                            foreach (array_keys($lPayModeArrayData) as $lRow) {
+                                echo '<option value=' . $lPayModeArrayData[$lRow]['paymode'] . '>' . $lPayModeArrayData[$lRow]['paymode'] . '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="col-6">
                         <label for="rooms">Deposit paid:</label><br>
@@ -56,12 +73,12 @@
                     <h4>Property info</h4>
                     <hr>
                     <div class="col-6">
-                        <label for="type">Type:</label><br>
-                        <input type="text" id="type" value=<?=$lData['type']?> class="form-control" disabled><br>
+                        <label for="propertyno">Property Number:</label><br>
+                        <input type="text" id="propertyno" value=<?=$lData['propertyno']?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
-                        <label for="rooms">Rooms:</label><br>
-                        <input type="text" id="rooms" value=<?=$lData['rooms']?> class="form-control" disabled><br>
+                        <label for="type">Type:</label><br>
+                        <input type="text" id="type" value=<?=$lData['type']?> class="form-control" disabled><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -69,7 +86,10 @@
                         <label for="rent">Rent:</label><br>
                         <input type="text" id="rent" value=<?=$lData['rent']?> class="form-control" disabled><br>
                     </div>
-                    <div class="col-6"></div>
+                    <div class="col-6">
+                        <label for="rooms">Rooms:</label><br>
+                        <input type="text" id="rooms" value=<?=$lData['rooms']?> class="form-control" disabled><br>
+                    </div>
                 </div>
                 <div class="row mt-4">
                     <h4>Owner info</h4>
@@ -111,7 +131,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

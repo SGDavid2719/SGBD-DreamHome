@@ -1,0 +1,27 @@
+1,SG5  ,,address,INFO,,EDIT,"{'"city_OLD'":'"Alcorcon'",'"city_NEW'":'"Glasgow'"}",2022-01-15 17:24:58.896181,4
+2,SG5  ,,staff,INFO,,EDIT,"{'"branchno_OLD'":'"B003 '",'"branchno_NEW'":'"B003'",'"lname_OLD'":'"Fords'",'"lname_NEW'":'"Ford'"}",2022-01-15 17:34:55.389571,4
+3,SG5  ,,staff,ERROR,Error inserting staff,INSERT,,2022-01-15 17:38:04.77801,4
+4,SG5  ,,staff,ERROR,Error inserting staff,INSERT,,2022-01-15 17:39:10.351898,4
+5,SG5  ,,staff,INFO,,INSERT,"{'"branchno'":'"B003'",'"staffno'":'"999'",'"position'":'"Assistant'",'"fname'":'"test1'",'"lname'":'"test1'",'"sex'":'"M'",'"dob'":'"2022-01-15'",'"salary'":'"999'",'"email'":'"test@dreamhome.com'",'"password'":'"REgtdHQhMjAyMg=='",'"staffsecurityclass'":1,'"securityclass'":2}",2022-01-15 17:40:57.634273,4
+6,SG5  ,,propertyforrent,INFO,,EDIT,"{'"propertyno_OLD'":'"PA14 '",'"propertyno_NEW'":'"PA14'",'"ownerno_OLD'":'"CO46 '",'"ownerno_NEW'":'"CO46'",'"rooms_OLD'":'"6'",'"rooms_NEW'":'"5'"}",2022-01-15 17:51:13.901377,4
+7,SG5  ,,owner,INFO,,EDIT,"{'"fname_OLD'":'"Tina'",'"fname_NEW'":'"Tinas'",'"address_OLD'":'"63 Well St. Glasgow G42'",'"address_NEW'":'"63'"}",2022-01-15 18:06:15.764476,4
+8,SG5  ,,owner,INFO,,INSERT,"{'"ownerno'":'"CO999'",'"fname'":'"test2'",'"lname'":'"test2'",'"address'":'"testttt'",'"telno'":'"999'",'"email'":'"test2@dreamhome.com'",'"securityclass'":1}",2022-01-15 18:11:09.98575,4
+9,SG5  ,,owner,INFO,,INSERT,"{'"ownerno'":'"CO998'",'"fname'":'"test3'",'"lname'":'"test3'",'"address'":'"testttt'",'"telno'":'"998'",'"email'":'"test3@dreamhome.com'",'"securityclass'":1,'"password'":'"MTIz'"}",2022-01-15 18:13:04.093933,4
+10,SG5  ,,client,INFO,,EDIT,"{'"preftype_OLD'":'"Flat'",'"preftype_NEW'":'"House'"}",2022-01-15 18:22:52.91075,4
+11,SG5  ,,client,INFO,,INSERT,"{'"clientno'":'"CR999'",'"fname'":'"test3'",'"lname'":'"test3'",'"email'":'"test3@dreamhome.com'",'"telno'":'"999'",'"preftype'":'"Flat'",'"maxrent'":'"999'",'"password'":'"REgtdHQhMjAyMg=='",'"clientsecurityclass'":0,'"securityclass'":0}",2022-01-15 18:23:28.083182,4
+12,SG5  ,,client,INFO,,EDIT,"{'"email_OLD'":'"test3@dreamhome.com'",'"email_NEW'":'"test3@hotmail.com'"}",2022-01-15 18:24:01.645668,4
+13,SG5  ,,contract,INFO,,EDIT,"{'"paymode_OLD'":'"Cash'",'"paymode_NEW'":'"Visa'",'"depositpaid_OLD'":'"200'",'"depositpaid_NEW'":'"999'"}",2022-01-15 18:29:51.718069,4
+14,SG5  ,,contract,INFO,,INSERT,"{'"contractno'":'"LN999'",'"clientno'":'"CR56'",'"propertyno'":'"PG4'",'"startdate'":'"2022-01-15'",'"enddate'":'"2022-01-16'",'"paymode'":'"Visa'",'"depositpaid'":'"999'",'"securityclass'":1}",2022-01-15 18:31:37.818746,4
+15,SG5  ,,newspaper,INFO,,EDIT,"{'"addressno_OLD'":'"S008 '",'"addressno_NEW'":'"S008'",'"name_OLD'":'"test'",'"name_NEW'":'"testttt'"}",2022-01-15 18:40:12.72873,4
+16,SG5  ,,newspaper,CRITICAL ERROR,SQL Injection,INSERT,,2022-01-15 18:41:08.710595,4
+17,SG5  ,,newspaper,INFO,,INSERT,"{'"newspaperno'":'"NS999'",'"addressno'":'"S010'",'"name'":'"test4'",'"telephone'":'"999'",'"contactfname'":'"test4'",'"contactlname'":'"test4'",'"securityclass'":3}",2022-01-15 18:45:47.417383,4
+18,SG5  ,,newspaper,INFO,,EDIT,"{'"addressno_OLD'":'"S010 '",'"addressno_NEW'":'"S010'",'"telephone_OLD'":'"999'",'"telephone_NEW'":'"998'"}",2022-01-15 18:46:03.687412,4
+19,SG5  ,,staff,INFO,,EDIT,"{'"branchno_OLD'":'"B003 '",'"branchno_NEW'":'"B003'",'"salary_OLD'":'"999'",'"salary_NEW'":'"1'",'"sex_OLD'":'"M'",'"sex_NEW'":'"F'"}",2022-01-17 12:21:34.910711,4
+20,SG5  ,,address,INFO,,EDIT,"{'"street_OLD'":'"163'",'"street_NEW'":'"163 Main St'",'"postcode_OLD'":'"G11'",'"postcode_NEW'":'"G11 9QX'"}",2022-01-17 15:11:36.091565,4
+21,SG5  ,,address,INFO,,INSERT,"{'"addressno'":'"999'",'"street'":'"testttttttttttttttttttttttttttttttt'",'"city'":'"testtttttt'",'"postcode'":'"9999999999'",'"securityclass'":0}",2022-01-17 15:33:08.60853,4
+22,SG5  ,,address,INFO,,INSERT,"{'"addressno'":'"S999'",'"street'":'"testttttttttttttttttttttttttttttttt'",'"city'":'"testtttttt'",'"postcode'":'"9999999999'",'"securityclass'":0}",2022-01-17 15:37:29.292941,4
+23,SG5  ,,propertyforrent,ERROR,Error inserting property for rent,INSERT,,2022-01-17 15:42:41.108816,4
+24,SG5  ,,propertyforrent,ERROR,Error inserting property for rent,INSERT,,2022-01-17 15:44:46.803364,4
+25,SG5  ,,propertyforrent,ERROR,Error inserting property for rent,INSERT,,2022-01-17 15:46:06.09442,4
+26,SG5  ,,address,INFO,,INSERT,"{'"addressno'":'"S999'",'"street'":'"testttttttttttttttttttttttttttttttt'",'"city'":'"testtttttt'",'"postcode'":'"9999999999'",'"securityclass'":0}",2022-01-17 15:47:45.242643,4
+27,SG5  ,,propertyforrent,INFO,,INSERT,"{'"propertyno'":'"PA999'",'"addressno'":'"S999'",'"type'":'"Flat'",'"rooms'":'"99'",'"rent'":'"999'",'"ownerno'":'"CO999'",'"staffno'":'"SG5'",'"securityclass'":0}",2022-01-17 15:47:45.330783,4

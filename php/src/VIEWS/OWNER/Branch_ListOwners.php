@@ -1,17 +1,22 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("owner");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
+        $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lBranchNumber = $_SESSION['branchno'];
         $lColumns = "DISTINCT owner.ownerno, owner.fname, owner.lname, owner.address, owner.telno, owner.email";
         $lTable = "owner";
-        $lCriteria = "INNER JOIN propertyforrent ON owner.ownerno = propertyforrent.ownerno INNER JOIN staff ON propertyforrent.staffno = staff.staffno WHERE staff.branchno = '$lBranchNumber '";
+        $lCriteria = "INNER JOIN propertyforrent ON owner.ownerno = propertyforrent.ownerno INNER JOIN staff ON propertyforrent.staffno = staff.staffno WHERE staff.branchno = '$lBranchNumber ' AND owner.securityclass<=$lRoleSecurityClass";
         $lDataArray = GetAllData($lColumns, $lTable, $lCriteria);
         // Clear session data
         if (isset($_SESSION['ownerno'])) unset($_SESSION['ownerno']);
@@ -44,19 +49,36 @@
                 </tbody>
             </table>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-8"></div>
+            <div class="col-2 d-flex justify-content-end">
+                <button id='ReturnBtn' type="button" class="btn btn-secondary">Return</button>
+                <script>
+                    var lBtn = document.getElementById('ReturnBtn');
+                    lBtn.addEventListener('click', function() {
+                        document.location.href = 'All_ListOwners.php';
+                    });
+                </script>
+            </div>
+            <div class="col-2 d-flex justify-content-end">
+                <form id="addOwner" action="../../PHP/Utilities.php" method="post">
+                    <input type="submit" value="Add Owner" class="btn btn-secondary" name="addOwner_BRANCH">
+                </form> 
+            </div>
+        </div>
     </section>
 
     <?php
-
-    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager' && $_SESSION['role'] != 'Supervisor') {
-        echo '<style>#editOwner { display:none;}</style>';
+    if ($_SESSION['role'] != 'Director' &&  $_SESSION['role'] != 'Manager') 
+    {
+        echo '<style>#ReturnBtn { display:none;}</style>';
+        echo '<style>#addOwner { display:none;}</style>';
+        if ($_SESSION['role'] != 'Supervisor') echo '<style>#editOwner { display:none;}</style>';
     } 
-
     ?>
     
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

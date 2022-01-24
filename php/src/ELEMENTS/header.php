@@ -2,17 +2,21 @@
     $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
 
     /* Client section */
-    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_DetailClient.php" : "../CLIENT/Branch_ListClients.php";
+    $lClientLink = ($_SESSION['role'] == 'Client') ? "../CLIENT/All_DetailClient.php" : "../CLIENT/All_ListClients.php";
     /* Property section */
-    $lPropertyLink = ($_SESSION['role'] == 'Client') ? "../PROPERTY/All_ListProperties.php" : "../PROPERTY/Branch_ListProperties.php";
+    $lPropertyLink = ($_SESSION['role'] == 'Client' || $_SESSION['role'] == 'Manager') ? "../PROPERTY/All_ListProperties.php" : "../PROPERTY/Branch_ListProperties.php";
     /* Viewing section */
     $lPropertyViewingLink = "../VIEWING/Branch_ListViewings.php";
     /* Owner section */
-    $lOwnerViewingLink = "../OWNER/Branch_ListOwners.php";
+    $lOwnerViewingLink = ($_SESSION['role'] == 'Manager') ? "../OWNER/All_ListOwners.php" : "../OWNER/Branch_ListOwners.php";
     /* Lease section */
-    $lLeaseLink = "../LEASE/Branch_ListLeases.php";
+    $lLeaseLink = ($_SESSION['role'] == 'Manager') ? "../LEASE/All_ListLeases.php" : "../LEASE/Branch_ListLeases.php";
     /* Staff section */
-    $lStaffLink = "../STAFF/Branch_ListStaff.php";
+    $lStaffLink = ($_SESSION['role'] == 'Manager') ? "../STAFF/All_ListStaff.php" : "../STAFF/Branch_ListStaff.php";
+    /* Branch section */
+    $lBranchLink = "../BRANCH/All_ListBranches.php";
+    /* Newspaper section */
+    $lNewspaperLink = "../NEWSPAPER/All_ListNewspapers.php";
 ?>
 
 <header>
@@ -23,11 +27,13 @@
         <div class="m-2 navigation-elements">
             <nav id="navigation-main" class="navigation-main">
                 <!-- Brand -->
-                <a href="../INDEX/Index.php"><img src="../../IMG/dream-home.png" alt="DreamHome Logo" class="iconImg invert"></a>
+                <a href="../INDEX/Index.php">
+                    <i class="fas fa-house-user invert"></i>
+                </a>
                 <!-- Left Nav -->
                 <ul class="navigation-menu mt-2">
                     <li id="branchLink">
-                        <a href="branch.php">Branch</a>
+                        <a href=<?=$lBranchLink?>>Branch</a>
                     </li>
                     <li id="staffLink">
                         <a href=<?=$lStaffLink?>>Staff</a>
@@ -48,7 +54,7 @@
                         <a href=<?=$lLeaseLink?>>Lease</a>
                     </li>
                     <li id="newspaperLink">
-                        <a href="newspaper.php">Newspaper</a>
+                        <a href=<?=$lNewspaperLink?>>Newspaper</a>
                     </li>
                 </ul>
                 <ul class="navigation-menu-user mt-2">

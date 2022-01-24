@@ -1,18 +1,24 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("viewing");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
-        include_once('../../ELEMENTS/header.php');
-        include_once('../../PHP/Utilities.php');
+        include_once('../../ELEMENTS/Header.php');
         $lViewingNumber = $_SESSION['viewingno'];
         $lColumns = "viewing.viewingno, viewing.viewdate, viewing.comment, propertyforrent.type, propertyforrent.rooms, propertyforrent.rent, address.street, address.city, address.postcode";
         $lTable = "viewing INNER JOIN propertyforrent ON viewing.propertyno = propertyforrent.propertyno INNER JOIN address ON propertyforrent.addressno = address.addressno";
         $lCriteria = "WHERE viewing.viewingno = '$lViewingNumber '";
         $lData = GetData($lColumns, $lTable, $lCriteria);
+        // Value handler
+        $lStreet = $lData['street'];
     ?>
     <section>
         <div class="container mt-5">
@@ -36,7 +42,7 @@
                     </div>
                     <div class="col-6">
                         <label for="comment">Comment:</label><br>
-                        <input type="text" id="comment" name="comment" value=<?=(!empty($lData['comment'])) ? print($lData['comment']) : print("-")?> class="form-control"><br>
+                        <input type="text" id="comment" name="comment" value=<?php (!empty($lData['comment'])) ? print($lData['comment']) : print("-")?> class="form-control"><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -63,7 +69,7 @@
                     <hr>
                     <div class="col-6">
                         <label for="street">Street:</label><br>
-                        <input type="text" id="street" value=<?=$lData['street']?> class="form-control" disabled><br>
+                        <input type="text" id="street" value=<?="'$lStreet'"?> class="form-control" disabled><br>
                     </div>
                     <div class="col-6">
                         <label for="city">City:</label><br>
@@ -84,7 +90,7 @@
                         <script>
                             var lBtn = document.getElementById('ReturnBtn');
                             lBtn.addEventListener('click', function() {
-                                document.location.href = 'Branch_ShowViewing.php';
+                                document.location.href = 'Branch_ListViewings.php';
                             });
                         </script>
                     </div>
@@ -96,7 +102,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>

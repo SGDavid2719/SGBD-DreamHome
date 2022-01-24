@@ -1,18 +1,25 @@
 <?php
-    include_once('../../ELEMENTS/head.php');
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("client");
+    // Head
+    include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/CLIENT/Query.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
 <?php
-    include_once('../../ELEMENTS/header.php');
-    include_once('../../PHP/Utilities.php');
-    $lColumns = "*";
-    $lTable = ($_SESSION['role'] == 'Client') ? 'client' : 'staff';
-    $lRoleNumber = $_SESSION['roleno'];
-    $lCriteria = ($_SESSION['role'] == 'Client') ? "WHERE clientno='$lRoleNumber'" : "WHERE staffno='$lRoleNumber'";
+    include_once('../../ELEMENTS/Header.php');
+    $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
+    $lClientNumber = ($_SESSION['role'] == 'Client') ? $_SESSION['roleno'] : $_SESSION['clientno'];
+    $lColumns = "client.clientno, client.fname, client.lname, client.telno, client.preftype, client.maxrent, client.email";
+    $lTable = "client";
+    $lCriteria = "WHERE client.clientno = '$lClientNumber' AND client.securityclass<=$lRoleSecurityClass";
     $lData = GetData($lColumns, $lTable, $lCriteria);
+    // Property types
+    $lPropertyTypes = array("Flat", "House");
 ?>
     <section>
         <div class="container mt-5">
@@ -22,11 +29,11 @@
                     <hr>
                     <div class="col-6">
                         <label for="fname">First name:</label><br>
-                        <input type="text" id="fname" value=<?=$lData['fname']?> class="form-control" disabled><br>
+                        <input type="text" id="fname" name="fname" value=<?=$lData['fname']?> maxlength="10" class="form-control"><br>
                     </div>
                     <div class="col-6">
                         <label for="lname">Last name:</label><br>
-                        <input type="text" id="lname" value=<?=$lData['lname']?> class="form-control" disabled><br>
+                        <input type="text" id="lname" name="lname" value=<?=$lData['lname']?> maxlength="10" class="form-control"><br>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -43,7 +50,15 @@
                     <hr>
                     <div class="col-6">
                         <label for="preftype">Pref Type:</label><br>
-                        <input type="text" id="preftype" name="preftype" value=<?=$lData['preftype']?> class="form-control"><br>
+                        <select type="text" id="preftype" name="preftype" class="form-select form-select-sm" required>
+                            <?php 
+                            foreach ($lPropertyTypes as $lRow) 
+                            {
+                                if ($lRow == $lData['preftype']) echo '<option value=' . "$lRow" . ' selected>' . $lRow . '</option>';
+                                else echo '<option value=' . "$lRow" . '>' . $lRow . '</option>';
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="col-6">
                         <label for="maxrent">Max Rent</label><br>
@@ -55,12 +70,9 @@
                     <hr>
                     <div class="col-6">
                         <label for="email">Email:</label><br>
-                        <input type="text" id="email" name="email" value=<?=$lData['email']?> class="form-control"><br>
+                        <input type="text" id="email" name="email" value=<?=$lData['email']?> maxlength="50" class="form-control"><br>
                     </div>
-                    <div class="col-6">
-                        <label for="password">Password:</label><br>
-                        <input type="password" id="password" name="password" value=<?=$lData['password']?> class="form-control"><br>
-                    </div>
+                    <div class="col-6"></div>
                 </div>
                 <div class="row mt-4">
                     <div class="col-10"></div>
@@ -68,8 +80,10 @@
                         <button id='ReturnBtn' type="button" class="btn btn-danger">Cancel</button>
                         <script>
                             var lBtn = document.getElementById('ReturnBtn');
+                            var lRole = "<?php echo $_SESSION['role']; ?>";
                             lBtn.addEventListener('click', function() {
-                                document.location.href = 'All_DetailClient.php';
+                                if (lRole == 'Client') document.location.href = 'All_DetailClient.php';
+                                else document.location.href = 'All_ListClients.php';
                             });
                         </script>
                     </div>
@@ -81,7 +95,7 @@
         </div>
     </section>
     <?php
-        include_once('../../ELEMENTS/footer.php');
+        include_once('../../ELEMENTS/Footer.php');
     ?>
 </body>
 </html>
