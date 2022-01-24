@@ -1,13 +1,17 @@
 <?php
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("staff");
+    // Head
     include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
         include_once('../../ELEMENTS/Header.php');
-        include_once('../../PHP/Utilities.php');
         $lPositionsArray = array('Assistant');
         if ($_SESSION['role'] == 'Manager') array_push($lPositionsArray, 'Supervisor');
     ?>

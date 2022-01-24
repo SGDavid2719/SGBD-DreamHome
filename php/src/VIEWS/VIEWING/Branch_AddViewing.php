@@ -1,13 +1,17 @@
 <?php
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("viewing");
+    // Head
     include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
         include_once('../../ELEMENTS/Header.php');
-        include_once('../../PHP/Utilities.php');
         // Client numbers
         $lColumns = 'client.clientno';
         $lTable = 'client';
@@ -38,7 +42,6 @@
                         <select type="text" id="clientno" name="clientno" class="form-select form-select-sm" required>
                             <?php 
                             foreach (array_keys($lClientArrayData) as $lRow) {
-                                print_r($lClientArrayData[$lRow]);
                                 echo '<option value=' . $lClientArrayData[$lRow]['clientno'] . '>' . $lClientArrayData[$lRow]['clientno'] . '</option>';
                             }
                             ?>

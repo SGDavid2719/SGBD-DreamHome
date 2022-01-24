@@ -69,9 +69,10 @@ function InsertData ($pTable, $pNewData, $pRoleNumber)
 {
     foreach (array_keys($pNewData) as $lRow) 
     {
-        if(str_contains($pNewData[$lRow], 'SELECT') || str_contains($pNewData[$lRow], 'UNION') || str_contains($pNewData[$lRow], 'OR') || str_contains($pNewData[$lRow], 'AND') || str_contains($pNewData[$lRow], 'WHERE') || str_contains($pNewData[$lRow], 'or') || str_contains($pNewData[$lRow], 'and') || str_contains($pNewData[$lRow], 'DROP') )
+        if(str_contains($pNewData[$lRow], 'SELECT') || str_contains($pNewData[$lRow], 'UNION') || str_contains($pNewData[$lRow], ' OR ') || str_contains($pNewData[$lRow], 'AND') || str_contains($pNewData[$lRow], 'WHERE') || str_contains($pNewData[$lRow], ' or ') || str_contains($pNewData[$lRow], 'and') || str_contains($pNewData[$lRow], 'DROP') )
         {
-            InsertWarning($pTable, 'CRITICAL ERROR', 'INSERT', 'SQL Injection', $_SESSION['roleno']);
+            $lDescription = "SQL Injection : " . $_SESSION['roleno'];
+            InsertWarning('securitylog', '', 'CRITICAL ERROR', '', $lDescription, '');
             require_once("./Logout_Action.php");
         }
     }
@@ -122,14 +123,21 @@ function EditData ($pTable, $pNewData, $pCondition, $pRoleNumber)
     return $lResult;
 }
 
-function InsertWarning ($pTable, $pType, $pEventType, $pDescription, $pRoleNumber) {
+function InsertWarning ($pLog, $pTable, $pType, $pEventType, $pDescription, $pRoleNumber) {
 
     $lConnection = ConnectToDatabase();
 
-    $lNewData = array('type' => $pType, 'eventtype' => $pEventType, 'description' => $pDescription, 'tablename' => $pTable, 'securityclass' => 4);
-    $lRoleData = (str_contains($pRoleNumber, 'CR')) ? array('clientno' => $pRoleNumber) : array('staffno' => $pRoleNumber);
-    $lMergedArray = array_merge($lNewData, $lRoleData);
-    $lSaveLog = pg_insert($lConnection, 'log', $lMergedArray);
+    if ($pLog == "log")
+    {
+        $lNewData = array('type' => $pType, 'eventtype' => $pEventType, 'description' => $pDescription, 'tablename' => $pTable, 'securityclass' => 4);
+        $lRoleData = (str_contains($pRoleNumber, 'CR')) ? array('clientno' => $pRoleNumber) : array('staffno' => $pRoleNumber);
+        $lMergedArray = array_merge($lNewData, $lRoleData);
+        $lSaveLog = pg_insert($lConnection, $pLog, $lMergedArray);
+    } else 
+    {
+        $lNewData = array('type' => $pType, 'description' => $pDescription, 'securityclass' => 4);
+        $lSaveLog = pg_insert($lConnection, $pLog, $lNewData);
+    }
 
 }
 

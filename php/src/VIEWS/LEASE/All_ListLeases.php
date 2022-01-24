@@ -1,13 +1,17 @@
 <?php
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("contract");
+    // Head
     include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
         include_once('../../ELEMENTS/Header.php');
-        include_once('../../PHP/Utilities.php');
         $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lColumns = "contract.contractno, contract.startdate, contract.enddate, contract.paymode";
         $lTables = "contract";

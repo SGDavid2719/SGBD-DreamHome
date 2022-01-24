@@ -1,13 +1,17 @@
 <?php
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("owner");
+    // Head
     include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
         include_once('../../ELEMENTS/Header.php');
-        include_once('../../PHP/Utilities.php');
         $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lColumns = "owner.ownerno, owner.fname, owner.lname, owner.address, owner.telno, owner.email";
         $lTables = "owner";

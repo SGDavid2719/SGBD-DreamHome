@@ -1,13 +1,18 @@
 <?php
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("branch");
+    // Head
     include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/PROPERTY/Property.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css"/>
 </head>
 <body>
     <?php
         include_once('../../ELEMENTS/Header.php');
-        include_once('../../PHP/Utilities.php');
+        // Getter
         $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lColumns = "branch.branchno, address.addressno, address.street, address.city, address.postcode";
         $lTables = "branch INNER JOIN address ON branch.addressno = address.addressno";

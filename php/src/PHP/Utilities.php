@@ -33,7 +33,7 @@
         {
             $lClientNo = ($_SESSION['role'] == 'Client') ? $_SESSION['roleno'] : $_SESSION['clientno'];
             $lDescription = 'Error editing client: ' . $lClientNo;
-            InsertWarning('client', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'client', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }
 
         if ($_SESSION['role'] == 'Client') 
@@ -63,7 +63,7 @@
             if ($lResult == false) 
             {
                 $lDescription = 'Error editing client password: ' . $_SESSION['roleno'];
-                InsertWarning('client', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+                InsertWarning('log', 'client', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
             }
         }
         unset($_POST);
@@ -105,7 +105,7 @@
         if ($lResult == false)
         {
             $lDescription = 'Error inserting client';
-            InsertWarning('client', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'client', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
         }
         
         unset($_POST);
@@ -145,13 +145,13 @@
             if ($lResultProperty == false) 
             {
                 $lDescription = 'Error inserting property for rent';
-                InsertWarning('propertyforrent', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+                InsertWarning('log', 'propertyforrent', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
             }
         }
         else
         {
             $lDescription = 'Error inserting address for rent';
-            InsertWarning('address', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'address', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
         }
 
         unset($_POST);
@@ -171,7 +171,7 @@
         if ($lResult == false)
         {
             $lDescription = 'Error editing property for rent: ' . $_POST['propertyno'];
-            InsertWarning('propertyforrent', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'propertyforrent', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }
 
         unset($_POST);
@@ -217,7 +217,7 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error editing owner: ' . $_SESSION['ownerno'];
-            InsertWarning('owner', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'owner', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }
         
         unset($_POST);
@@ -258,8 +258,13 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error inserting owner';
-            InsertWarning('owner', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'owner', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
         }
+        else 
+        {
+            $lNewData = array('ownerno' => $_POST['ownerno'], 'securityclass' => 1);
+            $lResult = InsertData('privateowner', $lNewData, $_SESSION['roleno']);
+        }  
 
         unset($_POST);
         Redirect('../VIEWS/OWNER/Branch_ListOwners.php', false);
@@ -297,7 +302,7 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error editing viewing: ' . $_SESSION['viewingno'];
-            InsertWarning('viewing', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'viewing', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }
         
         unset($_POST);
@@ -318,7 +323,7 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error inserting viewing';
-            InsertWarning('viewing', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'viewing', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
         }
 
         unset($_POST);
@@ -365,7 +370,7 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error editing contract: ' . $_POST['contractno'];
-            InsertWarning('contract', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'contract', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }
 
         unset($_POST);
@@ -394,7 +399,7 @@
         if ($lResult == false)
         {
             $lDescription = 'Error inserting contract';
-            InsertWarning('contract', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'contract', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
         }
 
         unset($_POST);
@@ -420,6 +425,7 @@
         $lFNameLetter = substr($_POST['fname'], 0, 1);
         $lLNameLetter = substr($_POST['lname'], 0, 1);
         $lCurrentYear = date("Y");
+        $_POST['staffno'] = "SA" . $_POST['staffno'];
         $lPassword = "DH-" . strtolower($lFNameLetter[0]) . strtolower($lLNameLetter[0]) . "!" . "$lCurrentYear";
         $_POST['password'] = base64_encode($lPassword);
         switch ($_POST['position']) {
@@ -440,8 +446,16 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error inserting staff';
-            InsertWarning('staff', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
-        }        
+            InsertWarning('log', 'staff', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+        }      
+        else 
+        {
+            if ($_POST['position'] == 'Supervisor')
+            {
+                $lNewData = array('staffno' => $_POST['staffno']);
+                $lResult = InsertData('supervisor', $lNewData, $_SESSION['roleno']);
+            }
+        }  
 
         unset($_POST);
         Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
@@ -473,7 +487,7 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error editing staff: ' . $_SESSION['staffno'];
-            InsertWarning('staff', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'staff', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }
 
         unset($_POST);
@@ -503,7 +517,7 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error editing branch: ' . $_SESSION['addressno'];
-            InsertWarning('branch', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'branch', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }        
 
         Redirect('../VIEWS/BRANCH/All_ListBranches.php', false);
@@ -538,7 +552,7 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error editing newspaper: ' . $_SESSION['newspaperno'];
-            InsertWarning('newspaper', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'newspaper', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }
 
         Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
@@ -567,10 +581,28 @@
         if ($lResult == false) 
         {
             $lDescription = 'Error inserting newspaper';
-            InsertWarning('newspaper', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
+            InsertWarning('log', 'newspaper', 'ERROR', 'INSERT', $lDescription, $_SESSION['roleno']);
         }
 
         Redirect('../VIEWS/NEWSPAPER/All_ListNewspapers.php', false);
     }
+
+    /*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+    // SECURITY HANDLER
+
+    function CheckRolePermission($pTable) {
+        $lColumns_Security = "DISTINCT securityclass";
+        $lTable_Security = $pTable;
+        $lCriteria_Security = "";
+        $lData_Security = GetData($lColumns_Security, $lTable_Security, $lCriteria_Security);
+        if ($lData_Security['securityclass'] > $_SESSION['rolesecurityclass'])
+        {
+            $lDescription = 'Tried to scale permissions ' . $_SESSION['roleno'];
+            InsertWarning('securitylog', '', 'CRITICAL ERROR', '', $lDescription, '');
+            session_destroy();
+            Redirect("../Login.php",false);
+        }
+    }    
 
 ?>

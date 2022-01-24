@@ -21,8 +21,8 @@ hr.headerSplitter {
   opacity: 1;
 }
 
-#iconImg {
-  width: 50px;
+.icon {
+  font-size: 80px;
 }
 
 label {

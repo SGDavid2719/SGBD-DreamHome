@@ -1,13 +1,17 @@
 <?php
+    // Utilities
+    include_once('../../PHP/Utilities.php');
+    // Security handler
+    CheckRolePermission("contract");
+    // Head
     include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/VIEWING/Viewing.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Views.css" />
 </head>
 <body>
     <?php
         include_once('../../ELEMENTS/Header.php');
-        include_once('../../PHP/Utilities.php');
         $lRoleSecurityClass = $_SESSION['rolesecurityclass'];
         $lContractNumber = $_SESSION['contractno'];
         unset($_SESSION['contractno']);
@@ -15,7 +19,6 @@
         $lTable = "contract INNER JOIN propertyforrent ON contract.propertyno = propertyforrent.propertyno INNER JOIN client ON contract.clientno = client.clientno";
         $lCriteria = "WHERE contract.contractno='$lContractNumber' AND contract.securityclass<=$lRoleSecurityClass";
         $lData = GetData($lColumns, $lTable, $lCriteria);
-        //print_r($lData)
     ?>
     <section>
         <div class="container mt-5">

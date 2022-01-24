@@ -27,7 +27,9 @@
         <div class="m-2 navigation-elements">
             <nav id="navigation-main" class="navigation-main">
                 <!-- Brand -->
-                <a href="../INDEX/Index.php"><img src="../../IMG/dream-home.png" alt="DreamHome Logo" class="iconImg invert"></a>
+                <a href="../INDEX/Index.php">
+                    <i class="fas fa-house-user invert"></i>
+                </a>
                 <!-- Left Nav -->
                 <ul class="navigation-menu mt-2">
                     <li id="branchLink">

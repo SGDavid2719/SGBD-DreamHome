@@ -2,7 +2,7 @@
     include_once('../../ELEMENTS/Head.php');
 ?>
 <!-- STYLES -->
-<link rel="stylesheet" type="text/css" href="../../CSS/index.css" />
+<link rel="stylesheet" type="text/css" href="../../CSS/Index.css" />
 </head>
 <body>
     <?php
@@ -12,22 +12,20 @@
         $lData = GetData('*', $lTable, "");
         // Branch handler
         unset($_SESSION['addressno']);
-        //DELETE
-        print_r($_SESSION);
-        print_r($_POST);
     ?>
-    <section>
-        <div class="container mt-5">
-            <header>
-                <div class="row rowHeader">
-                    <img src="../../IMG/dream-home.png" alt="DreamHome Logo" id="profileIMG">
-                </div>  
-                <div class="row mt-2">
-                    <h1>Welcome, <?=$_SESSION['fname']?> <?=$_SESSION['lname']?></h1>
-                </div>                
-            </header>
+    <div class="container mt-5">
+        <div class="row mt-2">
+            <div class="col-lg-12 d-flex justify-content-center align-self-center">
+                <h1>Welcome, <?=$_SESSION['fname']?> <?=$_SESSION['lname']?></h1>
+            </div>
+            <div class="col-lg-12 d-flex justify-content-center align-self-center">
+                <i class="fas fa-home icon"></i>
+            </div>
+            <div class="col-lg-12 d-flex justify-content-center">
+                <h1>DreamHome</h1>
+            </div>
         </div>
-    </section>
+    </div>
     <?php
         include_once('../../ELEMENTS/Footer.php');
     ?>
