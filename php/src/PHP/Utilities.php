@@ -479,19 +479,19 @@
     {
         unset($_POST['submitStaffEdition']);
 
-        $lCondition = array('staffno' => $_SESSION['staffno']);
+        $lCondition = array('staffno' => $_POST['staffno']);
+        $lStaffno = $_POST['staffno'];
         unset($_POST['staffno']);
         $lNewData = $_POST;
         $lResult = EditData('staff', $lNewData, $lCondition, $_SESSION['roleno']);
 
         if ($lResult == false) 
         {
-            $lDescription = 'Error editing staff: ' . $_SESSION['staffno'];
+            $lDescription = 'Error editing staff: ' . $lStaffno;
             InsertWarning('log', 'staff', 'ERROR', 'EDIT', $lDescription, $_SESSION['roleno']);
         }
 
         unset($_POST);
-        unset($_SESSION['staffno']);
         Redirect('../VIEWS/STAFF/Branch_ListStaff.php', false);
     }
 
